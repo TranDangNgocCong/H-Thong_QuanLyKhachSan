@@ -18,7 +18,7 @@ Dưới đây là danh sách toàn bộ tài khoản nhân sự được đồng
 | **6** | Lê Văn Bếp | `cleaner_fb` | `LuxeHaven@2026` | `cleaner` (Buồng phòng) | `F&B` |
 | **7** | Nguyễn Thị Spa | `cleaner_spa` | `LuxeHaven@2026` | `cleaner` (Buồng phòng) | `SPA` |
 | **8** | Trần Văn Lái | `cleaner_transport` | `LuxeHaven@2026` | `cleaner` (Buồng phòng) | `TRANSPORT` |
-| **9** | Nguyễn Hoàng Minh | `tech_minh` | `LuxeHaven@2026` | `technical` (Kỹ thuật viên) | `NULL` |
+| **9** | Trần Công | `tech_cong` | `LuxeHaven@2026` | `technical` (Kỹ thuật viên) | `NULL` |
 
 ---
 
