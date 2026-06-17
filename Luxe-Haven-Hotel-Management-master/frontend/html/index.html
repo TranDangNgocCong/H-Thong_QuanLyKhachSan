@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-[#FDFBF7] text-[#2C2623]">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeHaven Resort & Villas - Trải Nghiệm Nghỉ Dưỡng Đẳng Cấp</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            terracotta: '#b3541e',
+            clay: '#9b4117',
+            sand: '#F7F3EB',
+            charcoal: '#2C2623'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    .font-serif-luxury {
+      font-family: 'Playfair Display', serif;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-[#FDFBF7]">
+
+  <header class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-[#E5DFD3]/60 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#b3541e] flex items-center justify-center shadow-md">
+          <i class="fa-solid fa-umbrella-beach text-white text-lg"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg font-serif-luxury font-bold tracking-wide text-charcoal">LuxeHaven</span>
+          <span class="text-[9px] font-semibold text-[#b3541e] uppercase tracking-widest">Khu Nghỉ Dưỡng</span>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold text-[#5C524E] uppercase tracking-wider">
+        <a href="#" class="text-[#b3541e] transition-colors">Khu Nghỉ Dưỡng</a>
+        <a href="#phong-nghi" class="hover:text-[#b3541e] transition-colors">Phòng Nghỉ</a>
+        <a href="#tien-ich" class="hover:text-[#b3541e] transition-colors">Ẩm Thực & Spa</a>
+        <a href="#" class="hover:text-[#b3541e] transition-colors">Ưu Đãi</a>
+        <a href="/login.html" class="hover:text-[#b3541e] transition-colors normal-case text-[11px] text-[#81726A] border-l border-[#E5DFD3]/80 pl-4"><i class="fa-solid fa-user-shield mr-1"></i>Cổng nhân viên</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="#phong-nghi"
+          class="bg-[#b3541e] hover:bg-[#9b4117] text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-lg transition-all shadow-md shadow-[#b3541e]/15">
+          Đặt Ngay
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="relative h-[70vh] sm:h-[80vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-black/30 z-10"></div>
+    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1800&q=80"
+      alt="Resort Banner" class="absolute inset-0 w-full h-full object-cover">
+
+    <div class="relative max-w-4xl mx-auto text-center px-4 z-20 text-white space-y-4">
+      <span
+        class="text-xs font-bold uppercase tracking-widest text-white/90 bg-black/20 backdrop-blur-sm px-4 py-1.5 rounded-full">Vịnh
+        Hạ Long, Việt Nam</span>
+      <h1 class="text-4xl sm:text-6xl font-serif-luxury font-bold leading-tight">LuxeHaven Resort & Spa</h1>
+      <p class="text-sm sm:text-base font-light text-white/80 max-w-xl mx-auto">Điểm đến biệt lập nơi giao thoa giữa Di
+        Sản Văn Hóa & Thiên Nhiên nguyên sơ.</p>
+      <div class="pt-4">
+        <a href="#phong-nghi"
+          class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-white border-b-2 border-white pb-1 hover:text-[#F7F3EB] hover:border-[#F7F3EB] transition-all">
+          Khám phá không gian <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="space-y-6">
+      <h2 class="text-2xl sm:text-4xl font-serif-luxury font-bold leading-snug text-charcoal">
+        Điểm đến biệt lập nơi giao thoa giữa Di Sản Văn Hóa & Thiên Nhiên nguyên sơ
+      </h2>
+      <p class="text-xs sm:text-sm text-[#5C524E] leading-relaxed">
+        Mở lòng với thiên nhiên nơi tách biệt với nhịp sống bộn bề hàng ngày. Nép mình giữa khung cảnh hoang sơ,
+        LuxeHaven mang đến sự riêng tư, thoải mái, không gian đậm chất văn hóa Việt, hòa quyện cùng thiên nhiên mộc mạc,
+        cho bạn tận hưởng trọn vẹn những khoảnh khắc đáng nhớ.
+      </p>
+      <div class="border-l-2 border-[#b3541e] pl-4 py-1">
+        <p class="text-xs italic text-[#81726A]">Trải rộng trên diện tích 70 ha với hơn 150 phòng nghỉ cao cấp và biệt
+          thự hướng biển tuyệt mỹ.</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80"
+        alt="Lobby" class="rounded-2xl shadow-md h-64 w-full object-cover">
+      <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80" alt="Spa"
+        class="rounded-2xl shadow-md h-64 w-full object-cover mt-8">
+    </div>
+  </section>
+
+  <section id="phong-nghi" class="bg-sand/40 border-y border-[#E5DFD3]/60 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-xl mx-auto mb-16 space-y-2">
+        <span class="text-[10px] font-bold text-[#b3541e] uppercase tracking-widest">Không gian lưu trú</span>
+        <h2 class="text-3xl font-serif-luxury font-bold text-charcoal">Phòng Nghỉ & Biệt Thự</h2>
+        <div class="w-12 h-0.5 bg-[#b3541e] mx-auto mt-4"></div>
+      </div>
+
+      <div id="roomTypeGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="col-span-full text-center text-xs text-[#81726A] py-12">
+          <i class="fa-solid fa-spinner animate-spin text-lg text-[#b3541e] mr-2"></i> Đang tải danh sách phòng...
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tien-ich" class="py-20 bg-[#FDFBF7]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <span class="text-xs font-bold text-[#C5A880] uppercase tracking-widest">ĐẶC QUYỀN TRẢI NGHIỆM</span>
+        <h2 class="text-3xl sm:text-4xl font-serif-luxury font-bold text-charcoal">Dịch Vụ & Tiện Ích Đẳng Cấp</h2>
+        <p class="text-xs sm:text-sm text-[#81726A] leading-relaxed">
+          Tận hưởng những đặc quyền thượng lưu cùng các dịch vụ được thiết kế riêng biệt, mang lại trải nghiệm nghỉ
+          dưỡng hoàn mỹ khó quên tại LuxeHaven.
+        </p>
+        <div class="w-12 h-0.5 bg-[#b3541e] mx-auto mt-4"></div>
+      </div>
+
+      <!-- Service Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Service 1: Ẩm Thực Tại Phòng 24/7 -->
+        <div
+          class="bg-white rounded-2xl overflow-hidden border border-[#E5DFD3]/60 shadow-sm hover:shadow-md hover:border-[#b3541e]/20 transition-all duration-300 group flex flex-col justify-between">
+          <div class="h-60 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
+              alt="Ẩm Thực Tại Phòng 24/7"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div
+              class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg shadow-sm border border-[#E5DFD3]/50">
+              <span class="text-[10px] font-bold font-mono text-[#b3541e]">Từ 250.000đ</span>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <h3 class="text-base font-bold text-charcoal">Ẩm Thực Tại Phòng 24/7</h3>
+              <p class="text-xs text-[#81726A] line-clamp-2 leading-relaxed">Trải nghiệm thực đơn đa dạng phục vụ tận
+                giường bất kể giờ giấc.</p>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <button
+                class="text-xs font-bold text-[#b3541e] hover:text-[#9b4117] transition-all flex items-center gap-1.5 cursor-pointer">
+                Đăng ký dịch vụ <i
+                  class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 2: Trà Chiều Hoàng Hôn -->
+        <div
+          class="bg-white rounded-2xl overflow-hidden border border-[#E5DFD3]/60 shadow-sm hover:shadow-md hover:border-[#b3541e]/20 transition-all duration-300 group flex flex-col justify-between">
+          <div class="h-60 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80"
+              alt="Trà Chiều Hoàng Hôn"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div
+              class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg shadow-sm border border-[#E5DFD3]/50">
+              <span class="text-[10px] font-bold font-mono text-[#b3541e]">Từ 350.000đ</span>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <h3 class="text-base font-bold text-charcoal">Trà Chiều Hoàng Hôn</h3>
+              <p class="text-xs text-[#81726A] line-clamp-2 leading-relaxed">Nhâm nhi trà chiều thượng hạng ngắm hoàng
+                hôn buông trên mặt biển.</p>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <button
+                class="text-xs font-bold text-[#b3541e] hover:text-[#9b4117] transition-all flex items-center gap-1.5 cursor-pointer">
+                Đăng ký dịch vụ <i
+                  class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 3: Spa & Trị Liệu Đặc Quyền -->
+        <div
+          class="bg-white rounded-2xl overflow-hidden border border-[#E5DFD3]/60 shadow-sm hover:shadow-md hover:border-[#b3541e]/20 transition-all duration-300 group flex flex-col justify-between">
+          <div class="h-60 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
+              alt="Spa & Trị Liệu Đặc Quyền"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div
+              class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg shadow-sm border border-[#E5DFD3]/50">
+              <span class="text-[10px] font-bold font-mono text-[#b3541e]">Từ 950.000đ</span>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <h3 class="text-base font-bold text-charcoal">Spa & Trị Liệu Đặc Quyền</h3>
+              <p class="text-xs text-[#81726A] line-clamp-2 leading-relaxed">Tái tạo năng lượng cơ thể và tinh thần với
+                các liệu pháp thiên nhiên.</p>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <button
+                class="text-xs font-bold text-[#b3541e] hover:text-[#9b4117] transition-all flex items-center gap-1.5 cursor-pointer">
+                Đăng ký dịch vụ <i
+                  class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 4: Tour Du Thuyền Khám Phá Vịnh -->
+        <div
+          class="bg-white rounded-2xl overflow-hidden border border-[#E5DFD3]/60 shadow-sm hover:shadow-md hover:border-[#b3541e]/20 transition-all duration-300 group flex flex-col justify-between">
+          <div class="h-60 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=800&q=80"
+              alt="Tour Du Thuyền Khám Phá Vịnh"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div
+              class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg shadow-sm border border-[#E5DFD3]/50">
+              <span class="text-[10px] font-bold font-mono text-[#b3541e]">Từ 1.500.000đ</span>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <h3 class="text-base font-bold text-charcoal">Tour Du Thuyền Khám Phá Vịnh</h3>
+              <p class="text-xs text-[#81726A] line-clamp-2 leading-relaxed">Ngắm nhìn trọn vẹn cảnh quan vịnh biển kỳ
+                vĩ từ boong du thuyền hạng sang.</p>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <button
+                class="text-xs font-bold text-[#b3541e] hover:text-[#9b4117] transition-all flex items-center gap-1.5 cursor-pointer">
+                Đăng ký dịch vụ <i
+                  class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 5: Chèo Thuyền Kayak & SUP -->
+        <div
+          class="bg-white rounded-2xl overflow-hidden border border-[#E5DFD3]/60 shadow-sm hover:shadow-md hover:border-[#b3541e]/20 transition-all duration-300 group flex flex-col justify-between">
+          <div class="h-60 overflow-hidden relative">
+            <img src="https://th.bing.com/th/id/R.95098a2fb6518cb3819b5118278292af?rik=XXsKKFzzprw6vg&pid=ImgRaw&r=0"
+              alt="Chèo Thuyền Kayak & SUP"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div
+              class="absolute bottom-4 left-4 bg-emerald-50/95 backdrop-blur-sm px-3 py-1 rounded-lg shadow-sm border border-emerald-200">
+              <span class="text-[10px] font-bold font-mono text-emerald-700">Miễn phí cho khách lưu trú</span>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <h3 class="text-base font-bold text-charcoal">Chèo Thuyền Kayak & SUP</h3>
+              <p class="text-xs text-[#81726A] line-clamp-2 leading-relaxed">Hòa mình vào làn nước xanh trong với các
+                hoạt động thể thao biển.</p>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <button
+                class="text-xs font-bold text-[#b3541e] hover:text-[#9b4117] transition-all flex items-center gap-1.5 cursor-pointer">
+                Đăng ký dịch vụ <i
+                  class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 6: Đưa Đón Sân Bay Hạng Sang -->
+        <div
+          class="bg-white rounded-2xl overflow-hidden border border-[#E5DFD3]/60 shadow-sm hover:shadow-md hover:border-[#b3541e]/20 transition-all duration-300 group flex flex-col justify-between">
+          <div class="h-60 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80"
+              alt="Đưa Đón Sân Bay Hạng Sang"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div
+              class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg shadow-sm border border-[#E5DFD3]/50">
+              <span class="text-[10px] font-bold font-mono text-[#b3541e]">Từ 600.000đ</span>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <h3 class="text-base font-bold text-charcoal">Đưa Đón Sân Bay Hạng Sang</h3>
+              <p class="text-xs text-[#81726A] line-clamp-2 leading-relaxed">Đưa đón an toàn, riêng tư tuyệt đối bằng xe
+                Limousine sang trọng.</p>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <button
+                class="text-xs font-bold text-[#b3541e] hover:text-[#9b4117] transition-all flex items-center gap-1.5 cursor-pointer">
+                Đăng ký dịch vụ <i
+                  class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-white border-t border-[#E5DFD3]/80 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-xs text-[#5C524E]">
+      <div class="space-y-3">
+        <h4 class="font-bold uppercase tracking-wider text-charcoal">Địa Chỉ</h4>
+        <p class="leading-relaxed text-[#81726A]">Thôn Sơn Hào, Đặc Khu Vân Đồn, Tỉnh Quảng Ninh, Việt Nam</p>
+        <p class="text-[#b3541e] font-medium"><i class="fa-solid fa-phone"></i> +84 203 3933 888</p>
+      </div>
+      <div class="space-y-2">
+        <h4 class="font-bold uppercase tracking-wider text-charcoal">Thương Hiệu</h4>
+        <p class="text-[#81726A]">LuxeHaven Collection</p>
+        <p class="text-[#81726A]">Banyan Tree Partner</p>
+        <p class="text-[#81726A]">Angsana Heritage</p>
+      </div>
+      <div class="space-y-2">
+        <h4 class="font-bold uppercase tracking-wider text-charcoal">Tiện Ích & Dịch Vụ</h4>
+        <p class="text-[#81726A]">Hồ bơi trong nhà & ngoài trời</p>
+        <p class="text-[#81726A]">Phòng Gym & CLB Trẻ em</p>
+        <p class="text-[#81726A]">Thể thao dưới nước</p>
+      </div>
+      <div class="space-y-4">
+        <h4 class="font-bold uppercase tracking-wider text-charcoal">Mạng Xã Hội</h4>
+        <div class="flex gap-4 text-base text-[#81726A]">
+          <a href="#" class="hover:text-[#b3541e]"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" class="hover:text-[#b3541e]"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="hover:text-[#b3541e]"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" class="hover:text-[#b3541e]"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#E5DFD3]/40 mt-12 pt-6 text-center text-[10px] text-[#81726A]">
+      &copy; 2026 LuxeHaven Resort & Villas. All rights reserved. Developed for IT University Graduation Project.
+    </div>
+  </footer>
+
+  <!-- Modal Đặt Phòng Multi-step -->
+  <div id="bookingModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-8 relative shadow-2xl border border-[#E5DFD3]/60 flex flex-col max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button onclick="closeBookingModal()" class="absolute top-6 right-6 text-[#81726A] hover:text-[#b3541e] transition-colors cursor-pointer text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="mb-6">
+        <h3 id="modalRoomTitle" class="text-xl font-serif-luxury font-bold text-charcoal">Đặt Phòng</h3>
+        <p class="text-xs text-[#81726A] mt-1">Hoàn thành các bước để giữ chỗ ngay lập tức.</p>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="grid grid-cols-3 gap-2 mb-8 relative">
+        <div id="stepIndicator1" class="flex flex-col gap-1 border-t-2 border-[#b3541e] pt-2 transition-all duration-300">
+          <span class="text-[10px] font-bold text-[#b3541e]">BƯỚC 1</span>
+          <span class="text-xs font-semibold text-charcoal">Thời gian</span>
+        </div>
+        <div id="stepIndicator2" class="flex flex-col gap-1 border-t-2 border-[#E5DFD3] pt-2 transition-all duration-300">
+          <span class="text-[10px] font-bold text-[#81726A]">BƯỚC 2</span>
+          <span class="text-xs font-semibold text-[#81726A]">Thông tin</span>
+        </div>
+        <div id="stepIndicator3" class="flex flex-col gap-1 border-t-2 border-[#E5DFD3] pt-2 transition-all duration-300">
+          <span class="text-[10px] font-bold text-[#81726A]">BƯỚC 3</span>
+          <span class="text-xs font-semibold text-[#81726A]">Đặt cọc</span>
+        </div>
+      </div>
+
+      <!-- Error / Alert Message Box -->
+      <div id="modalAlert" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-xs rounded-xl flex items-center gap-2">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="modalAlertText">Thông tin không hợp lệ</span>
+      </div>
+
+      <!-- Steps Content -->
+      <div class="flex-1">
+        
+        <!-- STEP 1: DATE CHOICE -->
+        <div id="step1Content" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-[#81726A] mb-1.5">Ngày Nhận Phòng</label>
+              <input type="date" id="checkInDate" onchange="calculateNightsAndTotal(); fetchAvailableRoomsForDates();" class="w-full px-4 py-2.5 rounded-xl border border-[#E5DFD3] focus:border-[#b3541e] focus:outline-none text-xs text-charcoal">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-[#81726A] mb-1.5">Ngày Trả Phòng</label>
+              <input type="date" id="checkOutDate" onchange="calculateNightsAndTotal(); fetchAvailableRoomsForDates();" class="w-full px-4 py-2.5 rounded-xl border border-[#E5DFD3] focus:border-[#b3541e] focus:outline-none text-xs text-charcoal">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-[#81726A] mb-1.5">Chọn Số Phòng & Tầng</label>
+            <select id="roomNumberSelector" onchange="onRoomSelectorChange()" class="w-full px-4 py-2.5 rounded-xl border border-[#E5DFD3] focus:border-[#b3541e] focus:outline-none text-xs text-charcoal bg-white">
+              <option value="">-- Vui lòng chọn ngày trước --</option>
+            </select>
+          </div>
+
+          <div class="bg-[#F7F3EB]/60 rounded-2xl p-5 border border-[#E5DFD3]/40 space-y-2.5">
+            <div class="flex justify-between text-xs text-[#5C524E]">
+              <span>Giá phòng/đêm:</span>
+              <span id="modalPricePerNight" class="font-bold">1.500.000 đ</span>
+            </div>
+            <div class="flex justify-between text-xs text-[#5C524E]">
+              <span>Số đêm lưu trú:</span>
+              <span id="modalNightsCount" class="font-bold">0 đêm</span>
+            </div>
+            <div class="border-t border-[#E5DFD3]/60 my-2 pt-2.5 flex justify-between text-sm text-charcoal font-bold">
+              <span>Tổng chi phí (gồm 10% VAT):</span>
+              <span id="modalTotalCost" class="text-[#b3541e]">0 đ</span>
+            </div>
+          </div>
+
+          <button id="btnStep1Continue" onclick="goToStep2()" class="w-full bg-[#b3541e] hover:bg-[#9b4117] text-white text-xs font-bold uppercase tracking-wider py-3 rounded-xl transition-all shadow-md shadow-[#b3541e]/15 flex items-center justify-center gap-2 cursor-pointer mt-4">
+            Tiếp Tục <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+
+        <!-- STEP 2: CUSTOMER INFO -->
+        <div id="step2Content" class="hidden space-y-4">
+          <div class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-[#81726A] mb-1.5">Họ Và Tên</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-[#81726A]/60 text-xs">
+                  <i class="fa-solid fa-user"></i>
+                </span>
+                <input type="text" id="custName" placeholder="Nguyễn Văn A" class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#E5DFD3] focus:border-[#b3541e] focus:outline-none text-xs text-charcoal">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-[#81726A] mb-1.5">Số Điện Thoại</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-[#81726A]/60 text-xs">
+                    <i class="fa-solid fa-phone"></i>
+                  </span>
+                  <input type="tel" id="custPhone" placeholder="0901234567" class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#E5DFD3] focus:border-[#b3541e] focus:outline-none text-xs text-charcoal">
+                </div>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-[#81726A] mb-1.5">Email</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-[#81726A]/60 text-xs">
+                    <i class="fa-solid fa-envelope"></i>
+                  </span>
+                  <input type="email" id="custEmail" placeholder="email@gmail.com" class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#E5DFD3] focus:border-[#b3541e] focus:outline-none text-xs text-charcoal">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-[#F7F3EB]/60 rounded-2xl p-5 border border-[#E5DFD3]/40 space-y-2">
+            <div class="flex justify-between text-xs text-[#5C524E]">
+              <span>Tổng chi phí:</span>
+              <span id="modalTotalCostStep2" class="font-bold">0 đ</span>
+            </div>
+            <div class="flex justify-between text-xs text-charcoal font-bold border-t border-[#E5DFD3]/60 pt-2 mt-2">
+              <span>Số tiền cần cọc (50%):</span>
+              <span id="modalDepositCost" class="text-emerald-700 text-sm">0 đ</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <button onclick="goToStep1()" class="w-full bg-[#E5DFD3] hover:bg-[#D9CEBA] text-charcoal text-xs font-bold uppercase tracking-wider py-3 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-arrow-left text-[10px]"></i> Quay Lại
+            </button>
+            <button onclick="goToStep3()" class="w-full bg-[#b3541e] hover:bg-[#9b4117] text-white text-xs font-bold uppercase tracking-wider py-3 rounded-xl transition-all shadow-md shadow-[#b3541e]/15 flex items-center justify-center gap-2 cursor-pointer">
+              Tiếp Tục <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: DYNAMIC VIETQR PAYMENT -->
+        <div id="step3Content" class="hidden space-y-4">
+          
+          <!-- Warning banner -->
+          <div class="p-3 bg-amber-50 border border-amber-200 text-amber-800 text-[11px] rounded-xl flex items-start gap-2.5 leading-relaxed">
+            <i class="fa-solid fa-triangle-exclamation text-amber-600 mt-0.5 text-xs"></i>
+            <div>
+              <span class="font-bold">Lưu ý:</span> Hệ thống sẽ tự động xác nhận đơn đặt sau khi nhận được tiền cọc. Vui lòng không tắt trình duyệt.
+            </div>
+          </div>
+
+          <!-- QR code container -->
+          <div class="flex flex-col items-center justify-center py-4 bg-sand/20 rounded-2xl border border-[#E5DFD3]/50">
+            <div class="w-56 h-56 bg-white p-2.5 rounded-2xl shadow-sm border border-[#E5DFD3]/40 flex items-center justify-center relative overflow-hidden">
+              <img id="vietqrImage" src="" alt="Mã VietQR" class="w-full h-full object-contain">
+            </div>
+            <p class="text-[10px] text-[#81726A] mt-2 font-medium tracking-wide">Quét mã bằng ứng dụng Ngân hàng để thanh toán</p>
+          </div>
+
+          <!-- Copy helpers -->
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between items-center bg-white border border-[#E5DFD3]/80 rounded-xl px-4 py-2.5">
+              <div class="flex flex-col">
+                <span class="text-[10px] font-bold text-[#81726A] uppercase tracking-wider">Số tài khoản</span>
+                <span class="font-mono text-charcoal font-semibold">0071001234567 <span class="text-[10px] text-[#81726A]/80 font-sans font-normal">(Vietcombank)</span></span>
+              </div>
+              <button onclick="copyText('0071001234567', this)" class="w-8 h-8 rounded-lg bg-sand hover:bg-[#E5DFD3]/60 text-[#b3541e] hover:text-[#9b4117] transition-all flex items-center justify-center cursor-pointer active:scale-95 shadow-sm border border-[#E5DFD3]/40" title="Sao chép">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+
+            <div class="flex justify-between items-center bg-white border border-[#E5DFD3]/80 rounded-xl px-4 py-2.5">
+              <div class="flex flex-col">
+                <span class="text-[10px] font-bold text-[#81726A] uppercase tracking-wider">Số tiền cần cọc (50%)</span>
+                <span id="copyDepositAmountText" class="font-mono text-[#b3541e] font-bold text-sm">0 đ</span>
+              </div>
+              <button id="copyAmountBtn" onclick="copyAmount(this)" class="w-8 h-8 rounded-lg bg-sand hover:bg-[#E5DFD3]/60 text-[#b3541e] hover:text-[#9b4117] transition-all flex items-center justify-center cursor-pointer active:scale-95 shadow-sm border border-[#E5DFD3]/40" title="Sao chép">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <button onclick="goToStep2()" class="w-full bg-[#E5DFD3] hover:bg-[#D9CEBA] text-charcoal text-xs font-bold uppercase tracking-wider py-3 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-arrow-left text-[10px]"></i> Quay Lại
+            </button>
+            <button id="confirmTransferBtn" onclick="submitBooking()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider py-3 rounded-xl transition-all shadow-md shadow-emerald-600/15 flex items-center justify-center gap-2 cursor-pointer">
+              Xác Nhận Đã Chuyển Khoản <i class="fa-solid fa-circle-check text-[10px]"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const API_URL = '/api';
+    let currentStep = 1;
+    let selectedRoomType = '';
+    let selectedRoomId = null;
+    let selectedRoomPrice = 0;
+    let computedTotalCost = 0;
+    let computedDepositAmount = 0;
+    let computedNights = 0;
+
+    // Open booking modal
+    async function openBookingModal(roomType, price) {
+      selectedRoomType = roomType;
+      selectedRoomPrice = price;
+      selectedRoomId = null;
+      
+      document.getElementById('checkInDate').value = '';
+      document.getElementById('checkOutDate').value = '';
+      document.getElementById('roomNumberSelector').innerHTML = '<option value="">-- Vui lòng chọn ngày trước --</option>';
+      document.getElementById('custName').value = '';
+      document.getElementById('custPhone').value = '';
+      document.getElementById('custEmail').value = '';
+      
+      hideAlert();
+      calculateNightsAndTotal();
+      
+      document.getElementById('modalRoomTitle').innerText = `Đặt Phòng: ${roomType}`;
+      document.getElementById('modalPricePerNight').innerText = `${price.toLocaleString('vi-VN')} đ`;
+      
+      const modal = document.getElementById('bookingModal');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+      }, 50);
+      
+      showStep(1);
+    }
+
+    function closeBookingModal() {
+      const modal = document.getElementById('bookingModal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    function showAlert(msg) {
+      const alertDiv = document.getElementById('modalAlert');
+      const alertText = document.getElementById('modalAlertText');
+      alertText.innerText = msg;
+      alertDiv.classList.remove('hidden');
+    }
+
+    function hideAlert() {
+      const alertDiv = document.getElementById('modalAlert');
+      alertDiv.classList.add('hidden');
+    }
+
+    function calculateNightsAndTotal() {
+      const checkInVal = document.getElementById('checkInDate').value;
+      const checkOutVal = document.getElementById('checkOutDate').value;
+      
+      const nightsSpan = document.getElementById('modalNightsCount');
+      const totalSpan = document.getElementById('modalTotalCost');
+      
+      if (!checkInVal || !checkOutVal) {
+        nightsSpan.innerText = '0 đêm';
+        totalSpan.innerText = '0 đ';
+        computedNights = 0;
+        computedTotalCost = 0;
+        return;
+      }
+      
+      const inDate = new Date(checkInVal);
+      const outDate = new Date(checkOutVal);
+      
+      if (outDate <= inDate) {
+        nightsSpan.innerText = '0 đêm';
+        totalSpan.innerText = '0 đ';
+        computedNights = 0;
+        computedTotalCost = 0;
+        return;
+      }
+      
+      const diffTime = outDate - inDate;
+      computedNights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      // Total including 10% VAT
+      computedTotalCost = selectedRoomPrice * computedNights * 1.1;
+      
+      nightsSpan.innerText = `${computedNights} đêm`;
+      totalSpan.innerText = `${Math.round(computedTotalCost).toLocaleString('vi-VN')} đ`;
+    }
+
+    // Dynamic available room fetch by type and dates
+    async function fetchAvailableRoomsForDates() {
+      const checkInVal = document.getElementById('checkInDate').value;
+      const checkOutVal = document.getElementById('checkOutDate').value;
+      const selectEl = document.getElementById('roomNumberSelector');
+      const continueBtn = document.getElementById('btnStep1Continue');
+      
+      if (!checkInVal || !checkOutVal) {
+        selectEl.innerHTML = '<option value="">-- Vui lòng chọn ngày trước --</option>';
+        continueBtn.disabled = false;
+        hideAlert();
+        return;
+      }
+      
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const inDate = new Date(checkInVal);
+      inDate.setHours(0,0,0,0);
+      const outDate = new Date(checkOutVal);
+      outDate.setHours(0,0,0,0);
+      
+      if (inDate < today) {
+        showAlert('Ngày nhận phòng không được ở quá khứ.');
+        continueBtn.disabled = true;
+        selectEl.innerHTML = '<option value="">-- Ngày không hợp lệ --</option>';
+        return;
+      }
+      
+      if (outDate <= inDate) {
+        showAlert('Ngày trả phòng phải sau ngày nhận phòng.');
+        continueBtn.disabled = true;
+        selectEl.innerHTML = '<option value="">-- Ngày không hợp lệ --</option>';
+        return;
+      }
+      
+      try {
+        selectEl.innerHTML = '<option value="">Đang tải phòng trống...</option>';
+        continueBtn.disabled = true;
+        hideAlert();
+        
+        const typeParam = encodeURIComponent(selectedRoomType);
+        const url = `${API_URL}/rooms/available-by-type?type=${typeParam}&checkin=${checkInVal}&checkout=${checkOutVal}`;
+        const res = await fetch(url);
+        const json = await res.json();
+        
+        const rooms = json.data || [];
+        if (rooms.length === 0) {
+          selectEl.innerHTML = '<option value="">Hết phòng trống</option>';
+          showAlert('Không còn phòng trống thuộc hạng này trong thời gian lựa chọn.');
+          continueBtn.disabled = true;
+          selectedRoomId = null;
+          return;
+        }
+        
+        // Populate select list
+        let optionsHtml = '';
+        rooms.forEach((room, index) => {
+          const floor = room.number.charAt(0);
+          optionsHtml += `<option value="${room.id}" ${index === 0 ? 'selected' : ''}>Phòng ${room.number} - Tầng ${floor}</option>`;
+        });
+        
+        selectEl.innerHTML = optionsHtml;
+        selectedRoomId = parseInt(rooms[0].id);
+        continueBtn.disabled = false;
+        
+      } catch (err) {
+        console.error('Lỗi khi tải phòng trống theo ngày:', err);
+        selectEl.innerHTML = '<option value="">Lỗi tải dữ liệu</option>';
+        showAlert('Đã xảy ra lỗi khi tìm phòng trống.');
+        continueBtn.disabled = true;
+      }
+    }
+
+    function onRoomSelectorChange() {
+      const selectEl = document.getElementById('roomNumberSelector');
+      selectedRoomId = selectEl.value ? parseInt(selectEl.value) : null;
+    }
+
+    function showStep(step) {
+      currentStep = step;
+      hideAlert();
+      
+      document.getElementById('step1Content').classList.add('hidden');
+      document.getElementById('step2Content').classList.add('hidden');
+      document.getElementById('step3Content').classList.add('hidden');
+      
+      document.getElementById(`step${step}Content`).classList.remove('hidden');
+      
+      const ind1 = document.getElementById('stepIndicator1');
+      const ind2 = document.getElementById('stepIndicator2');
+      const ind3 = document.getElementById('stepIndicator3');
+      
+      ind1.className = "flex flex-col gap-1 border-t-2 border-[#E5DFD3] pt-2 transition-all duration-300";
+      ind2.className = "flex flex-col gap-1 border-t-2 border-[#E5DFD3] pt-2 transition-all duration-300";
+      ind3.className = "flex flex-col gap-1 border-t-2 border-[#E5DFD3] pt-2 transition-all duration-300";
+      
+      if (step >= 1) {
+        ind1.className = "flex flex-col gap-1 border-t-2 border-[#b3541e] pt-2 transition-all duration-300";
+        ind1.querySelector('span:first-child').className = "text-[10px] font-bold text-[#b3541e]";
+        ind1.querySelector('span:last-child').className = "text-xs font-semibold text-charcoal";
+      } else {
+        ind1.querySelector('span:first-child').className = "text-[10px] font-bold text-[#81726A]";
+        ind1.querySelector('span:last-child').className = "text-xs font-semibold text-[#81726A]";
+      }
+      
+      if (step >= 2) {
+        ind2.className = "flex flex-col gap-1 border-t-2 border-[#b3541e] pt-2 transition-all duration-300";
+        ind2.querySelector('span:first-child').className = "text-[10px] font-bold text-[#b3541e]";
+        ind2.querySelector('span:last-child').className = "text-xs font-semibold text-charcoal";
+      } else {
+        ind2.querySelector('span:first-child').className = "text-[10px] font-bold text-[#81726A]";
+        ind2.querySelector('span:last-child').className = "text-xs font-semibold text-[#81726A]";
+      }
+      
+      if (step >= 3) {
+        ind3.className = "flex flex-col gap-1 border-t-2 border-[#b3541e] pt-2 transition-all duration-300";
+        ind3.querySelector('span:first-child').className = "text-[10px] font-bold text-[#b3541e]";
+        ind3.querySelector('span:last-child').className = "text-xs font-semibold text-charcoal";
+      } else {
+        ind3.querySelector('span:first-child').className = "text-[10px] font-bold text-[#81726A]";
+        ind3.querySelector('span:last-child').className = "text-xs font-semibold text-[#81726A]";
+      }
+    }
+
+    function goToStep1() {
+      showStep(1);
+    }
+
+    function goToStep2() {
+      const checkInVal = document.getElementById('checkInDate').value;
+      const checkOutVal = document.getElementById('checkOutDate').value;
+      
+      if (!checkInVal || !checkOutVal) {
+        showAlert('Vui lòng chọn ngày nhận phòng và ngày trả phòng.');
+        return;
+      }
+      
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const inDate = new Date(checkInVal);
+      inDate.setHours(0,0,0,0);
+      
+      if (inDate < today) {
+        showAlert('Ngày nhận phòng không được ở quá khứ.');
+        return;
+      }
+      
+      const outDate = new Date(checkOutVal);
+      outDate.setHours(0,0,0,0);
+      
+      if (outDate <= inDate) {
+        showAlert('Ngày trả phòng phải sau ngày nhận phòng ít nhất 1 đêm.');
+        return;
+      }
+
+      if (!selectedRoomId) {
+        showAlert('Vui lòng chọn số phòng trống để tiếp tục.');
+        return;
+      }
+      
+      computedDepositAmount = Math.round(computedTotalCost * 0.5);
+      document.getElementById('modalTotalCostStep2').innerText = `${Math.round(computedTotalCost).toLocaleString('vi-VN')} đ`;
+      document.getElementById('modalDepositCost').innerText = `${computedDepositAmount.toLocaleString('vi-VN')} đ`;
+      
+      showStep(2);
+    }
+
+    function goToStep3() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const email = document.getElementById('custEmail').value.trim();
+      
+      if (!name || !phone || !email) {
+        showAlert('Vui lòng điền đầy đủ Họ tên, Số điện thoại và Email.');
+        return;
+      }
+      
+      if (!/^[0-9+() -]{9,15}$/.test(phone)) {
+        showAlert('Số điện thoại không hợp lệ.');
+        return;
+      }
+      
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showAlert('Địa chỉ Email không hợp lệ.');
+        return;
+      }
+      
+      const bank = 'vcb';
+      const accountNum = '0071001234567';
+      const accountName = 'LE MAI MINH TRONG';
+      const encodedName = encodeURIComponent(accountName);
+      const encodedInfo = encodeURIComponent(`LuxeHaven Doc Phong ${phone}`);
+      
+      const vietqrUrl = `https://img.vietqr.io/image/${bank}-${accountNum}-compact2.png?amount=${computedDepositAmount}&addInfo=${encodedInfo}&accountName=${encodedName}`;
+      
+      document.getElementById('vietqrImage').src = vietqrUrl;
+      document.getElementById('copyDepositAmountText').innerText = `${computedDepositAmount.toLocaleString('vi-VN')} đ`;
+      
+      showStep(3);
+    }
+
+    function copyText(text, btnElement) {
+      navigator.clipboard.writeText(text).then(() => {
+        const icon = btnElement.querySelector('i');
+        icon.className = "fa-solid fa-check text-emerald-600";
+        setTimeout(() => {
+          icon.className = "fa-regular fa-copy";
+        }, 1500);
+      }).catch(err => {
+        console.error('Không thể sao chép văn bản: ', err);
+      });
+    }
+
+    function copyAmount(btnElement) {
+      copyText(computedDepositAmount.toString(), btnElement);
+    }
+
+    async function submitBooking() {
+      const btn = document.getElementById('confirmTransferBtn');
+      const originalHtml = btn.innerHTML;
+      
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Đang xử lý...';
+      hideAlert();
+      
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const email = document.getElementById('custEmail').value.trim();
+      const checkIn = document.getElementById('checkInDate').value;
+      const checkOut = document.getElementById('checkOutDate').value;
+      
+      try {
+        const resCheck = await fetch(`${API_URL}/users/check-email`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, phone: phone })
+        });
+        const checkJson = await resCheck.json();
+        
+        let customerId = null;
+        
+        if (resCheck.ok && checkJson.success && checkJson.data && checkJson.data.exists) {
+          customerId = checkJson.data.id;
+        } else {
+          const registerRes = await fetch(`${API_URL}/users/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              fullName: name,
+              phone: phone,
+              email: email,
+              role: 'customer'
+            })
+          });
+          
+          const registerJson = await registerRes.json();
+          if (!registerRes.ok) {
+            throw new Error(registerJson.message || 'Lỗi khi tạo hồ sơ khách hàng.');
+          }
+          
+          customerId = registerJson.data.id;
+        }
+        
+        const bookingRes = await fetch(`${API_URL}/bookings`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: customerId,
+            roomId: selectedRoomId,
+            checkIn: checkIn,
+            checkOut: checkOut,
+            paymentMethod: 'Chuyển khoản ngân hàng QR',
+            isPaid: true
+          })
+        });
+        
+        const bookingJson = await bookingRes.json();
+        if (!bookingRes.ok) {
+          throw new Error(bookingJson.message || 'Lỗi khi tạo đơn đặt phòng.');
+        }
+        
+        alert(`Chúc mừng! LuxeHaven đã nhận được yêu cầu và khoản cọc của quý khách thành công. Mã đặt phòng của bạn là BK-${bookingJson.data.id}. Chúng tôi sẽ liên hệ sớm nhất.`);
+        closeBookingModal();
+        window.location.reload();
+        
+      } catch (err) {
+        console.error('Lỗi khi thực hiện đặt phòng:', err);
+        showAlert(err.message || 'Đã xảy ra lỗi khi gửi yêu cầu đặt phòng. Quý khách vui lòng thử lại.');
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
+    }
+
+    // Dynamic Room types fetch and render
+    async function fetchAndRenderRoomTypes() {
+      try {
+        const res = await fetch(`${API_URL}/rooms/types`);
+        const json = await res.json();
+        const types = json.data || [];
+        
+        const grid = document.getElementById('roomTypeGrid');
+        if (!grid) return;
+        
+        if (types.length === 0) {
+          grid.innerHTML = `
+            <div class="col-span-full text-center text-xs text-[#81726A] py-12 bg-white border border-[#E5DFD3]/60 rounded-2xl">
+              Không có hạng phòng nào sẵn có tại hệ thống.
+            </div>`;
+          return;
+        }
+
+        let html = '';
+        types.forEach(t => {
+          const btnId = `btn-room-${t.room_type.replace(/\s+/g, '-')}`;
+          
+          html += `
+        <div class="bg-white rounded-2xl border border-[#E5DFD3]/60 overflow-hidden shadow-sm group hover:shadow-md transition-all">
+          <div class="h-56 overflow-hidden relative">
+            <img src="${t.image_url}"
+              alt="${t.room_type}"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div class="p-6 space-y-4">
+            <h3 class="text-lg font-serif-luxury font-bold text-charcoal">Phòng ${t.room_type}</h3>
+            <p class="text-xs text-[#5C524E] leading-relaxed">${t.description}</p>
+            <div class="grid grid-cols-2 gap-y-2 text-[11px] text-[#81726A] font-medium border-t border-[#E5DFD3]/40 pt-4">
+              <span><i class="fa-solid fa-users w-4"></i> ${t.max_guests} Người lớn</span>
+              <span><i class="fa-solid fa-maximize w-4"></i> ${t.size_sqm} sqm</span>
+              <span><i class="fa-solid fa-bed w-4"></i> ${t.bed_type}</span>
+              <span><i class="fa-solid fa-water w-4"></i> ${t.view_type}</span>
+            </div>
+            <button id="${btnId}" onclick="openBookingModal('${t.room_type.replace(/'/g, "\\'")}', ${t.min_price})"
+              class="w-full bg-[#b3541e] hover:bg-[#9b4117] text-white text-xs font-bold uppercase tracking-wider py-3 rounded-xl transition-all cursor-pointer">
+              Đặt Ngay
+            </button>
+          </div>
+        </div>`;
+        });
+        
+        grid.innerHTML = html;
+        
+        // Check dynamic availability
+        await checkAvailabilityForRenderedTypes(types);
+      } catch (err) {
+        console.error('Lỗi khi tải danh sách hạng phòng:', err);
+        const grid = document.getElementById('roomTypeGrid');
+        if (grid) {
+          grid.innerHTML = `
+            <div class="col-span-full text-center text-xs text-rose-600 py-12 bg-white border border-[#E5DFD3]/60 rounded-2xl">
+              Không thể kết nối máy chủ để tải danh sách hạng phòng. Quý khách vui lòng tải lại trang.
+            </div>`;
+        }
+      }
+    }
+
+    async function checkAvailabilityForRenderedTypes(types) {
+      try {
+        const [roomsRes, bookingsRes] = await Promise.all([
+          fetch(`${API_URL}/rooms`),
+          fetch(`${API_URL}/bookings`)
+        ]);
+        const roomsJson = await roomsRes.json();
+        const bookingsJson = await bookingsRes.json();
+        
+        const rooms = roomsJson.data || [];
+        const bookings = bookingsJson.data || [];
+        
+        const todayStr = new Date().toISOString().split('T')[0];
+        const activeBookings = bookings.filter(b => {
+          const checkIn = b.checkIn.split('T')[0];
+          const checkOut = b.checkOut.split('T')[0];
+          const isActive = ['active', 'confirmed', 'occupied'].includes(b.status.toLowerCase());
+          const isTodayOverlapping = todayStr >= checkIn && todayStr < checkOut;
+          return isActive && isTodayOverlapping;
+        });
+        
+        types.forEach(t => {
+          const type = t.room_type;
+          const roomsOfType = rooms.filter(r => 
+            r.type.toLowerCase().includes(type.toLowerCase()) || 
+            type.toLowerCase().includes(r.type.toLowerCase())
+          );
+          
+          const allBusy = roomsOfType.length > 0 && roomsOfType.every(room => 
+            activeBookings.some(b => b.roomId === room.id)
+          );
+          
+          const btnId = `btn-room-${type.replace(/\s+/g, '-')}`;
+          const btn = document.getElementById(btnId);
+          if (btn) {
+            if (allBusy) {
+              btn.disabled = true;
+              btn.innerText = 'HẾT PHÒNG';
+              btn.className = "w-full bg-neutral-300 text-neutral-500 text-xs font-bold uppercase tracking-wider py-3 rounded-xl pointer-events-none";
+            } else {
+              btn.disabled = false;
+              btn.innerText = 'Đặt Ngay';
+              btn.className = "w-full bg-[#b3541e] hover:bg-[#9b4117] text-white text-xs font-bold uppercase tracking-wider py-3 rounded-xl transition-all cursor-pointer";
+            }
+          }
+        });
+      } catch (err) {
+        console.error('Lỗi khi kiểm tra tình trạng phòng:', err);
+      }
+    }
+
+    // Run availability check when page loads
+    document.addEventListener('DOMContentLoaded', fetchAndRenderRoomTypes);
+  </script>
+
+</body>
+
+</html>

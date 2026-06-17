@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-[#FDFBF7] text-[#2C2623]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeHaven Resort - Điều Phối & Nhật Ký Dọn Phòng</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            terracotta: {
+              50: '#fdf4f0',
+              100: '#fbe7de',
+              200: '#f7d2c1',
+              300: '#efb197',
+              400: '#e38664',
+              500: '#b3541e', /* Terracotta Red-Brown */
+              600: '#9b4117',
+              700: '#813313',
+              800: '#682912',
+              950: '#381205',
+            },
+            luxury: {
+              cream: '#FDFBF7',
+              sand: '#F7F3EB',
+              charcoal: '#2C2623',
+              gold: '#C5A880',
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts - Playfair Display & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    .font-serif-luxury {
+      font-family: 'Playfair Display', serif;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    /* Elegant soft custom scrollbar matching cream design */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F7F3EB;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E5DFD3;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b3541e;
+    }
+  </style>
+</head>
+<body class="h-full flex overflow-hidden bg-[#FDFBF7]">
+
+  <!-- ================= THANH ĐIỀU HƯỚNG BÊN (SIDEBAR) ================= -->
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebarBackdrop" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-40 hidden lg:hidden" onclick="toggleMobileSidebar()"></div>
+  
+  <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white border-r border-[#E5DFD3]/80 z-50 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-300 ease-in-out shadow-sm">
+    <div>
+      <!-- Brand Logo / Resort Title -->
+      <div class="h-20 flex items-center px-6 border-b border-[#E5DFD3]/60 bg-[#FDFBF7]/50">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#b3541e] flex items-center justify-center shadow-lg shadow-[#b3541e]/20">
+            <i class="fa-solid fa-umbrella-beach text-white text-lg"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-base font-serif-luxury font-bold tracking-wide text-[#2C2623]">LuxeHaven</span>
+            <span class="text-[9px] font-semibold text-[#b3541e] uppercase tracking-widest mt-0.5">Khu Nghỉ Dưỡng</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-4 space-y-1.5">
+        <a href="./dashboard_AD.html" class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-hotel w-5 text-center"></i>
+          <span>Tổng Quan Hệ Thống</span>
+        </a>
+        <a href="./rooms.html" class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-key w-5 text-center"></i>
+          <span>Quản Lý Phòng</span>
+        </a>
+        <a href="./bookings.html" class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-calendar-days w-5 text-center"></i>
+          <span>Đặt Phòng</span>
+        </a>
+        <a href="./services.html" class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-spa w-5 text-center"></i>
+          <span>Dịch Vụ Khách Sạn</span>
+        </a>
+        <a href="./housekeeping.html" class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium bg-[#b3541e] text-white shadow-md shadow-[#b3541e]/15 transition-all duration-200">
+          <i class="fa-solid fa-broom w-5 text-center"></i>
+          <span>Nhật Ký Dọn Phòng</span>
+        </a>
+        <a href="./users.html" id="sidebarUsersLink" class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-user-shield w-5 text-center"></i>
+          <span>Quản Lý Người Dùng</span>
+        </a>
+        <a href="./accounting.html" id="sidebarAccountingLink" class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-wallet w-5 text-center"></i>
+          <span>Quản Lý Tài Chính</span>
+        </a>
+      </nav>
+    </div>
+
+  </aside>
+
+  <!-- ================= MAIN LAYOUT WRAPPER ================= -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    
+    <!-- ================= THANH NAVBAR TRÊN ================= -->
+    <header class="h-20 bg-white border-b border-[#E5DFD3]/60 flex items-center justify-between px-6 z-30 shadow-sm">
+      <div class="flex items-center gap-4 flex-1">
+        <!-- Mobile Sidebar Toggle -->
+        <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-xl text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB] transition-colors cursor-pointer">
+          <i class="fa-solid fa-bars-staggered text-lg"></i>
+        </button>
+
+      </div>
+
+      <!-- User Actions & Info -->
+      <div class="flex items-center gap-5">
+        <!-- Backend Status Badge -->
+        <div id="backendStatusBadge"
+          class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border">
+          <span id="backendStatusDot" class="w-1.5 h-1.5 rounded-full"></span>
+          <span id="backendStatusText">Đang kiểm tra kết nối...</span>
+        </div>
+
+        <!-- Notification -->
+        <div class="relative" id="notificationContainer">
+          <button id="notificationBellBtn"
+            class="p-2.5 rounded-xl text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB] transition-all cursor-pointer">
+            <i class="fa-solid fa-bell text-sm"></i>
+          </button>
+          <span id="notificationDot" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#b3541e] border-2 border-white rounded-full hidden"></span>
+          
+          <!-- Dropdown Panel -->
+          <div id="notificationDropdown" class="absolute right-0 mt-2 w-80 bg-white border border-[#E5DFD3]/60 rounded-2xl shadow-xl z-50 hidden overflow-hidden">
+            <div class="p-3.5 border-b border-[#E5DFD3]/60 bg-[#FDFBF7]/50 flex items-center justify-between">
+              <span class="text-xs font-bold text-[#2C2623]">Thông báo</span>
+              <button onclick="markAllNotificationsAsRead(event)" class="text-[10px] font-semibold text-[#b3541e] hover:underline cursor-pointer">
+                Đánh dấu đã đọc
+              </button>
+            </div>
+            <div id="notificationList" class="max-h-80 overflow-y-auto divide-y divide-[#E5DFD3]/40">
+              <!-- Dynamic rows go here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Vertical Divider -->
+        <span class="h-7 w-px bg-[#E5DFD3]/60"></span>
+
+        <!-- Profile Menu -->
+        <div class="relative" id="profileDropdownContainer">
+          <button class="flex items-center gap-3.5 hover:opacity-90 focus:outline-none cursor-pointer">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#b3541e] to-[#e38664] flex items-center justify-center font-bold text-white text-sm shadow-md">
+              LT
+            </div>
+            <div class="text-left hidden md:block">
+              <p class="text-xs font-semibold text-[#2C2623]" id="navUserName">Jane Doe</p>
+              <p class="text-[10px] text-[#b3541e] font-semibold tracking-wider uppercase mt-0.5" id="navUserRole">Lễ Tân</p>
+            </div>
+            <i class="fa-solid fa-chevron-down text-[#A89F9A] text-[9px]"></i>
+          </button>
+          
+          <div id="profileDropdown" class="absolute right-0 mt-3 w-48 bg-white border border-[#E5DFD3]/80 rounded-xl shadow-xl py-1.5 hidden z-50">
+            <a href="#" onclick="openProfileModal(event)" class="flex items-center gap-2 px-4 py-2 text-xs text-[#5C524E] hover:bg-[#F7F3EB] hover:text-[#b3541e]"><i class="fa-solid fa-user w-4 text-center"></i> Hồ sơ cá nhân</a>
+            <a href="#" onclick="openConfigModal(event)" class="flex items-center gap-2 px-4 py-2 text-xs text-[#5C524E] hover:bg-[#F7F3EB] hover:text-[#b3541e]"><i class="fa-solid fa-sliders w-4 text-center"></i> Thiết lập cấu hình</a>
+            <hr class="border-[#E5DFD3]/40 my-1">
+            <a href="#" onclick="handleLogout(event)" class="flex items-center gap-2 px-4 py-2 text-xs text-rose-600 hover:bg-rose-50"><i class="fa-solid fa-power-off w-4 text-center"></i> Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= NỘI DUNG CHÍNH (CONTENT AREA) ================= -->
+    <main class="flex-1 overflow-y-auto p-6 space-y-6">
+      
+      <!-- Page Header -->
+      <div class="bg-white border border-[#E5DFD3]/60 p-6 rounded-2xl shadow-sm">
+        <span class="text-[10px] font-bold text-[#b3541e] uppercase tracking-widest bg-[#b3541e]/5 px-2.5 py-1 rounded-full">Phân Hệ Điều Phối Buồng Phòng</span>
+        <h1 class="text-2xl font-serif-luxury font-bold text-[#2C2623] mt-2">Bảng Dọn Phòng & Phân Công Việc</h1>
+        <p class="text-xs text-[#81726A] mt-1">Giám sát và phân nhiệm vụ lau dọn buồng phòng dựa trên quy trình trạng thái dọn dẹp.</p>
+      </div>
+
+      <!-- ================= ALERT ZONE: CANCELLATION REQUESTS (ADMIN ONLY) ================= -->
+      <section id="cancelAlertSection" class="bg-rose-50 border border-rose-200 rounded-2xl p-5 shadow-sm space-y-3 hidden">
+        <div class="flex gap-3 text-xs text-rose-800">
+          <div class="mt-0.5"><i class="fa-solid fa-triangle-exclamation text-rose-600 text-lg"></i></div>
+          <div class="flex-1">
+            <h4 class="font-bold text-sm">Yêu Cầu Hủy Nhiệm Vụ Cần Phê Duyệt</h4>
+            <div id="cancelAlertList" class="mt-2 space-y-2.5">
+              <!-- Dynamically populated cancel requests -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DYNAMIC VIEW CONTAINER ================= -->
+      
+      <!-- 1. VIEW 1: ADMIN CONTROL PANEL -->
+      <div id="view-admin" class="space-y-6 block">
+        <!-- Metrics bar -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div class="bg-white border border-[#E5DFD3]/60 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+            <div>
+              <p class="text-[10px] font-bold text-[#81726A] uppercase tracking-wider">Phòng Chưa Phân Công</p>
+              <h3 class="text-xl font-bold text-rose-600 font-mono mt-1" id="adminMetricUnassigned">0</h3>
+            </div>
+            <span class="p-2.5 bg-rose-50 rounded-lg text-rose-600"><i class="fa-solid fa-hourglass-start text-sm"></i></span>
+          </div>
+
+          <div class="bg-white border border-[#E5DFD3]/60 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+            <div>
+              <p class="text-[10px] font-bold text-[#81726A] uppercase tracking-wider">Đang Tiến Hành Dọn</p>
+              <h3 class="text-xl font-bold text-amber-600 font-mono mt-1" id="adminMetricAssigned">0</h3>
+            </div>
+            <span class="p-2.5 bg-amber-50 rounded-lg text-amber-600"><i class="fa-solid fa-broom-ball text-sm"></i></span>
+          </div>
+
+          <div class="bg-white border border-[#E5DFD3]/60 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+            <div>
+              <p class="text-[10px] font-bold text-[#81726A] uppercase tracking-wider">Yêu Cầu Xin Hủy Việc</p>
+              <h3 class="text-xl font-bold text-rose-800 font-mono mt-1" id="adminMetricCancel">0</h3>
+            </div>
+            <span class="p-2.5 bg-rose-900/5 rounded-lg text-rose-800"><i class="fa-solid fa-circle-xmark text-sm"></i></span>
+          </div>
+        </div>
+
+        <!-- Room Allocation Grid -->
+        <div class="bg-white border border-[#E5DFD3]/60 p-6 rounded-2xl shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-[#E5DFD3]/50 pb-3">
+            <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623]">Sơ Đồ Phòng & Điều Phối Công Việc</h3>
+            <span class="text-[10px] text-[#81726A] font-semibold">Bao gồm 6 phòng hoạt động tiêu biểu</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="adminRoomGrid">
+            <!-- Grid cards populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. VIEW 2: CLEANING STAFF DASHBOARD -->
+      <div id="view-staff" class="space-y-6 hidden">
+        
+        <!-- Active Staff Info Badge -->
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center justify-between">
+          <div class="flex items-center gap-3 text-xs">
+            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">JD</div>
+            <div>
+              <p class="font-bold text-[#2C2623]" id="activeStaffName">Jane Doe (Nhân viên dọn phòng)</p>
+              <p class="text-[10px] text-emerald-700">Mã Số: NV-002 • Ca làm việc: Sáng (08:00 - 16:00)</p>
+            </div>
+          </div>
+          <span class="text-[9px] bg-emerald-600 text-white px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">Đang làm việc</span>
+        </div>
+
+        <!-- Section A: Assigned Tasks -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+            <i class="fa-solid fa-clipboard-list text-[#b3541e]"></i>
+            <span>Nhiệm vụ của tôi hôm nay</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="staffMyTasks">
+            <!-- Assigned cards rendered here -->
+          </div>
+        </div>
+
+        <!-- Section B: Unassigned Dirty Rooms -->
+        <div class="space-y-4 pt-3">
+          <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+            <i class="fa-solid fa-circle-dot text-rose-500"></i>
+            <span>Danh sách phòng trống đang bẩn (Chờ nhận việc)</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="staffOpenTasks">
+            <!-- Unassigned cards rendered here -->
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="h-12 bg-white border-t border-[#E5DFD3]/60 flex items-center justify-between px-6 text-[10px] text-[#81726A] font-medium z-10 shrink-0">
+      <span>&copy; 2026 LuxeHaven Resort - Hệ Thống Quản Lý Đặt Phòng Cao Cấp</span>
+      <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>Liên kết hệ thống</span>
+    </footer>
+
+  </div>
+
+  <!-- ================= MODAL: HỒ SƠ CÁ NHÂN & ĐỔI MẬT KHẨU ================= -->
+  <div id="profileModal" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-user-circle text-[#b3541e] text-base"></i>
+          <span>Hồ Sơ Cá Nhân</span>
+        </h3>
+        <button onclick="closeProfileModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Staff Details Display -->
+      <div class="p-3.5 bg-[#F7F3EB]/50 border border-[#E5DFD3] rounded-xl text-xs space-y-2 text-[#5C524E]">
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Họ và tên:</span>
+          <span class="font-bold text-[#2C2623]" id="profileFullName">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Tên đăng nhập:</span>
+          <span class="font-mono font-bold text-[#2C2623]" id="profileUsername">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Email:</span>
+          <span class="font-bold text-[#2C2623]" id="profileEmail">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Số điện thoại:</span>
+          <span class="font-mono font-bold text-[#2C2623]" id="profilePhone">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Chức vụ:</span>
+          <span class="font-bold text-[#b3541e]" id="profileRole">--</span>
+        </p>
+      </div>
+
+      <!-- Change Password Form -->
+      <form id="changePasswordForm" class="space-y-3 pt-2 border-t border-[#E5DFD3]/60" onsubmit="submitChangePassword(event)">
+        <h4 class="text-xs font-bold text-[#2C2623] uppercase tracking-wider">Đổi mật khẩu tài khoản</h4>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Mật khẩu hiện tại</label>
+          <input type="password" id="oldPassword" required placeholder="Nhập mật khẩu hiện tại..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Mật khẩu mới</label>
+          <input type="password" id="newPassword" required placeholder="Nhập mật khẩu mới..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Xác nhận mật khẩu mới</label>
+          <input type="password" id="confirmNewPassword" required placeholder="Xác nhận mật khẩu mới..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+          <button type="button" onclick="closeProfileModal()"
+            class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+          <button type="submit"
+            class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Cập nhật</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: THIẾT LẬP CẤU HÌNH ================= -->
+  <div id="configModal" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-[#b3541e] text-base"></i>
+          <span>Thiết Lập Cấu Hình</span>
+        </h3>
+        <button onclick="closeConfigModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Config Form -->
+      <form id="configForm" class="space-y-3.5 text-xs" onsubmit="submitConfigForm(event)">
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Ca làm việc hoạt động (Active Shift)</label>
+          <select id="configShift"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="Ca Sáng">Ca Sáng (08:00 - 16:00)</option>
+            <option value="Ca Chiều">Ca Chiều (16:00 - 24:00)</option>
+            <option value="Ca Đêm">Ca Đêm (00:00 - 08:00)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Chế độ giao diện (Interface Theme)</label>
+          <select id="configTheme"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="luxury-light">Luxury Light (Mặc định sáng)</option>
+            <option value="luxury-warm">Luxury Cream (Ấm áp)</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+          <button type="button" onclick="closeConfigModal()"
+            class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+          <button type="submit"
+            class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Lưu cấu hình</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= CLIENT SIDE INTERACTIONS SCRIPT ================= -->
+  <script>
+    // ============================================================
+    // ROLE-BASED ACCESS CONTROL GUARD
+    // Runs synchronously before any rendering to prevent UI flicker
+    // ============================================================
+    (function applyRoleBasedAccessControl() {
+      const currentUserRole = localStorage.getItem('userRole');
+      const currentFullName = localStorage.getItem('fullName');
+
+      // 1. Auth Guard: Redirect to login if not authenticated
+      if (!currentUserRole) {
+        window.location.href = './login.html';
+        return;
+      }
+
+      if (currentUserRole === 'accountant') {
+        window.location.href = './accounting.html';
+        return;
+      }
+
+      // 2. Update Header Profile Display from localStorage (instant, no flicker)
+      const navUserNameEl = document.getElementById('navUserName');
+      const navUserRoleEl = document.getElementById('navUserRole');
+      const initialsEl = document.querySelector('#profileDropdownContainer .rounded-xl.bg-gradient-to-tr');
+
+      if (navUserNameEl && currentFullName) navUserNameEl.textContent = currentFullName;
+      if (navUserRoleEl) {
+        let roleText = 'LỄ TÂN';
+        const r = (currentUserRole || '').toLowerCase().trim();
+        if (r === 'admin') roleText = 'QUẢN TRỊ VIÊN';
+        else if (r === 'cleaner') roleText = 'BUỒNG PHÒNG';
+        else if (r === 'accountant') roleText = 'KẾ TOÁN KINH DOANH';
+        else if (['tech', 'technical', 'technician', 'kỹ thuật', 'ky_thuat'].includes(r)) roleText = 'KỸ THUẬT';
+        navUserRoleEl.textContent = roleText;
+      }
+      if (initialsEl && currentFullName) {
+        const names = currentFullName.trim().split(' ');
+        const initials = names.length > 1
+          ? (names[0][0] + names[names.length - 1][0]).toUpperCase()
+          : names[0].substring(0, 2).toUpperCase();
+        initialsEl.textContent = initials;
+      }
+
+      // 3. Customize Sidebar and options based on Role
+      const usersLink = document.getElementById('sidebarUsersLink');
+      const acctLink = document.getElementById('sidebarAccountingLink');
+
+      if (currentUserRole === 'admin') {
+        if (usersLink) usersLink.classList.remove('hidden');
+        if (acctLink) acctLink.classList.remove('hidden');
+      } else if (currentUserRole === 'receptionist') {
+        if (usersLink) usersLink.classList.add('hidden');
+        if (acctLink) acctLink.classList.add('hidden');
+      } else if (currentUserRole === 'cleaner') {
+        const links = document.querySelectorAll('aside nav a');
+        links.forEach(link => {
+          if (!link.getAttribute('href').includes('housekeeping.html')) {
+            link.classList.add('hidden');
+          }
+        });
+      }
+    })();
+
+    const API_URL = '/api';
+
+    function getAuthHeaders() {
+      const token = localStorage.getItem('token');
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      };
+    }
+
+    // loadUserProfileHeader: syncs API data to localStorage for consistency
+    async function loadUserProfileHeader() {
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : '/api';
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/me`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        if (res.status === 401) {
+          localStorage.clear();
+          window.location.href = './login.html';
+          return;
+        }
+        if (res.ok) {
+          const result = await res.json();
+          if (result.success && result.data) {
+            localStorage.setItem('fullName', result.data.fullName);
+            localStorage.setItem('userRole', result.data.role);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching user profile for header:', err);
+      }
+    }
+
+    // Profile Dropdown Toggle
+    function toggleProfileDropdown(e) {
+      if (e) e.stopPropagation();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.toggle('hidden');
+    }
+
+    // Attach robust click listener to the profile wrapper button
+    (function initProfileDropdown() {
+      const profileBtn = document.querySelector('#profileDropdownContainer button');
+      const dropdown = document.getElementById('profileDropdown');
+      
+      if (profileBtn && dropdown) {
+        profileBtn.removeAttribute('onclick');
+        profileBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          dropdown.classList.toggle('hidden');
+          const notifDropdown = document.getElementById('notificationDropdown');
+          if (notifDropdown) notifDropdown.classList.add('hidden');
+        });
+      }
+      
+      document.addEventListener('click', function (e) {
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!dropdown.contains(e.target) && (!profileBtn || !profileBtn.contains(e.target))) {
+            dropdown.classList.add('hidden');
+          }
+        }
+      });
+    })();
+
+    // Notification Dropdown Toggle & Polling
+    (function initNotificationDropdown() {
+      const bellBtn = document.getElementById('notificationBellBtn');
+      const dropdown = document.getElementById('notificationDropdown');
+      
+      if (bellBtn && dropdown) {
+        bellBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          dropdown.classList.toggle('hidden');
+          const profileDropdown = document.getElementById('profileDropdown');
+          if (profileDropdown) profileDropdown.classList.add('hidden');
+        });
+      }
+      
+      document.addEventListener('click', function (e) {
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!dropdown.contains(e.target) && (!bellBtn || !bellBtn.contains(e.target))) {
+            dropdown.classList.add('hidden');
+          }
+        }
+      });
+
+      // Poll notifications immediately and every 30 seconds
+      fetchNotifications();
+      setInterval(fetchNotifications, 30000);
+    })();
+
+    async function fetchNotifications() {
+      try {
+        const res = await fetch(`${API_URL}/notifications`, {
+          headers: getAuthHeaders()
+        });
+        if (!res.ok) return;
+        const json = await res.json();
+        const notifications = json.data || [];
+        
+        // Check for unread
+        const hasUnread = notifications.some(n => !n.isRead);
+        const dot = document.getElementById('notificationDot');
+        if (dot) {
+          if (hasUnread) {
+            dot.classList.remove('hidden');
+          } else {
+            dot.classList.add('hidden');
+          }
+        }
+        
+        // Populate dropdown list
+        const list = document.getElementById('notificationList');
+        if (list) {
+          if (notifications.length === 0) {
+            list.innerHTML = `
+              <div class="p-4 text-center text-xs text-[#81726A] italic">
+                Không có thông báo mới nào
+              </div>
+            `;
+          } else {
+            list.innerHTML = notifications.map(n => {
+              const bgClass = n.isRead ? 'bg-white hover:bg-stone-50' : 'bg-orange-50/40 hover:bg-orange-50/60';
+              const textWeight = n.isRead ? 'font-medium' : 'font-bold';
+              return `
+                <div class="p-3.5 text-xs transition-colors duration-150 ${bgClass}">
+                  <p class="${textWeight} text-[#2C2623]">${escapeHTML(n.title)}</p>
+                  <p class="text-[#5C524E] mt-1 leading-relaxed">${escapeHTML(n.message)}</p>
+                  <p class="text-[10px] text-stone-400 mt-1.5 flex items-center justify-between">
+                    <span>${timeAgo(n.createdAt)}</span>
+                    ${!n.isRead ? `<span class="w-1.5 h-1.5 rounded-full bg-[#b3541e]"></span>` : ''}
+                  </p>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching notifications:', err);
+      }
+    }
+
+    async function markAllNotificationsAsRead(e) {
+      if (e) e.stopPropagation();
+      try {
+        const res = await fetch(`${API_URL}/notifications/read-all`, {
+          method: 'PUT',
+          headers: getAuthHeaders()
+        });
+        if (res.ok) {
+          fetchNotifications();
+        }
+      } catch (err) {
+        console.error('Error marking all read:', err);
+      }
+    }
+
+    function timeAgo(dateString) {
+      if (!dateString) return '';
+      const now = new Date();
+      const past = new Date(dateString);
+      const diffMs = now - past;
+      const diffMins = Math.floor(diffMs / 60000);
+      if (diffMins < 1) return 'Vừa xong';
+      if (diffMins < 60) return `${diffMins} phút trước`;
+      const diffHours = Math.floor(diffMins / 60);
+      if (diffHours < 24) return `${diffHours} giờ trước`;
+      const diffDays = Math.floor(diffHours / 24);
+      return `${diffDays} ngày trước`;
+    }
+
+    // Helper function to escape HTML special characters
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Profile Modal Actions
+    async function openProfileModal(e) {
+      if (e) e.preventDefault();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+
+      document.getElementById('oldPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmNewPassword').value = '';
+
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/me`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        const result = await res.json();
+        if (res.ok && result.success && result.data) {
+          const user = result.data;
+          document.getElementById('profileFullName').textContent = user.fullName;
+          document.getElementById('profileUsername').textContent = user.username;
+          document.getElementById('profileEmail').textContent = user.email;
+          document.getElementById('profilePhone').textContent = user.phone || 'Chưa cung cấp';
+          let roleText = 'Nhân Viên Lễ Tân';
+          const r = (user.role || '').toLowerCase().trim();
+          if (r === 'admin') roleText = 'Quản Trị Viên';
+          else if (r === 'receptionist') roleText = 'Nhân Viên Lễ Tân';
+          else if (r === 'cleaner') roleText = 'Nhân Viên Dọn Dẹp';
+          else if (r === 'accountant') roleText = 'Nhân Viên Kế Toán';
+          else if (['tech', 'technical', 'technician', 'kỹ thuật', 'ky_thuat'].includes(r)) roleText = 'Nhân Viên Kỹ Thuật';
+          document.getElementById('profileRole').textContent = roleText;
+        } else {
+          alert('Không thể tải thông tin hồ sơ: ' + (result.message || 'Lỗi không xác định'));
+        }
+      } catch (err) {
+        console.error('Error loading profile details:', err);
+        alert('Không thể kết nối đến máy chủ để tải thông tin hồ sơ.');
+      }
+
+      document.getElementById('profileModal').classList.remove('hidden');
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profileModal').classList.add('hidden');
+    }
+
+    async function submitChangePassword(e) {
+      if (e) e.preventDefault();
+      const oldPassword = document.getElementById('oldPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+      if (newPassword !== confirmNewPassword) {
+        alert('Mật khẩu mới và Xác nhận mật khẩu không khớp!');
+        return;
+      }
+
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/change-password`, {
+          method: 'PUT',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ oldPassword, newPassword })
+        });
+        const result = await res.json();
+        if (res.ok && result.success) {
+          alert('Đổi mật khẩu thành công!');
+          closeProfileModal();
+        } else {
+          alert('Lỗi: ' + (result.message || 'Đổi mật khẩu thất bại'));
+        }
+      } catch (err) {
+        console.error('Error changing password:', err);
+        alert('Không thể kết nối đến máy chủ để đổi mật khẩu.');
+      }
+    }
+
+    // Config Modal Actions
+    function openConfigModal(e) {
+      if (e) e.preventDefault();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+
+      const savedShift = localStorage.getItem('activeShift') || 'Ca Sáng';
+      const savedTheme = localStorage.getItem('uiTheme') || 'luxury-warm';
+
+      document.getElementById('configShift').value = savedShift;
+      document.getElementById('configTheme').value = savedTheme;
+
+      document.getElementById('configModal').classList.remove('hidden');
+    }
+
+    function closeConfigModal() {
+      document.getElementById('configModal').classList.add('hidden');
+    }
+
+    function submitConfigForm(e) {
+      if (e) e.preventDefault();
+      const shift = document.getElementById('configShift').value;
+      const theme = document.getElementById('configTheme').value;
+
+      localStorage.setItem('activeShift', shift);
+      localStorage.setItem('uiTheme', theme);
+
+      alert('Lưu cấu hình thành công!');
+      closeConfigModal();
+
+      applyTheme(theme);
+    }
+
+    function applyTheme(theme) {
+      if (theme === 'luxury-warm') {
+        document.documentElement.classList.add('bg-[#FDFBF7]');
+        document.body.style.backgroundColor = '#FDFBF7';
+      } else {
+        document.documentElement.classList.remove('bg-[#FDFBF7]');
+        document.body.style.backgroundColor = '';
+      }
+    }
+
+    // Apply theme on load
+    applyTheme(localStorage.getItem('uiTheme') || 'luxury-warm');
+
+    // Logout Action
+    function handleLogout(e) {
+      if (e) e.preventDefault();
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = './login.html';
+    }
+    let isBackendOnline = false;
+
+    // System users list matching schema
+    let staffMembers = [
+      { id: 2, fullName: 'Jane Doe', initials: 'JD' },
+      { id: 3, fullName: 'John Smith', initials: 'JS' },
+      { id: 4, fullName: 'Nguyễn Văn A', initials: 'NA' }
+    ];
+
+    // Local state simulation of rooms and housekeeping logs
+    let roomsData = [
+      { id: 101, number: '101', type: 'Deluxe Room' },
+      { id: 102, number: '102', type: 'Deluxe Room' },
+      { id: 203, number: '203', type: 'Suite' },
+      { id: 305, number: '305', type: 'Family Room' },
+      { id: 401, number: '401', type: 'Ocean Villa' },
+      { id: 402, number: '402', type: 'Ocean Villa' }
+    ];
+
+    // Housekeeping tasks
+    let tasksState = [];
+
+    // Current Role ('admin' or 'staff')
+    let currentRole = 'admin';
+    // Active staff ID in staff view
+    let currentActiveStaffId = 2; // Jane Doe
+
+    // Verify backend connectivity
+    async function checkBackendConnection() {
+      const badge = document.getElementById('backendStatusBadge');
+      const dot = document.getElementById('backendStatusDot');
+      const text = document.getElementById('backendStatusText');
+      if (badge) badge.classList.remove('hidden');
+
+      try {
+        const res = await fetch(`${API_URL}/health`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        if (res.ok) {
+          isBackendOnline = true;
+          if (badge && dot && text) {
+            badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-emerald-200 bg-emerald-50 text-emerald-700';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+            text.innerText = 'Máy chủ kết nối: TRỰC TUYẾN';
+          }
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        const token = localStorage.getItem('token');
+        if (token) {
+          console.warn("Backend connection health check failed, but token exists. Bypassing state lock.");
+          isBackendOnline = true;
+          if (badge && dot && text) {
+            badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-emerald-200 bg-emerald-50 text-emerald-700';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+            text.innerText = 'Máy chủ kết nối: TRỰC TUYẾN';
+          }
+        } else {
+          isBackendOnline = false;
+          if (badge && dot && text) {
+            badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-rose-200 bg-rose-50 text-rose-700';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse';
+            text.innerText = 'Máy chủ ngoại tuyến: DÙNG MOCK';
+          }
+        }
+      }
+    }
+
+    // Load initial states
+    async function initPage() {
+      // 1. Read authentic credentials from storage on boot
+      const loggedInUserRole = localStorage.getItem('userRole') || 'admin';
+      const loggedInFullName = localStorage.getItem('fullName') || 'Lê Mai Minh Trọng';
+
+      // 2. Set currentRole based on the logged in role (if admin or receptionist, default to 'admin' viewport)
+      currentRole = (loggedInUserRole === 'admin' || loggedInUserRole === 'receptionist') ? 'admin' : 'staff';
+
+      // 3. Toggle admin / staff view
+      const adminView = document.getElementById('view-admin');
+      const staffView = document.getElementById('view-staff');
+      
+      if (currentRole === 'admin') {
+        if (adminView) adminView.classList.remove('hidden');
+        if (staffView) staffView.classList.add('hidden');
+      } else {
+        if (staffView) staffView.classList.remove('hidden');
+        if (adminView) adminView.classList.add('hidden');
+      }
+
+      // 4. Force update profile header display from storage on boot (instant, clean, correct)
+      const navUserNameEl = document.getElementById('navUserName');
+      const navUserRoleEl = document.getElementById('navUserRole');
+      const initialsEl = document.querySelector('#profileDropdownContainer .rounded-xl.bg-gradient-to-tr');
+
+      if (navUserNameEl) navUserNameEl.textContent = loggedInFullName;
+      if (navUserRoleEl) {
+        let roleText = 'LỄ TÂN';
+        const r = (loggedInUserRole || '').toLowerCase().trim();
+        if (r === 'admin') roleText = 'QUẢN TRỊ VIÊN';
+        else if (r === 'cleaner') roleText = 'BUỒNG PHÒNG';
+        else if (r === 'accountant') roleText = 'KẾ TOÁN KINH DOANH';
+        else if (['tech', 'technical', 'technician', 'kỹ thuật', 'ky_thuat'].includes(r)) roleText = 'KỸ THUẬT';
+        navUserRoleEl.textContent = roleText;
+      }
+
+      // Extract real staff ID from token if present
+      const token = localStorage.getItem('token');
+      if (token) {
+        const match = token.match(/mock-jwt-token-for-user-(\d+)/);
+        if (match) {
+          currentActiveStaffId = parseInt(match[1]);
+        }
+      }
+      if (initialsEl) {
+        const names = loggedInFullName.trim().split(' ');
+        const initials = names.length > 1
+          ? (names[0][0] + names[names.length - 1][0]).toUpperCase()
+          : names[0].substring(0, 2).toUpperCase();
+        initialsEl.textContent = initials;
+      }
+
+      await refreshData();
+      loadUserProfileHeader(); // Non-blocking sync
+    }
+
+    // Fetch dynamic data from API
+    async function refreshData() {
+      await checkBackendConnection();
+      if (isBackendOnline) {
+        try {
+          // 1. Fetch Staff (cleaners only)
+          const resUsers = await fetch(`${API_URL}/housekeeping/cleaners`, { headers: getAuthHeaders() });
+          const dataUsers = await resUsers.json();
+          if (!resUsers.ok || !dataUsers.success) throw new Error(dataUsers.message || 'Cleaners load failed');
+          if (dataUsers.data && dataUsers.data.length > 0) {
+            staffMembers = dataUsers.data.map(u => {
+              const name = u.full_name || u.fullName || 'Nhân Viên';
+              return {
+                id: u.id,
+                fullName: name,
+                initials: name.split(' ').map(n => n[0]).join('').toUpperCase()
+              };
+            });
+          }
+
+          // 2. Fetch Rooms
+          const resRooms = await fetch(`${API_URL}/rooms`, { headers: getAuthHeaders() });
+          const dataRooms = await resRooms.json();
+          if (!resRooms.ok || !dataRooms.success) throw new Error(dataRooms.message || 'Rooms load failed');
+          if (dataRooms.data && dataRooms.data.length > 0) {
+            roomsData = dataRooms.data.map(r => ({
+              id: r.id,
+              number: r.number,
+              type: r.type.replace(' Room', '')
+            }));
+          }
+
+          // 3. Fetch Housekeeping logs
+          const resHousekeeping = await fetch(`${API_URL}/housekeeping`, { headers: getAuthHeaders() });
+          const dataHousekeeping = await resHousekeeping.json();
+          if (!resHousekeeping.ok || !dataHousekeeping.success) throw new Error(dataHousekeeping.message || 'Housekeeping load failed');
+          if (dataHousekeeping.data) {
+            tasksState = dataHousekeeping.data;
+          }
+        } catch (err) {
+          console.error("Lỗi đồng bộ dữ liệu dọn phòng từ backend:", err);
+          loadFallbackMockData();
+        }
+      } else {
+        loadFallbackMockData();
+      }
+      renderBoard();
+    }
+
+    function loadFallbackMockData() {
+      staffMembers = [
+        { id: 4, fullName: 'Nguyen Van Cleaner', initials: 'NC' }
+      ];
+      tasksState = [
+        {
+          id: 1,
+          roomId: 101,
+          staffId: 4,
+          status: 'completed',
+          task_status: 'completed',
+          cancellation_reason: null,
+          start_time: '2026-06-11 08:30:12',
+          end_time: '2026-06-11 09:15:45'
+        },
+        {
+          id: 2,
+          roomId: 203,
+          staffId: 4,
+          status: 'cleaning',
+          task_status: 'assigned',
+          cancellation_reason: null,
+          start_time: '2026-06-11 19:40:00',
+          end_time: null
+        }
+      ];
+    }
+
+
+
+    // Toggle dropdown profile
+    // (Handled by global custom methods)
+
+    // Toggle Mobile Sidebar
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.toggle('-translate-x-full');
+      backdrop.classList.toggle('hidden');
+    }
+
+    // Main render router
+    function renderBoard() {
+      renderAlertSection();
+      if (currentRole === 'admin') {
+        renderAdminView();
+      } else {
+        renderStaffView();
+      }
+    }
+
+    // Alert Banner: cancel requests listing
+    function renderAlertSection() {
+      const section = document.getElementById('cancelAlertSection');
+      const list = document.getElementById('cancelAlertList');
+      list.innerHTML = '';
+      
+      const requests = tasksState.filter(t => t.task_status === 'cancel_requested');
+      
+      if (requests.length > 0 && currentRole === 'admin') {
+        section.classList.remove('hidden');
+        
+        requests.forEach(req => {
+          const room = roomsData.find(r => r.id == req.roomId);
+          const staff = staffMembers.find(s => s.id == req.staffId);
+          const roomNum = room ? room.number : req.roomId;
+          const staffName = staff ? staff.fullName : 'Nhân viên';
+ 
+          const div = document.createElement('div');
+          div.className = 'flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-white border border-rose-100 rounded-xl';
+          div.innerHTML = `
+            <div>
+              <p class="font-bold text-[#2C2623] text-xs">
+                Nhân viên <span class="text-[#b3541e]">${staffName}</span> xin hủy dọn dẹp phòng <span class="font-mono font-bold text-[#b3541e]">${roomNum}</span>
+              </p>
+              <p class="text-[10px] text-slate-500 mt-1">Lý do: <span class="italic text-rose-600">"${req.cancellation_reason}"</span></p>
+            </div>
+            <div class="flex items-center gap-2 self-end sm:self-auto">
+              <button onclick="approveCancel(${req.roomId})" class="px-2.5 py-1.5 bg-[#b3541e] hover:bg-[#9b4117] text-white font-semibold rounded-lg text-[9px] uppercase tracking-wide cursor-pointer transition-all">Đồng ý Hủy</button>
+              <button onclick="rejectCancel(${req.roomId})" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-[#5C524E] font-semibold rounded-lg text-[9px] uppercase tracking-wide cursor-pointer transition-all">Bác bỏ</button>
+            </div>
+          `;
+          list.appendChild(div);
+        });
+      } else {
+        section.classList.add('hidden');
+      }
+    }
+
+    // Render Admin control structures
+    function renderAdminView() {
+      // 1. Calculate Metrics
+      const unassignedCount = tasksState.filter(t => t.task_status === 'unassigned').length;
+      const assignedCount = tasksState.filter(t => t.task_status === 'assigned').length;
+      const cancelRequestsCount = tasksState.filter(t => t.task_status === 'cancel_requested').length;
+ 
+      document.getElementById('adminMetricUnassigned').innerText = unassignedCount;
+      document.getElementById('adminMetricAssigned').innerText = assignedCount;
+      document.getElementById('adminMetricCancel').innerText = cancelRequestsCount;
+ 
+      // 2. Render Rooms Grid
+      const grid = document.getElementById('adminRoomGrid');
+      grid.innerHTML = '';
+ 
+      roomsData.forEach(room => {
+        const task = tasksState.find(t => t.roomId == room.id);
+        const taskStatus = task ? task.task_status : 'completed';
+        const staff = task && task.staffId ? staffMembers.find(s => s.id == task.staffId) : null;
+        
+        let statusBadge = '';
+        let allocationUI = '';
+        let timeTracking = '';
+ 
+        if (taskStatus === 'unassigned') {
+          statusBadge = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+              <i class="fa-solid fa-hourglass-start text-[8px]"></i> Chưa phân công
+            </span>`;
+          
+          // Dropdown options
+          let options = `<option value="">-- Phân công nhân viên --</option>`;
+          staffMembers.forEach(s => {
+            options += `<option value="${s.id}">${s.fullName}</option>`;
+          });
+          allocationUI = `
+            <div class="mt-4 pt-3 border-t border-[#E5DFD3]/40">
+              <label class="block text-[10px] font-bold text-[#81726A] mb-1">Chỉ định nhân viên:</label>
+              <select onchange="adminAssignStaff(${room.id}, this.value)" class="w-full bg-[#F7F3EB]/50 border border-[#E5DFD3] rounded-lg px-2 py-1.5 text-[10px] focus:outline-none focus:border-[#b3541e] transition-all">
+                ${options}
+              </select>
+            </div>`;
+        } else if (taskStatus === 'assigned') {
+          statusBadge = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+              <i class="fa-solid fa-rotate text-[8px] animate-spin"></i> Đang dọn dẹp
+            </span>`;
+          allocationUI = `
+            <div class="mt-4 pt-3 border-t border-[#E5DFD3]/40 text-[10px] text-[#81726A]">
+              <p>Phụ trách: <span class="font-bold text-[#2C2623]">${staff ? staff.fullName : 'Ẩn danh'}</span></p>
+            </div>`;
+          timeTracking = `
+            <div class="text-[9px] text-slate-400 mt-1.5 space-y-0.5 font-mono">
+              <p><i class="fa-solid fa-clock-open mr-1"></i> Bắt đầu: ${task.start_time}</p>
+            </div>`;
+        } else if (taskStatus === 'cancel_requested') {
+          statusBadge = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-950/5 text-rose-800 border border-rose-900/10">
+              <i class="fa-solid fa-circle-exclamation text-[8px]"></i> Chờ duyệt hủy
+            </span>`;
+          allocationUI = `
+            <div class="mt-4 pt-3 border-t border-[#E5DFD3]/40 text-[10px] text-[#81726A]">
+              <p>Yêu cầu hủy từ: <span class="font-bold text-[#2C2623]">${staff ? staff.fullName : 'Nhân viên'}</span></p>
+              <p class="text-[9px] text-rose-600 mt-1 italic">"${task.cancellation_reason}"</p>
+            </div>`;
+        } else {
+          statusBadge = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <i class="fa-solid fa-circle-check text-[8px]"></i> Đã sạch
+            </span>`;
+          allocationUI = `
+            <div class="mt-4 pt-3 border-t border-[#E5DFD3]/40 flex justify-between items-center text-[10px] text-slate-400">
+              <span>Buồng phòng sẵn sàng đón khách</span>
+              <button onclick="adminResetRoomDirty(${room.id})" class="text-[#b3541e] font-bold hover:underline">Báo bẩn</button>
+            </div>`;
+          if (task) {
+            timeTracking = `
+              <div class="text-[9px] text-slate-400 mt-1.5 space-y-0.5 font-mono">
+                <p><i class="fa-solid fa-clock mr-1"></i> Bắt đầu: ${task.start_time || 'N/A'}</p>
+                <p><i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i> Hoàn thành: ${task.end_time || 'N/A'}</p>
+              </div>`;
+          }
+        }
+ 
+        const div = document.createElement('div');
+        div.className = 'bg-[#FDFBF7] border border-[#E5DFD3] p-4 rounded-2xl shadow-sm flex flex-col justify-between hover:border-[#b3541e]/20 transition-all';
+        div.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white border border-[#E5DFD3] flex flex-col items-center justify-center shadow-sm">
+                  <span class="text-[8px] font-bold text-[#81726A] uppercase leading-none">Phòng</span>
+                  <span class="text-xs font-bold text-[#2C2623] font-mono leading-none mt-1">${room.number}</span>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-[#2C2623]">${room.type}</h4>
+                  <p class="text-[9px] text-slate-400">ID: RM-${room.id}</p>
+                </div>
+              </div>
+              ${statusBadge}
+            </div>
+            ${timeTracking}
+          </div>
+          ${allocationUI}
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    // Render Staff tasks structures
+    function renderStaffView() {
+      const myTasksContainer = document.getElementById('staffMyTasks');
+      const openTasksContainer = document.getElementById('staffOpenTasks');
+ 
+      myTasksContainer.innerHTML = '';
+      openTasksContainer.innerHTML = '';
+
+      // Update Active Staff Info Badge dynamically
+      const loggedInFullName = localStorage.getItem('fullName') || 'Nhân viên';
+      const names = loggedInFullName.trim().split(' ');
+      const initials = names.length > 1
+        ? (names[0][0] + names[names.length - 1][0]).toUpperCase()
+        : names[0].substring(0, 2).toUpperCase();
+
+      const initialsCircle = document.querySelector('#view-staff .rounded-lg.bg-emerald-600');
+      if (initialsCircle) initialsCircle.textContent = initials;
+
+      const activeStaffName = document.getElementById('activeStaffName');
+      if (activeStaffName) activeStaffName.textContent = `${loggedInFullName} (Nhân viên dọn dẹp)`;
+
+      const activeStaffSub = document.querySelector('#view-staff p.text-emerald-700');
+      if (activeStaffSub) {
+        activeStaffSub.textContent = `Mã Số: NV-${String(currentActiveStaffId).padStart(3, '0')} • Ca làm việc: ${localStorage.getItem('activeShift') || 'Ca Sáng'}`;
+      }
+ 
+      // 1. Render Section A: Assigned to me
+      const myTasks = tasksState.filter(t => t.staffId == currentActiveStaffId && t.task_status !== 'completed');
+      
+      if (myTasks.length === 0) {
+        myTasksContainer.innerHTML = `
+          <div class="col-span-2 p-6 bg-white border border-[#E5DFD3]/60 rounded-2xl text-center text-xs text-[#81726A]">
+            Bạn không có nhiệm vụ dọn dẹp phòng nào được giao ngày hôm nay.
+          </div>`;
+      } else {
+        myTasks.forEach(task => {
+          const room = roomsData.find(r => r.id == task.roomId);
+          const roomNum = room ? room.number : task.roomId;
+          const roomType = room ? room.type : 'Standard Room';
+          
+          let cardActions = '';
+          
+          if (task.task_status === 'assigned') {
+            cardActions = `
+              <div class="flex gap-2 border-t border-[#E5DFD3]/40 pt-4 mt-4">
+                <button onclick="staffCompleteTask(${task.roomId})" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-[10px] font-bold uppercase tracking-wide cursor-pointer transition-all shadow-md shadow-emerald-500/10">Hoàn thành</button>
+                <button onclick="toggleCancelRequestUI(${task.roomId}, true)" class="py-2 px-3 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-xl text-[10px] font-bold uppercase tracking-wide cursor-pointer transition-all border border-amber-200">Hủy việc</button>
+              </div>
+              
+              <!-- Cancel reason popup overlay inside card -->
+              <div id="cancelUI-${task.roomId}" class="mt-4 pt-3 border-t border-rose-200 space-y-2 hidden bg-rose-50/50 p-3 rounded-xl border border-rose-100">
+                <label class="block text-[9px] font-bold text-rose-800">Lý do xin rút khỏi công việc dọn dẹp:</label>
+                <input type="text" id="cancelReason-${task.roomId}" placeholder="Ví dụ: Thiếu xe đẩy dụng cụ buồng phòng..." class="w-full text-[10px] bg-white border border-[#E5DFD3] rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-rose-500">
+                <div class="flex gap-1.5 justify-end">
+                  <button onclick="toggleCancelRequestUI(${task.roomId}, false)" class="px-2.5 py-1.5 text-[9px] font-semibold text-slate-500 hover:text-slate-700">Hủy</button>
+                  <button onclick="staffSubmitCancelRequest(${task.roomId})" class="px-3 py-1.5 bg-[#b3541e] text-white text-[9px] font-bold uppercase rounded-lg">Gửi yêu cầu</button>
+                </div>
+              </div>`;
+          } else if (task.task_status === 'cancel_requested') {
+            cardActions = `
+              <div class="border-t border-[#E5DFD3]/40 pt-3 mt-4 text-[10px]">
+                <p class="text-rose-600 font-bold flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i> Đã gửi yêu cầu hủy việc dọn dẹp</p>
+                <p class="text-[9px] text-[#81726A] mt-0.5 italic">Lý do: "${task.cancellation_reason}"</p>
+              </div>`;
+          }
+ 
+          const div = document.createElement('div');
+          div.className = 'bg-white border border-[#E5DFD3] p-4 rounded-2xl shadow-sm hover:border-[#b3541e]/20 transition-all flex flex-col justify-between';
+          div.innerHTML = `
+            <div>
+              <div class="flex items-start justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-[#F7F3EB]/60 flex flex-col items-center justify-center font-mono font-bold text-[#2C2623]">
+                    <span class="text-[8px] text-[#81726A] uppercase leading-none font-sans">Phòng</span>
+                    <span class="text-sm mt-0.5 leading-none">${roomNum}</span>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-[#2C2623]">${roomType}</h4>
+                    <p class="text-[9px] text-slate-400">Bắt đầu lúc: ${task.start_time}</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] font-bold ${task.task_status === 'assigned' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-red-50 text-rose-800 border border-rose-100'}">
+                  ${task.task_status === 'assigned' ? 'Đang dọn dẹp' : 'Chờ duyệt hủy'}
+                </span>
+              </div>
+            </div>
+            ${cardActions}
+          `;
+          myTasksContainer.appendChild(div);
+        });
+      }
+ 
+      // 2. Render Section B: Open tasks (unassigned dirty rooms)
+      const openTasks = tasksState.filter(t => t.task_status === 'unassigned');
+      
+      if (openTasks.length === 0) {
+        openTasksContainer.innerHTML = `
+          <div class="col-span-2 p-6 bg-[#FDFBF7] border border-dashed border-[#E5DFD3] rounded-2xl text-center text-xs text-[#81726A]">
+            Tất cả các phòng bẩn đã được phân công hoặc đăng ký nhận việc.
+          </div>`;
+      } else {
+        openTasks.forEach(task => {
+          const room = roomsData.find(r => r.id == task.roomId);
+          const roomNum = room ? room.number : task.roomId;
+          const roomType = room ? room.type : 'Standard Room';
+ 
+          const div = document.createElement('div');
+          div.className = 'bg-white border border-[#E5DFD3] p-4 rounded-2xl shadow-sm hover:border-[#b3541e]/20 transition-all flex flex-col justify-between';
+          div.innerHTML = `
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-50 flex flex-col items-center justify-center font-mono font-bold text-rose-700">
+                  <span class="text-[8px] text-rose-500 uppercase leading-none font-sans">Bẩn</span>
+                  <span class="text-sm mt-0.5 leading-none">${roomNum}</span>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-[#2C2623]">${roomType}</h4>
+                  <p class="text-[9px] text-rose-600 font-semibold uppercase tracking-wider">Chờ phân công</p>
+                </div>
+              </div>
+              <button onclick="staffClaimTask(${task.roomId})" class="py-2 px-3 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-[10px] font-bold uppercase tracking-wide cursor-pointer transition-all shadow-sm">Nhận việc</button>
+            </div>
+          `;
+          openTasksContainer.appendChild(div);
+        });
+      }
+    }
+ 
+    // Format date string helper
+    function getFormattedCurrentDate() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+ 
+    // ACTIONS: Admin assign staff
+    async function adminAssignStaff(roomId, staffId) {
+      if (!staffId) return;
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/housekeeping/update`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              roomId,
+              staffId: parseInt(staffId),
+              status: 'cleaning',
+              task_status: 'assigned',
+              start_time: getFormattedCurrentDate()
+            })
+          });
+          if (res.ok) {
+            console.log(`Admin assigned Staff ID ${staffId} to Room ${roomId}`);
+          }
+        } catch (err) {
+          console.error("Lỗi assign staff: ", err);
+        }
+      } else {
+        const task = tasksState.find(t => t.roomId == roomId);
+        if (task) {
+          task.staffId = parseInt(staffId);
+          task.task_status = 'assigned';
+          task.status = 'cleaning';
+          task.start_time = getFormattedCurrentDate();
+        }
+      }
+      await refreshData();
+    }
+ 
+    // ACTIONS: Admin reset room to dirty unassigned
+    async function adminResetRoomDirty(roomId) {
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/housekeeping/update`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              roomId,
+              status: 'dirty',
+              task_status: 'unassigned',
+              staffId: null,
+              start_time: null,
+              end_time: null,
+              cancellation_reason: null
+            })
+          });
+          if (res.ok) {
+            console.log(`Admin reset room ${roomId} to dirty`);
+          }
+        } catch (err) {
+          console.error("Lỗi reset room dirty: ", err);
+        }
+      } else {
+        const task = tasksState.find(t => t.roomId == roomId);
+        if (task) {
+          task.status = 'dirty';
+          task.task_status = 'unassigned';
+          task.staffId = null;
+          task.start_time = null;
+          task.end_time = null;
+          task.cancellation_reason = null;
+        }
+      }
+      await refreshData();
+    }
+ 
+    // ACTIONS: Admin Approve Cancel Request
+    async function approveCancel(roomId) {
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/housekeeping/handle-cancel-request`, {
+            method: 'PUT',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({
+              roomId,
+              action: 'approve'
+            })
+          });
+          const json = await res.json();
+          if (res.ok && json.success) {
+            console.log(`Admin approved cancel for room ${roomId}`);
+          } else {
+            alert(json.message || 'Lỗi phê duyệt hủy.');
+          }
+        } catch (err) {
+          console.error("Lỗi approve cancel: ", err);
+        }
+      } else {
+        const task = tasksState.find(t => t.roomId == roomId);
+        if (task) {
+          task.task_status = 'unassigned';
+          task.status = 'dirty';
+          task.staffId = null;
+          task.start_time = null;
+          task.cancellation_reason = null;
+        }
+      }
+      await refreshData();
+    }
+ 
+    // ACTIONS: Admin Reject Cancel Request
+    async function rejectCancel(roomId) {
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/housekeeping/handle-cancel-request`, {
+            method: 'PUT',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({
+              roomId,
+              action: 'reject'
+            })
+          });
+          const json = await res.json();
+          if (res.ok && json.success) {
+            console.log(`Admin rejected cancel for room ${roomId}`);
+          } else {
+            alert(json.message || 'Lỗi từ chối hủy.');
+          }
+        } catch (err) {
+          console.error("Lỗi reject cancel: ", err);
+        }
+      } else {
+        const task = tasksState.find(t => t.roomId == roomId);
+        if (task) {
+          task.task_status = 'assigned';
+          task.status = 'cleaning';
+          task.cancellation_reason = null;
+        }
+      }
+      await refreshData();
+    }
+ 
+    // ACTIONS: Staff Claim task (Đăng ký nhận phòng bẩn)
+    async function staffClaimTask(roomId) {
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/housekeeping/assign-self`, {
+            method: 'PUT',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ roomId })
+          });
+          const json = await res.json();
+          if (res.ok && json.success) {
+            console.log(`Staff claimed Room ${roomId} for cleaning.`);
+          } else {
+            alert(json.message || 'Không thể nhận phòng để dọn dẹp.');
+          }
+        } catch (err) {
+          console.error("Lỗi claim task: ", err);
+        }
+      } else {
+        const task = tasksState.find(t => t.roomId == roomId);
+        if (task) {
+          task.staffId = currentActiveStaffId;
+          task.task_status = 'assigned';
+          task.status = 'cleaning';
+          task.start_time = getFormattedCurrentDate();
+        }
+      }
+      await refreshData();
+    }
+ 
+    // ACTIONS: Staff complete task
+    async function staffCompleteTask(roomId) {
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/housekeeping/update`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              roomId,
+              status: 'clean',
+              task_status: 'completed',
+              end_time: getFormattedCurrentDate()
+            })
+          });
+          if (res.ok) {
+            console.log(`Staff completed cleaning Room ${roomId}`);
+          }
+        } catch (err) {
+          console.error("Lỗi complete task: ", err);
+        }
+      } else {
+        const task = tasksState.find(t => t.roomId == roomId);
+        if (task) {
+          task.task_status = 'completed';
+          task.status = 'clean';
+          task.end_time = getFormattedCurrentDate();
+        }
+      }
+      await refreshData();
+    }
+ 
+    // Toggle cancel request details display inside staff card
+    function toggleCancelRequestUI(roomId, open) {
+      const container = document.getElementById(`cancelUI-${roomId}`);
+      if (open) {
+        container.classList.remove('hidden');
+      } else {
+        container.classList.add('hidden');
+      }
+    }
+ 
+    // ACTIONS: Staff submit cancel request (Yêu cầu hủy việc)
+    async function staffSubmitCancelRequest(roomId) {
+      const reasonInput = document.getElementById(`cancelReason-${roomId}`);
+      const reason = reasonInput.value.trim();
+      
+      if (!reason) {
+        alert("Vui lòng ghi rõ lý do hủy việc dọn phòng.");
+        return;
+      }
+ 
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/housekeeping/request-cancel`, {
+            method: 'PUT',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({
+              roomId,
+              reason
+            })
+          });
+          const json = await res.json();
+          if (res.ok && json.success) {
+            console.log(`Staff submitted cancellation request for Room ${roomId}.`);
+          } else {
+            alert(json.message || 'Lỗi gửi yêu cầu xin hủy dọn dẹp.');
+          }
+        } catch (err) {
+          console.error("Lỗi submit cancel request: ", err);
+        }
+      } else {
+        const task = tasksState.find(t => t.roomId == roomId);
+        if (task) {
+          task.task_status = 'cancel_requested';
+          task.cancellation_reason = reason;
+        }
+      }
+      await refreshData();
+    }
+
+    // Add window focus listener
+    window.addEventListener('focus', refreshData);
+
+    // Helper to update UI elements based on clocked-in state
+    function updateAttendanceUI(isClockedIn) {
+      localStorage.setItem('isClockedIn', isClockedIn ? 'true' : 'false');
+      const pill = document.getElementById('attendanceStatusPill');
+      const btn = document.getElementById('attendanceBtn');
+      if (pill && btn) {
+        if (isClockedIn) {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none border-emerald-200 bg-emerald-50 text-emerald-700';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>ĐANG LÀM VIỆC';
+          btn.innerHTML = '🔴 Kết Thúc Ca Làm';
+        } else {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none border-stone-200 bg-stone-50 text-stone-500';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>ĐÃ RA CA';
+          btn.innerHTML = '🟢 Điểm Danh Vào Ca';
+        }
+      }
+    }
+
+    async function checkAttendanceState() {
+      const role = localStorage.getItem('userRole');
+      if (role !== 'receptionist' && role !== 'cleaner') {
+        return;
+      }
+      const apiBase = typeof API_URL !== 'undefined' ? API_URL : (typeof API_BASE !== 'undefined' ? API_BASE : '/api');
+      try {
+        const res = await fetch(`${apiBase}/attendance/status`, { headers: getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            updateAttendanceUI(data.isClockedIn);
+          }
+        }
+      } catch (err) {
+        console.error('Lỗi đồng bộ chấm công:', err);
+      }
+    }
+
+    async function initAttendanceSubsystem() {
+      const role = localStorage.getItem('userRole');
+      if (role !== 'receptionist' && role !== 'cleaner') {
+        return;
+      }
+
+      const apiBase = typeof API_URL !== 'undefined' ? API_URL : (typeof API_BASE !== 'undefined' ? API_BASE : '/api');
+      const profileDropdown = document.getElementById('profileDropdown');
+      const profileDropdownContainer = document.getElementById('profileDropdownContainer');
+      if (!profileDropdown || !profileDropdownContainer) return;
+
+      // 1. Create status pill if it doesn't exist
+      let pill = document.getElementById('attendanceStatusPill');
+      if (!pill) {
+        pill = document.createElement('div');
+        pill.id = 'attendanceStatusPill';
+        pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none';
+        profileDropdownContainer.parentNode.insertBefore(pill, profileDropdownContainer);
+      }
+
+      // 2. Create button if it doesn't exist
+      let btn = document.getElementById('attendanceBtn');
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'attendanceBtn';
+        btn.className = 'flex items-center gap-2 px-4 py-2.5 text-xs font-semibold w-full text-left transition-all duration-150 border-b border-[#E5DFD3]/40 cursor-pointer focus:outline-none hover:bg-[#F7F3EB] hover:text-[#b3541e]';
+        profileDropdown.insertBefore(btn, profileDropdown.firstChild);
+      }
+
+      // Set initial UI instantly from localStorage to avoid flicker
+      const localClockedIn = localStorage.getItem('isClockedIn') === 'true';
+      updateAttendanceUI(localClockedIn);
+
+      // Fetch status from server to sync
+      await checkAttendanceState();
+
+      // Handle click event
+      btn.onclick = async function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Hide the profile dropdown to look clean
+        profileDropdown.classList.add('hidden');
+        
+        const currentlyClockedIn = localStorage.getItem('isClockedIn') === 'true';
+        if (!currentlyClockedIn) {
+          // Check in
+          try {
+            const res = await fetch(`${apiBase}/attendance/check-in`, {
+              method: 'POST',
+              headers: getAuthHeaders()
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              updateAttendanceUI(true);
+              alert(data.message || 'Điểm danh vào ca thành công!');
+            } else {
+              alert('Lỗi: ' + (data.message || 'Không thể điểm danh vào ca'));
+            }
+          } catch (err) {
+            console.error('Lỗi check-in:', err);
+            alert('Không thể kết nối máy chủ để điểm danh vào ca.');
+          }
+        } else {
+          // Check out
+          try {
+            const res = await fetch(`${apiBase}/attendance/check-out`, {
+              method: 'POST',
+              headers: getAuthHeaders()
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              updateAttendanceUI(false);
+              const hours = data.data ? data.data.totalHours : 0;
+              alert(`Bạn đã hoàn thành ca làm việc! Tổng thời gian: ${hours} giờ.`);
+            } else {
+              alert('Lỗi: ' + (data.message || 'Không thể kết thúc ca làm'));
+            }
+          } catch (err) {
+            console.error('Lỗi check-out:', err);
+            alert('Không thể kết nối máy chủ để kết thúc ca làm.');
+          }
+        }
+      };
+    }
+    window.addEventListener('DOMContentLoaded', initAttendanceSubsystem);
+ 
+    // Start App Board
+    window.addEventListener('DOMContentLoaded', initPage);
+  </script>
+</body>
+</html>

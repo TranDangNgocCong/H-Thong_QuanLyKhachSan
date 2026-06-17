@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-[#FDFBF7] text-[#2C2623]">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeHaven Resort - Quản Lý Đặt Phòng</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            terracotta: {
+              50: '#fdf4f0',
+              100: '#fbe7de',
+              200: '#f7d2c1',
+              300: '#efb197',
+              400: '#e38664',
+              500: '#b3541e', /* Terracotta Red-Brown Accent */
+              600: '#9b4117',
+              700: '#813313',
+              800: '#682912',
+            },
+            luxury: {
+              cream: '#FDFBF7',
+              sand: '#F7F3EB',
+              charcoal: '#2C2623',
+              gold: '#C5A880',
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts - Playfair Display & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&family=Playfair+Display:ital,wght=0,400..900;1,400..900&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    .font-serif-luxury {
+      font-family: 'Playfair Display', serif;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Elegant soft custom scrollbar matching cream design */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F7F3EB;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #E5DFD3;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b3541e;
+    }
+
+    /* Printable layout for Luxury Invoice */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printArea, #printArea * {
+        visibility: visible;
+      }
+      #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background-color: white !important;
+        max-height: 100% !important;
+        overflow: visible !important;
+      }
+      #receiptActionButtons, #paymentMethodSelectionContainer {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="h-full flex overflow-hidden bg-[#FDFBF7]">
+
+  <!-- ================= THANH ĐIỀU HƯỚNG BÊN (SIDEBAR) ================= -->
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebarBackdrop" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-40 hidden lg:hidden"
+    onclick="toggleMobileSidebar()"></div>
+
+  <aside id="sidebar"
+    class="fixed inset-y-0 left-0 w-64 bg-white border-r border-[#E5DFD3]/80 z-50 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-300 ease-in-out shadow-sm">
+    <div>
+      <!-- Brand Logo / Resort Title -->
+      <div class="h-20 flex items-center px-6 border-b border-[#E5DFD3]/60 bg-[#FDFBF7]/50">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#b3541e] flex items-center justify-center shadow-lg shadow-[#b3541e]/20">
+            <i class="fa-solid fa-umbrella-beach text-white text-lg"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-base font-serif-luxury font-bold tracking-wide text-[#2C2623]">LuxeHaven</span>
+            <span class="text-[9px] font-semibold text-[#b3541e] uppercase tracking-widest mt-0.5">Khu Nghỉ Dưỡng</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-4 space-y-1.5">
+        <a href="./dashboard_AD.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-hotel w-5 text-center"></i>
+          <span>Tổng Quan Hệ Thống</span>
+        </a>
+        <a href="./rooms.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-key w-5 text-center"></i>
+          <span>Quản Lý Phòng</span>
+        </a>
+        <a href="./bookings.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium bg-[#b3541e] text-white shadow-md shadow-[#b3541e]/15 transition-all duration-200">
+          <i class="fa-solid fa-calendar-days w-5 text-center"></i>
+          <span>Đặt Phòng</span>
+        </a>
+        <a href="./services.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-spa w-5 text-center"></i>
+          <span>Dịch Vụ Khách Sạn</span>
+        </a>
+        <a href="./housekeeping.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-broom w-5 text-center"></i>
+          <span>Nhật Ký Dọn Phòng</span>
+        </a>
+        <a href="./users.html" id="sidebarUsersLink"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-user-shield w-5 text-center"></i>
+          <span>Quản Lý Người Dùng</span>
+        </a>
+        <a href="./accounting.html" id="sidebarAccountingLink"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-wallet w-5 text-center"></i>
+          <span>Quản Lý Tài Chính</span>
+        </a>
+      </nav>
+    </div>
+
+
+  </aside>
+
+  <!-- ================= MAIN LAYOUT WRAPPER ================= -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+    <!-- ================= THANH NAVBAR TRÊN ================= -->
+    <header class="h-20 bg-white border-b border-[#E5DFD3]/60 flex items-center justify-between px-6 z-30 shadow-sm">
+      <div class="flex items-center gap-4 flex-1">
+        <!-- Mobile Sidebar Toggle -->
+        <button onclick="toggleMobileSidebar()"
+          class="lg:hidden p-2 rounded-xl text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB] transition-colors cursor-pointer">
+          <i class="fa-solid fa-bars-staggered text-lg"></i>
+        </button>
+
+        <!-- Search Bar -->
+        <div class="max-w-md w-full relative hidden sm:block">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A89F9A]">
+            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+          </div>
+          <input type="text" id="bookingGlobalSearch" oninput="handleSearch(this.value)"
+            placeholder="Tìm kiếm mã đơn, họ tên khách hàng, số điện thoại..."
+            class="w-full text-xs bg-[#F7F3EB]/50 text-[#2C2623] placeholder-[#A89F9A] rounded-xl pl-9 pr-4 py-2.5 border border-[#E5DFD3]/80 focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <!-- User Actions & Info -->
+      <div class="flex items-center gap-5">
+        <!-- Backend Status Badge -->
+        <div id="backendStatusBadge"
+          class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border">
+          <span id="backendStatusDot" class="w-1.5 h-1.5 rounded-full"></span>
+          <span id="backendStatusText">Đang kiểm tra kết nối...</span>
+        </div>
+
+        <!-- Notification -->
+        <div class="relative" id="notificationContainer">
+          <button id="notificationBellBtn"
+            class="p-2.5 rounded-xl text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB] transition-all cursor-pointer">
+            <i class="fa-solid fa-bell text-sm"></i>
+          </button>
+          <span id="notificationDot" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#b3541e] border-2 border-white rounded-full hidden"></span>
+          
+          <!-- Dropdown Panel -->
+          <div id="notificationDropdown" class="absolute right-0 mt-2 w-80 bg-white border border-[#E5DFD3]/60 rounded-2xl shadow-xl z-50 hidden overflow-hidden">
+            <div class="p-3.5 border-b border-[#E5DFD3]/60 bg-[#FDFBF7]/50 flex items-center justify-between">
+              <span class="text-xs font-bold text-[#2C2623]">Thông báo</span>
+              <button onclick="markAllNotificationsAsRead(event)" class="text-[10px] font-semibold text-[#b3541e] hover:underline cursor-pointer">
+                Đánh dấu đã đọc
+              </button>
+            </div>
+            <div id="notificationList" class="max-h-80 overflow-y-auto divide-y divide-[#E5DFD3]/40">
+              <!-- Dynamic rows go here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Vertical Divider -->
+        <span class="h-7 w-px bg-[#E5DFD3]/60"></span>
+
+        <!-- Profile Menu -->
+        <div class="relative" id="profileDropdownContainer">
+          <button class="flex items-center gap-3.5 hover:opacity-90 focus:outline-none cursor-pointer">
+            <div
+              class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#b3541e] to-[#e38664] flex items-center justify-center font-bold text-white text-sm shadow-md">
+              LT
+            </div>
+            <div class="text-left hidden md:block">
+              <p class="text-xs font-semibold text-[#2C2623]" id="navUserName">Jane Doe</p>
+              <p class="text-[10px] text-[#b3541e] font-semibold tracking-wider uppercase mt-0.5" id="navUserRole">Lễ Tân</p>
+            </div>
+            <i class="fa-solid fa-chevron-down text-[#A89F9A] text-[9px]"></i>
+          </button>
+
+          <!-- Dropdown List -->
+          <div id="profileDropdown"
+            class="absolute right-0 mt-3 w-48 bg-white border border-[#E5DFD3]/80 rounded-xl shadow-xl py-1.5 hidden z-50">
+            <a href="#" onclick="openProfileModal(event)"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-[#5C524E] hover:bg-[#F7F3EB] hover:text-[#b3541e]"><i
+                class="fa-solid fa-user w-4 text-center"></i> Hồ sơ cá nhân</a>
+            <a href="#" onclick="openConfigModal(event)"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-[#5C524E] hover:bg-[#F7F3EB] hover:text-[#b3541e]"><i
+                class="fa-solid fa-sliders w-4 text-center"></i> Thiết lập cấu hình</a>
+            <hr class="border-[#E5DFD3]/40 my-1">
+            <a href="#" onclick="handleLogout(event)" class="flex items-center gap-2 px-4 py-2 text-xs text-rose-600 hover:bg-rose-50"><i
+                class="fa-solid fa-power-off w-4 text-center"></i> Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= NỘI DUNG CHÍNH (CONTENT AREA) ================= -->
+    <main class="flex-1 overflow-y-auto p-6 space-y-6">
+
+      <!-- Page Header Title -->
+      <div class="bg-white border border-[#E5DFD3]/60 p-6 rounded-2xl shadow-sm">
+        <span class="text-[10px] font-bold text-[#b3541e] uppercase tracking-widest bg-[#b3541e]/5 px-2.5 py-1 rounded-full">Phân Hệ Lễ Tân & Đón Tiếp</span>
+        <h1 class="text-2xl font-serif-luxury font-bold text-[#2C2623] mt-2">Trung Tâm Điều Phối Đặt Phòng</h1>
+        <p class="text-xs text-[#81726A] mt-1">Quản lý vòng đời lưu trú của khách hàng, thực hiện các nghiệp vụ Check-in, Check-out và thanh toán hóa đơn.</p>
+      </div>
+
+      <!-- ================= 1. TOP STATS BAR (THỐNG KÊ NHANH) ================= -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- Thẻ 1: Tổng đơn đặt hôm nay -->
+        <div class="bg-white border border-[#E5DFD3]/60 p-5 rounded-2xl shadow-sm flex items-center justify-between">
+          <div class="space-y-1">
+            <p class="text-[10px] font-bold text-[#81726A] uppercase tracking-wider">Tổng đơn đặt hôm nay</p>
+            <h3 id="statTodayBookings" class="text-2xl font-bold font-serif-luxury text-[#2C2623]">0</h3>
+            <p class="text-[9px] text-emerald-600 font-semibold flex items-center gap-1"><i class="fa-solid fa-circle text-[6px]"></i> Đang đồng bộ</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-luxury-sand text-[#b3541e] flex items-center justify-center text-xl shadow-inner">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+        </div>
+
+        <!-- Thẻ 2: Khách dự kiến Check-in -->
+        <div class="bg-white border border-[#E5DFD3]/60 p-5 rounded-2xl shadow-sm flex items-center justify-between">
+          <div class="space-y-1">
+            <p class="text-[10px] font-bold text-[#81726A] uppercase tracking-wider">Khách dự kiến Check-in</p>
+            <h3 id="statExpectedCheckin" class="text-2xl font-bold font-serif-luxury text-amber-600">0</h3>
+            <p class="text-[9px] text-amber-600 font-semibold flex items-center gap-1"><i class="fa-solid fa-clock text-[8px]"></i> Trong ngày (12/06)</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl shadow-inner border border-amber-100">
+            <i class="fa-solid fa-plane-arrival"></i>
+          </div>
+        </div>
+
+        <!-- Thẻ 3: Khách dự kiến Check-out -->
+        <div class="bg-white border border-[#E5DFD3]/60 p-5 rounded-2xl shadow-sm flex items-center justify-between">
+          <div class="space-y-1">
+            <p class="text-[10px] font-bold text-[#81726A] uppercase tracking-wider">Khách dự kiến Check-out</p>
+            <h3 id="statExpectedCheckout" class="text-2xl font-bold font-serif-luxury text-blue-700">0</h3>
+            <p class="text-[9px] text-blue-600 font-semibold flex items-center gap-1"><i class="fa-solid fa-circle-exclamation text-[8px] animate-pulse"></i> Chờ trả phòng</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center text-xl shadow-inner border border-blue-100">
+            <i class="fa-solid fa-plane-departure"></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CONTROLS & FILTER TABS ================= -->
+      <div class="bg-white border border-[#E5DFD3]/60 p-4 rounded-2xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <button onclick="setStatusFilter('all')" id="filterBtn-all"
+            class="px-4 py-2 rounded-xl font-semibold bg-[#b3541e] text-white transition-all cursor-pointer">
+            Tất Cả
+          </button>
+          <button onclick="setStatusFilter('confirmed')" id="filterBtn-confirmed"
+            class="px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer">
+            Chờ nhận phòng (Check-in)
+          </button>
+          <button onclick="setStatusFilter('occupied')" id="filterBtn-occupied"
+            class="px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer">
+            Đang lưu trú
+          </button>
+          <button onclick="setStatusFilter('completed')" id="filterBtn-completed"
+            class="px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer">
+            Đã hoàn tất
+          </button>
+          <button onclick="setStatusFilter('cancelled')" id="filterBtn-cancelled"
+            class="px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer">
+            Đã hủy
+          </button>
+        </div>
+        <div class="text-[10px] text-[#81726A] font-bold uppercase tracking-wider bg-stone-100 px-3 py-1.5 rounded-lg border border-stone-200" id="todayIndicator">
+          Ngày giả định: 12/06/2026
+        </div>
+      </div>
+
+      <!-- ================= 2. ACTIONABLE RESERVATION TABLE ================= -->
+      <section class="space-y-4">
+        <div class="bg-white border border-[#E5DFD3]/60 rounded-2xl overflow-hidden shadow-sm">
+          <!-- Table Header Panel (Moved near table header) -->
+          <div class="px-6 py-4 border-b border-[#E5DFD3]/60 bg-[#FDFBF7]/30 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-bold text-[#2C2623] uppercase tracking-wider">Danh Sách Đơn Đặt Phòng</span>
+              <div id="todayFilterBadge" class="hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[#b3541e]/5 text-[#b3541e] border border-[#b3541e]/20 uppercase tracking-wider">
+                <span>Đang lọc: Hôm nay</span>
+                <a href="./bookings.html" class="text-rose-600 hover:text-rose-700 ml-1 hover:underline transition-colors">[Xóa bộ lọc]</a>
+              </div>
+            </div>
+            <span class="text-[10px] text-[#81726A] font-medium" id="tableSummaryText">Hiển thị 0 đơn đặt phòng</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-[#E5DFD3]/85 text-[10px] font-bold tracking-wider text-[#81726A] uppercase bg-[#F7F3EB]/40">
+                  <th class="py-4 px-6">Mã Đặt</th>
+                  <th class="py-4 px-6">Khách Hàng</th>
+                  <th class="py-4 px-6">Phòng Chọn</th>
+                  <th class="py-4 px-6">Thời Gian Lưu Trú</th>
+                  <th class="py-4 px-6">Trạng Thái Đơn</th>
+                  <th class="py-4 px-6">Tổng Tạm Tính</th>
+                  <th class="py-4 px-6 text-right font-medium">Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#E5DFD3]/40 text-xs text-[#5C524E]" id="bookingsTableBody">
+                <!-- Dynamically populated rows -->
+              </tbody>
+            </table>
+          </div>
+          <!-- Table Footer -->
+          <div class="px-6 py-3 border-t border-[#E5DFD3]/60 bg-[#FDFBF7]/30 flex justify-end text-[10px] text-[#81726A] font-medium">
+            <span>Hệ thống LuxeHaven Resort</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="h-12 bg-white border-t border-[#E5DFD3]/60 flex items-center justify-between px-6 text-[10px] text-[#81726A] font-medium z-10 shrink-0">
+      <span>&copy; 2026 LuxeHaven Resort - Hệ Thống Quản Lý Đặt Phòng Cao Cấp</span>
+      <span class="flex items-center gap-1.5"><span
+          class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>Bảng Quản Lý Hợp Đồng Đặt Phòng</span>
+    </footer>
+
+  </div>
+
+  <!-- ================= 3. POP-UP RECEIPT MODAL (READ-ONLY INVOICE) ================= -->
+  <div id="receiptModal"
+    class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div
+      class="bg-white border border-[#E5DFD3] rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden p-6 space-y-4 m-4 max-h-[90vh] overflow-y-auto" id="printArea">
+      
+      <!-- Top Title and Logo -->
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#b3541e]/5 border border-[#b3541e]/15 flex items-center justify-center text-[#b3541e] text-lg">
+            <i class="fa-solid fa-umbrella-beach"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-sm font-serif-luxury font-bold tracking-wide text-[#2C2623]">LuxeHaven Resort</span>
+            <span class="text-[9px] font-semibold text-[#b3541e] uppercase tracking-widest mt-0.5">Hóa đơn dịch vụ</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <h2 class="text-sm font-serif-luxury font-bold text-[#b3541e] tracking-wide uppercase">Hóa đơn thanh toán chi tiết</h2>
+          <p class="text-[9px] text-stone-400 font-mono mt-0.5" id="invoiceMeta">Mã HD: HD-2041 | Ngày in: 12/06/2026 09:44</p>
+        </div>
+      </div>
+
+      <!-- Customer Profile Summary -->
+      <div class="grid grid-cols-2 gap-4 bg-[#FDFBF7] border border-[#E5DFD3]/60 p-4 rounded-2xl text-xs">
+        <div>
+          <p class="text-[9px] font-bold text-stone-400 uppercase tracking-wider">Khách hàng</p>
+          <p class="font-bold text-[#2C2623] mt-1" id="invoiceGuestName">Alex Johnson</p>
+          <p class="text-[10px] text-stone-500 font-mono mt-0.5" id="invoiceGuestPhone">SĐT: 0912345678</p>
+        </div>
+        <div>
+          <p class="text-[9px] font-bold text-stone-400 uppercase tracking-wider">Thông tin lưu trú</p>
+          <p class="font-bold text-[#2C2623] mt-1" id="invoiceRoomDetail">Phòng 202 - Suite</p>
+          <p class="text-[10px] text-stone-500 font-mono mt-0.5" id="invoiceStayDates">12/06/2026 ➔ 14/06/2026</p>
+        </div>
+      </div>
+
+      <!-- SECTION A: TIỀN PHÒNG KHÁCH SẠN -->
+      <div class="space-y-2">
+        <h4 class="text-[10px] font-bold text-[#b3541e] uppercase tracking-wider flex items-center gap-1.5">
+          <i class="fa-solid fa-bed text-[11px]"></i>
+          <span>Phần A: Tiền phòng khách sạn</span>
+        </h4>
+        <div class="bg-white border border-[#E5DFD3]/60 rounded-xl overflow-hidden shadow-inner">
+          <table class="w-full text-left border-collapse text-[11px]">
+            <thead>
+              <tr class="border-b border-[#E5DFD3]/60 bg-[#F7F3EB]/30 text-[9px] font-bold text-stone-500 uppercase tracking-wider">
+                <th class="py-2.5 px-4">Nội dung (Loại phòng)</th>
+                <th class="py-2.5 px-4 text-center">Đơn giá/Đêm</th>
+                <th class="py-2.5 px-4 text-center">Số đêm</th>
+                <th class="py-2.5 px-4 text-right">Thành tiền</th>
+              </tr>
+            </thead>
+            <tbody id="invoiceRoomTableBody">
+              <!-- Dynamically populated room stay row -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION B: CHI TIẾT DỊCH VỤ PHÁT SINH -->
+      <div class="space-y-2">
+        <h4 class="text-[10px] font-bold text-[#b3541e] uppercase tracking-wider flex items-center gap-1.5">
+          <i class="fa-solid fa-bell-concierge text-[11px]"></i>
+          <span>Phần B: Chi tiết dịch vụ phát sinh</span>
+        </h4>
+        <div class="bg-white border border-[#E5DFD3]/60 rounded-xl overflow-hidden shadow-inner">
+          <table class="w-full text-left border-collapse text-[11px]">
+            <thead>
+              <tr class="border-b border-[#E5DFD3]/60 bg-[#F7F3EB]/30 text-[9px] font-bold text-stone-500 uppercase tracking-wider">
+                <th class="py-2.5 px-4">Tên dịch vụ</th>
+                <th class="py-2.5 px-4 text-center">Phân loại</th>
+                <th class="py-2.5 px-4 text-center">Đơn giá</th>
+                <th class="py-2.5 px-4 text-center">Số lượng</th>
+                <th class="py-2.5 px-4 text-right">Thành tiền</th>
+              </tr>
+            </thead>
+            <tbody id="invoiceServiceTableBody">
+              <!-- Dynamically populated services rows or empty note -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION C: TỔNG KẾT & PHƯƠNG THỨC -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end border-t border-[#E5DFD3]/60 pt-4">
+        <div class="space-y-1.5 w-full" id="paymentMethodSelectionContainer">
+          <label class="block text-[10px] font-bold text-stone-500 uppercase tracking-wider">Phương thức thanh toán</label>
+          <select id="invoicePaymentMethod"
+            class="w-full bg-[#F7F3EB]/50 border border-[#E5DFD3] rounded-xl px-3 py-2.5 text-xs font-semibold focus:outline-none focus:border-[#b3541e] transition-all cursor-pointer">
+            <option value="Tiền mặt">Tiền mặt (Cash)</option>
+            <option value="Chuyển khoản ngân hàng QR">Chuyển khoản ngân hàng QR (Bank Transfer QR)</option>
+            <option value="Quẹt thẻ nội bộ / Visa">Quẹt thẻ nội bộ / Visa (POS Card/Visa)</option>
+          </select>
+        </div>
+        <div class="space-y-2 text-xs w-full">
+          <div class="flex justify-between text-[#5C524E]">
+            <span class="font-medium">Tạm tính (Subtotal):</span>
+            <span class="font-mono font-semibold" id="invoiceSubtotal">0 đ</span>
+          </div>
+          <div class="flex justify-between text-[#5C524E]">
+            <span class="font-medium">Thuế VAT (10%):</span>
+            <span class="font-mono font-semibold" id="invoiceVat">0 đ</span>
+          </div>
+          <div class="bg-stone-50 border border-stone-200 p-3 rounded-2xl flex flex-col justify-center text-right w-full">
+            <span class="text-[9px] font-bold text-stone-400 uppercase tracking-wider">Tổng cộng (Grand Total)</span>
+            <span class="text-lg font-bold text-[#b3541e] font-mono mt-0.5" id="invoiceGrandTotal">0 đ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions Footer -->
+      <div id="receiptActionButtons" class="flex items-center justify-end gap-3 pt-4 border-t border-[#E5DFD3]/60">
+        <button type="button" onclick="closeReceiptModal()"
+          class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">
+          Đóng
+        </button>
+        <button id="confirmPaymentBtn" type="button"
+          class="px-5 py-2.5 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md shadow-[#b3541e]/15 transition-all cursor-pointer flex items-center gap-2">
+          <i class="fa-solid fa-receipt"></i> Xác Nhận Thanh Toán & In
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: HỒ SƠ CÁ NHÂN & ĐỔI MẬT KHẨU ================= -->
+  <div id="profileModal" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-user-circle text-[#b3541e] text-base"></i>
+          <span>Hồ Sơ Cá Nhân</span>
+        </h3>
+        <button onclick="closeProfileModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Staff Details Display -->
+      <div class="p-3.5 bg-[#F7F3EB]/50 border border-[#E5DFD3] rounded-xl text-xs space-y-2 text-[#5C524E]">
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Họ và tên:</span>
+          <span class="font-bold text-[#2C2623]" id="profileFullName">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Tên đăng nhập:</span>
+          <span class="font-mono font-bold text-[#2C2623]" id="profileUsername">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Email:</span>
+          <span class="font-bold text-[#2C2623]" id="profileEmail">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Số điện thoại:</span>
+          <span class="font-mono font-bold text-[#2C2623]" id="profilePhone">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Chức vụ:</span>
+          <span class="font-bold text-[#b3541e]" id="profileRole">--</span>
+        </p>
+      </div>
+
+      <!-- Change Password Form -->
+      <form id="changePasswordForm" class="space-y-3 pt-2 border-t border-[#E5DFD3]/60" onsubmit="submitChangePassword(event)">
+        <h4 class="text-xs font-bold text-[#2C2623] uppercase tracking-wider">Đổi mật khẩu tài khoản</h4>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Mật khẩu hiện tại</label>
+          <input type="password" id="oldPassword" required placeholder="Nhập mật khẩu hiện tại..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Mật khẩu mới</label>
+          <input type="password" id="newPassword" required placeholder="Nhập mật khẩu mới..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Xác nhận mật khẩu mới</label>
+          <input type="password" id="confirmNewPassword" required placeholder="Xác nhận mật khẩu mới..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+          <button type="button" onclick="closeProfileModal()"
+            class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+          <button type="submit"
+            class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Cập nhật</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: THIẾT LẬP CẤU HÌNH ================= -->
+  <div id="configModal" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-[#b3541e] text-base"></i>
+          <span>Thiết Lập Cấu Hình</span>
+        </h3>
+        <button onclick="closeConfigModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Config Form -->
+      <form id="configForm" class="space-y-3.5 text-xs" onsubmit="submitConfigForm(event)">
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Ca làm việc hoạt động (Active Shift)</label>
+          <select id="configShift"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="Ca Sáng">Ca Sáng (08:00 - 16:00)</option>
+            <option value="Ca Chiều">Ca Chiều (16:00 - 24:00)</option>
+            <option value="Ca Đêm">Ca Đêm (00:00 - 08:00)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Chế độ giao diện (Interface Theme)</label>
+          <select id="configTheme"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="luxury-light">Luxury Light (Mặc định sáng)</option>
+            <option value="luxury-warm">Luxury Cream (Ấm áp)</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+          <button type="button" onclick="closeConfigModal()"
+            class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+          <button type="submit"
+            class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Lưu cấu hình</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<!-- ================= RUNTIME INTERACTIONS JAVASCRIPT ================= -->
+  <script>
+    const API_URL = '/api';
+
+    function getAuthHeaders() {
+      const token = localStorage.getItem('token');
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      };
+    }
+
+    // ============================================================
+    // ROLE-BASED ACCESS CONTROL GUARD
+    // Runs synchronously before any rendering to prevent UI flicker
+    // ============================================================
+    (function applyRoleBasedAccessControl() {
+      const currentUserRole = localStorage.getItem('userRole');
+      const currentFullName = localStorage.getItem('fullName');
+
+      // 1. Auth Guard: Redirect to login if not authenticated
+      if (!currentUserRole) {
+        window.location.href = './login.html';
+        return;
+      }
+
+      if (currentUserRole === 'cleaner') {
+        window.location.href = './housekeeping.html';
+        return;
+      }
+
+      if (currentUserRole === 'accountant') {
+        window.location.href = './accounting.html';
+        return;
+      }
+
+      // 2. Update Header Profile Display from localStorage (instant, no flicker)
+      const navUserNameEl = document.getElementById('navUserName');
+      const navUserRoleEl = document.getElementById('navUserRole');
+      const initialsEl = document.querySelector('#profileDropdownContainer .rounded-xl.bg-gradient-to-tr');
+
+      if (navUserNameEl && currentFullName) navUserNameEl.textContent = currentFullName;
+      if (navUserRoleEl) {
+        let roleText = 'LỄ TÂN';
+        const r = (currentUserRole || '').toLowerCase().trim();
+        if (r === 'admin') roleText = 'QUẢN TRỊ VIÊN';
+        else if (r === 'cleaner') roleText = 'BUỒNG PHÒNG';
+        else if (r === 'accountant') roleText = 'KẾ TOÁN KINH DOANH';
+        else if (['tech', 'technical', 'technician', 'kỹ thuật', 'ky_thuat'].includes(r)) roleText = 'KỸ THUẬT';
+        navUserRoleEl.textContent = roleText;
+      }
+      if (initialsEl && currentFullName) {
+        const names = currentFullName.trim().split(' ');
+        const initials = names.length > 1
+          ? (names[0][0] + names[names.length - 1][0]).toUpperCase()
+          : names[0].substring(0, 2).toUpperCase();
+        initialsEl.textContent = initials;
+      }
+
+      // 3. Customize Sidebar and options based on Role
+      const usersLink = document.getElementById('sidebarUsersLink');
+      const acctLink = document.getElementById('sidebarAccountingLink');
+
+      if (currentUserRole === 'admin') {
+        if (usersLink) usersLink.classList.remove('hidden');
+        if (acctLink) acctLink.classList.remove('hidden');
+      } else {
+        if (usersLink) usersLink.classList.add('hidden');
+        if (acctLink) acctLink.classList.add('hidden');
+      }
+    })();
+
+    // Profile Dropdown Toggle Logic
+    function initAccountDropdown() {
+      try {
+        const profileBtn = document.querySelector('#profileDropdownContainer button');
+        const dropdown = document.getElementById('profileDropdown');
+        
+        if (profileBtn && dropdown) {
+          profileBtn.removeAttribute('onclick');
+          profileBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('hidden');
+            const notifDropdown = document.getElementById('notificationDropdown');
+            if (notifDropdown) notifDropdown.classList.add('hidden');
+          });
+        }
+        
+        document.addEventListener('click', function (e) {
+          try {
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+              if (!dropdown.contains(e.target) && (!profileBtn || !profileBtn.contains(e.target))) {
+                dropdown.classList.add('hidden');
+              }
+            }
+          } catch (err) {
+            console.error('Error in dropdown click listener:', err);
+          }
+        });
+      } catch (err) {
+        console.error('Error in initAccountDropdown:', err);
+      }
+    }
+
+    // Initialize dropdown at parse time
+    initAccountDropdown();
+
+    // Notification Dropdown Toggle & Polling
+    (function initNotificationDropdown() {
+      const bellBtn = document.getElementById('notificationBellBtn');
+      const dropdown = document.getElementById('notificationDropdown');
+      
+      if (bellBtn && dropdown) {
+        bellBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          dropdown.classList.toggle('hidden');
+          const profileDropdown = document.getElementById('profileDropdown');
+          if (profileDropdown) profileDropdown.classList.add('hidden');
+        });
+      }
+      
+      document.addEventListener('click', function (e) {
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!dropdown.contains(e.target) && (!bellBtn || !bellBtn.contains(e.target))) {
+            dropdown.classList.add('hidden');
+          }
+        }
+      });
+
+      // Poll notifications immediately and every 30 seconds
+      fetchNotifications();
+      setInterval(fetchNotifications, 30000);
+    })();
+
+    async function fetchNotifications() {
+      try {
+        const res = await fetch(`${API_URL}/notifications`, {
+          headers: getAuthHeaders()
+        });
+        if (!res.ok) return;
+        const json = await res.json();
+        const notifications = json.data || [];
+        
+        // Check for unread
+        const hasUnread = notifications.some(n => !n.isRead);
+        const dot = document.getElementById('notificationDot');
+        if (dot) {
+          if (hasUnread) {
+            dot.classList.remove('hidden');
+          } else {
+            dot.classList.add('hidden');
+          }
+        }
+        
+        // Populate dropdown list
+        const list = document.getElementById('notificationList');
+        if (list) {
+          if (notifications.length === 0) {
+            list.innerHTML = `
+              <div class="p-4 text-center text-xs text-[#81726A] italic">
+                Không có thông báo mới nào
+              </div>
+            `;
+          } else {
+            list.innerHTML = notifications.map(n => {
+              const bgClass = n.isRead ? 'bg-white hover:bg-stone-50' : 'bg-orange-50/40 hover:bg-orange-50/60';
+              const textWeight = n.isRead ? 'font-medium' : 'font-bold';
+              return `
+                <div class="p-3.5 text-xs transition-colors duration-150 ${bgClass}">
+                  <p class="${textWeight} text-[#2C2623]">${escapeHTML(n.title)}</p>
+                  <p class="text-[#5C524E] mt-1 leading-relaxed">${escapeHTML(n.message)}</p>
+                  <p class="text-[10px] text-stone-400 mt-1.5 flex items-center justify-between">
+                    <span>${timeAgo(n.createdAt)}</span>
+                    ${!n.isRead ? `<span class="w-1.5 h-1.5 rounded-full bg-[#b3541e]"></span>` : ''}
+                  </p>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching notifications:', err);
+      }
+    }
+
+    async function markAllNotificationsAsRead(e) {
+      if (e) e.stopPropagation();
+      try {
+        const res = await fetch(`${API_URL}/notifications/read-all`, {
+          method: 'PUT',
+          headers: getAuthHeaders()
+        });
+        if (res.ok) {
+          fetchNotifications();
+        }
+      } catch (err) {
+        console.error('Error marking all read:', err);
+      }
+    }
+
+    function timeAgo(dateString) {
+      if (!dateString) return '';
+      const now = new Date();
+      const past = new Date(dateString);
+      const diffMs = now - past;
+      const diffMins = Math.floor(diffMs / 60000);
+      if (diffMins < 1) return 'Vừa xong';
+      if (diffMins < 60) return `${diffMins} phút trước`;
+      const diffHours = Math.floor(diffMins / 60);
+      if (diffHours < 24) return `${diffHours} giờ trước`;
+      const diffDays = Math.floor(diffHours / 24);
+      return `${diffDays} ngày trước`;
+    }
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    let isBackendOnline = false;
+    let bookingsData = [];
+
+    // Variables for page filters & active checkouts
+    let currentFilter = 'all'; // 'all', 'confirmed', 'occupied', 'completed', 'cancelled'
+    let searchQuery = '';
+    let selectedBookingIdForPayment = null;
+
+    // Fetch dynamic bookings with Robust Error Handling
+    async function refreshData() {
+      const badge = document.getElementById('backendStatusBadge');
+      const dot = document.getElementById('backendStatusDot');
+      const text = document.getElementById('backendStatusText');
+      if (badge) badge.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/bookings', { headers: getAuthHeaders() });
+        const result = await response.json();
+        
+        if (result.success) {
+          isBackendOnline = true;
+          if (badge && dot && text) {
+            badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-emerald-200 bg-emerald-50 text-emerald-700';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+            text.innerText = 'Máy chủ kết nối: TRỰC TUYẾN';
+          }
+          
+          bookingsData = result.data || [];
+          
+          // Sort chronologically by checkIn descending (latest at the top)
+          bookingsData.sort((a, b) => {
+            const dateA = new Date(getCleanDateString(a.checkIn) || '1970-01-01');
+            const dateB = new Date(getCleanDateString(b.checkIn) || '1970-01-01');
+            return dateB - dateA;
+          });
+        } else {
+          throw new Error(result.message || 'Lỗi từ máy chủ');
+        }
+      } catch (err) {
+        console.error("Lỗi đồng bộ dữ liệu đặt phòng:", err);
+        const token = localStorage.getItem('token');
+        if (token) {
+          console.warn("Bookings fetch failed, but token exists. Bypassing offline lock.");
+          isBackendOnline = true;
+          if (badge && dot && text) {
+            badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-emerald-200 bg-emerald-50 text-emerald-700';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+            text.innerText = 'Máy chủ kết nối: TRỰC TUYẾN';
+          }
+        } else {
+          isBackendOnline = false;
+          if (badge && dot && text) {
+            badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-rose-200 bg-rose-50 text-rose-700';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse';
+            text.innerText = 'Máy chủ ngoại tuyến: DÙNG MOCK';
+          }
+          bookingsData = [];
+        }
+      }
+      renderAll();
+    }
+
+    // Initialize Page
+    async function initPage() {
+      await refreshData();
+      loadUserProfileHeader(); // Non-blocking sync
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('filter') === 'today') {
+        currentFilter = 'today';
+        // Deselect all filter buttons
+        const filters = ['all', 'confirmed', 'occupied', 'completed', 'cancelled'];
+        filters.forEach(f => {
+          const btn = document.getElementById(`filterBtn-${f}`);
+          if (btn) {
+            btn.className = "px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer";
+          }
+        });
+        renderAll();
+      }
+    }
+
+    // Sync API profile to localStorage for consistency
+    async function loadUserProfileHeader() {
+      try {
+        const res = await fetch(`${API_URL}/auth/me`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        if (res.status === 401) {
+          localStorage.clear();
+          window.location.href = './login.html';
+          return;
+        }
+        if (res.ok) {
+          const result = await res.json();
+          if (result.success && result.data) {
+            localStorage.setItem('fullName', result.data.fullName);
+            localStorage.setItem('userRole', result.data.role);
+          }
+        }
+      } catch (err) {
+        console.error('Error syncing user profile:', err);
+      }
+    }
+
+    // Mobile Sidebar functionality
+
+    // Toggle Mobile Sidebar
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.toggle('-translate-x-full');
+      backdrop.classList.toggle('hidden');
+    }
+
+    // Formatter Helpers
+    function getCleanDateString(dateVal) {
+      if (!dateVal) return '';
+      try {
+        const str = String(dateVal);
+        if (str.includes('T')) return str.split('T')[0];
+        if (str.includes(' ')) return str.split(' ')[0];
+        return str.trim();
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function formatCurrency(val) {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val);
+    }
+
+    function formatDate(str) {
+      if (!str) return '';
+      const clean = getCleanDateString(str);
+      const parts = clean.split('-');
+      if (parts.length !== 3) return str;
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+
+    // Currency normalization helper (maps backend USD prices to VND)
+    function getPrice(price) {
+      if (price < 10000) return price * 23000;
+      return price;
+    }
+
+    // Date night difference calculator
+    function getNights(checkInStr, checkOutStr) {
+      const cleanIn = getCleanDateString(checkInStr);
+      const cleanOut = getCleanDateString(checkOutStr);
+      if (!cleanIn || !cleanOut) return 1;
+      const checkIn = new Date(cleanIn);
+      const checkOut = new Date(cleanOut);
+      const diffTime = Math.abs(checkOut - checkIn);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays || 1;
+    }
+
+    // Calculate total bill (Room + Services) including 10% VAT
+    function calculateTotal(booking) {
+      const nights = getNights(booking.checkIn, booking.checkOut);
+      const roomPrice = booking.room ? getPrice(booking.room.pricePerNight) : 0;
+      const roomTotal = roomPrice * nights;
+      const serviceTotal = booking.services ? booking.services.reduce((sum, s) => sum + (getPrice(s.price) * s.quantity), 0) : 0;
+      const subtotal = roomTotal + serviceTotal;
+      return subtotal * 1.10; // includes 10% VAT
+    }
+
+    // RENDER FUNCTIONS
+    function renderAll() {
+      calculateStats();
+      renderTable();
+    }
+
+    // Calculate Dynamic Stats Indicator at Top
+    function calculateStats() {
+      try {
+        const today = new Date().toISOString().split('T')[0];
+        
+        const totalToday = bookingsData.filter(b => {
+          const checkInStr = getCleanDateString(b.checkIn);
+          const checkOutStr = getCleanDateString(b.checkOut);
+          return checkInStr === today || checkOutStr === today;
+        }).length;
+        
+        const checkinCount = bookingsData.filter(b => {
+          const checkInStr = getCleanDateString(b.checkIn);
+          return checkInStr === today && b.status === 'confirmed';
+        }).length;
+
+        const checkoutCount = bookingsData.filter(b => {
+          const checkOutStr = getCleanDateString(b.checkOut);
+          return checkOutStr === today && b.status === 'occupied';
+        }).length;
+
+        document.getElementById('statTodayBookings').innerText = totalToday;
+        document.getElementById('statExpectedCheckin').innerText = checkinCount;
+        document.getElementById('statExpectedCheckout').innerText = checkoutCount;
+      } catch (err) {
+        console.error('Lỗi khi tính toán số liệu đặt phòng:', err);
+      }
+    }
+
+    // Filter handling
+    function setStatusFilter(filter) {
+      // Clear URL parameter when user switches to a status filter tab
+      if (window.location.search.includes('filter=today')) {
+        window.history.replaceState(null, '', './bookings.html');
+      }
+      currentFilter = filter;
+      const filters = ['all', 'confirmed', 'occupied', 'completed', 'cancelled'];
+      filters.forEach(f => {
+        const btn = document.getElementById(`filterBtn-${f}`);
+        if (btn) {
+          if (f === filter) {
+            btn.className = "px-4 py-2 rounded-xl font-semibold bg-[#b3541e] text-white transition-all cursor-pointer";
+          } else {
+            btn.className = "px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer";
+          }
+        }
+      });
+      renderTable();
+    }
+
+    function handleSearch(query) {
+      searchQuery = query.trim().toLowerCase();
+      renderTable();
+    }
+
+    // Render Table Content
+    function renderTable() {
+      const tbody = document.getElementById('bookingsTableBody');
+      tbody.innerHTML = '';
+
+      // Apply Filters: Search query & Status Filter
+      const filteredBookings = bookingsData.filter(b => {
+        const code = `BK-${1000 + b.id}`;
+        const phone = b.guest ? b.guest.phone || '' : '';
+        const name = b.guestName || (b.guest ? b.guest.fullName : 'Guest');
+        
+        const matchesSearch = code.toLowerCase().includes(searchQuery) ||
+                              name.toLowerCase().includes(searchQuery) ||
+                              phone.includes(searchQuery);
+        
+        let matchesStatus = false;
+        if (currentFilter === 'today') {
+          try {
+            const today = new Date().toISOString().split('T')[0];
+            const checkInStr = getCleanDateString(b.checkIn);
+            const checkOutStr = getCleanDateString(b.checkOut);
+            matchesStatus = checkInStr === today || checkOutStr === today;
+          } catch (e) {
+            console.error('Lỗi phân tích cú pháp ngày đơn đặt phòng:', e);
+            matchesStatus = false;
+          }
+        } else {
+          matchesStatus = currentFilter === 'all' || b.status === currentFilter;
+        }
+        return matchesSearch && matchesStatus;
+      });
+
+      document.getElementById('tableSummaryText').innerText = `Hiển thị ${filteredBookings.length} đơn đặt phòng`;
+
+      const badge = document.getElementById('todayFilterBadge');
+      if (badge) {
+        if (currentFilter === 'today') {
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+
+      if (filteredBookings.length === 0) {
+        if (currentFilter === 'today') {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan='10' class='text-center py-8 text-neutral-400 font-medium'><i class='fa-solid fa-calendar-xmark mr-2'></i> Không có đơn đặt phòng nào được xếp lịch nhận phòng trong ngày hôm nay!</td>
+            </tr>
+          `;
+        } else {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="7" class="py-10 text-center text-xs text-stone-500 font-semibold bg-[#FDFBF7]/30">
+                Không tìm thấy đơn đặt phòng nào phù hợp với điều kiện lọc.
+              </td>
+            </tr>
+          `;
+        }
+        return;
+      }
+
+      filteredBookings.forEach(booking => {
+        const nights = getNights(booking.checkIn, booking.checkOut);
+        const grandTotal = calculateTotal(booking);
+
+        // Status Badge Mapping
+        let statusBadge = '';
+        if (booking.status === 'confirmed') {
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Chờ nhận phòng</span>`;
+        } else if (booking.status === 'occupied') {
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Đang lưu trú</span>`;
+        } else if (booking.status === 'completed') {
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Đã hoàn tất</span>`;
+        } else if (booking.status === 'cancelled') {
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">Đã hủy</span>`;
+        }
+
+        // Action Buttons Mapping
+        let actionBtn = '';
+        if (booking.status === 'confirmed') {
+          actionBtn = `
+            <button onclick="checkInBooking(${booking.id})" 
+              class="px-3.5 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm shadow-[#b3541e]/15 cursor-pointer">
+              Nhận phòng
+            </button>`;
+        } else if (booking.status === 'occupied') {
+          actionBtn = `
+            <button onclick="openReceiptModal(${booking.id})" 
+              class="px-3.5 py-2 bg-[#2C2623] hover:bg-black text-white rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm cursor-pointer">
+              Trả phòng & TT
+            </button>`;
+        } else if (booking.status === 'completed') {
+          actionBtn = `<span class="text-[10px] font-bold text-emerald-600 bg-emerald-50/50 px-3 py-1.5 rounded-lg border border-emerald-100/50"><i class="fa-solid fa-circle-check"></i> Đã thanh toán</span>`;
+        } else {
+          actionBtn = `<span class="text-[10px] font-bold text-stone-400 bg-stone-50 px-3 py-1.5 rounded-lg border border-stone-200/50">Hợp đồng hủy</span>`;
+        }
+
+        const roomNum = booking.room ? booking.room.number : 'N/A';
+        const roomType = booking.room ? booking.room.type : 'N/A';
+        const guestName = booking.guestName || (booking.guest ? booking.guest.fullName : 'Guest');
+        const guestPhone = booking.guest ? booking.guest.phone || '0900000000' : '0900000000';
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-[#F7F3EB]/25 transition-colors duration-150';
+        tr.innerHTML = `
+          <td class="py-4.5 px-6 font-mono font-bold text-[#b3541e]">BK-${1000 + booking.id}</td>
+          <td class="py-4.5 px-6">
+            <p class="font-bold text-[#2C2623]">${guestName}</p>
+            <p class="text-[10px] text-stone-400 font-mono mt-0.5">${guestPhone}</p>
+          </td>
+          <td class="py-4.5 px-6">
+            <p class="font-bold text-[#2C2623]">Phòng ${roomNum}</p>
+            <p class="text-[9px] text-[#b3541e] bg-[#b3541e]/5 px-1.5 py-0.5 rounded border border-[#b3541e]/10 inline-block font-semibold mt-1">${roomType}</p>
+          </td>
+          <td class="py-4.5 px-6">
+            <div class="flex items-center gap-1.5 font-mono text-[11px] text-[#2C2623]">
+              <span>${formatDate(booking.checkIn)}</span>
+              <span class="text-[#A89F9A]"><i class="fa-solid fa-right-long text-[9px]"></i></span>
+              <span>${formatDate(booking.checkOut)}</span>
+            </div>
+            <span class="inline-block mt-1 bg-stone-100 text-stone-600 font-bold px-2 py-0.5 rounded-md text-[9px] border border-stone-200/50 font-sans">${nights} Đêm</span>
+          </td>
+          <td class="py-4.5 px-6">${statusBadge}</td>
+          <td class="py-4.5 px-6 font-mono font-bold text-[#b3541e] text-sm">${formatCurrency(grandTotal)}</td>
+          <td class="py-4.5 px-6 text-right">${actionBtn}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // STATE CHANGE WORKFLOWS
+
+    // 1. Check-in (Nhận phòng)
+    async function checkInBooking(id) {
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/bookings/confirm/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          if (res.ok) {
+            console.log(`Đã Check-in đơn đặt phòng ID ${id}`);
+            await refreshData();
+          } else {
+            alert("Lỗi khi kết nối cập nhật trạng thái nhận phòng.");
+          }
+        } catch (err) {
+          console.error("Lỗi kết nối check-in: ", err);
+        }
+      }
+    }
+
+    // 2. Check-out & Receipt (Trả phòng & mở Hóa đơn)
+    async function openReceiptModal(id) {
+      if (!isBackendOnline) return;
+
+      try {
+        const res = await fetch(`${API_URL}/bookings/${id}/invoice`, { headers: getAuthHeaders() });
+        const json = await res.json();
+        const booking = json.data;
+        if (!booking) return;
+
+        selectedBookingIdForPayment = id;
+        const nights = getNights(booking.checkIn, booking.checkOut);
+        const roomPrice = booking.room ? getPrice(booking.room.pricePerNight) : 0;
+        const roomTotal = roomPrice * nights;
+        const serviceTotal = booking.services ? booking.services.reduce((sum, s) => sum + (getPrice(s.price) * s.quantity), 0) : 0;
+        const subtotal = roomTotal + serviceTotal;
+        const vat = subtotal * 0.10;
+        const grandTotal = subtotal + vat;
+
+        // Header Meta details
+        const now = new Date();
+        const timestamp = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        document.getElementById('invoiceMeta').innerText = `Mã HD: HD-${String(booking.id).padStart(4, '0')} | Ngày in: ${timestamp}`;
+
+        // Customer profile summary
+        const guestName = booking.guestName || (booking.guest ? booking.guest.fullName : 'Guest');
+        const guestPhone = booking.guest ? booking.guest.phone || '0900000000' : '0900000000';
+        const roomNum = booking.room ? booking.room.number : 'N/A';
+        const roomType = booking.room ? booking.room.type : 'N/A';
+
+        document.getElementById('invoiceGuestName').innerText = guestName;
+        document.getElementById('invoiceGuestPhone').innerText = `SĐT: ${guestPhone}`;
+        document.getElementById('invoiceRoomDetail').innerText = `Phòng ${roomNum} - Hạng ${roomType}`;
+        document.getElementById('invoiceStayDates').innerText = `${formatDate(booking.checkIn)} ➔ ${formatDate(booking.checkOut)}`;
+
+        // SECTION A: Room Stay
+        const roomTbody = document.getElementById('invoiceRoomTableBody');
+        roomTbody.innerHTML = `
+          <tr class="text-stone-700 hover:bg-stone-50/40 transition-colors">
+            <td class="py-3 px-4 font-semibold">Phòng ${roomType} ${roomNum}</td>
+            <td class="py-3 px-4 text-center font-mono font-medium">${formatCurrency(roomPrice)}</td>
+            <td class="py-3 px-4 text-center font-semibold">${nights} Đêm</td>
+            <td class="py-3 px-4 text-right font-mono font-bold text-[#b3541e]">${formatCurrency(roomTotal)}</td>
+          </tr>
+        `;
+
+        // SECTION B: Services
+        const serviceTbody = document.getElementById('invoiceServiceTableBody');
+        serviceTbody.innerHTML = '';
+        if (!booking.services || booking.services.length === 0) {
+          serviceTbody.innerHTML = `
+            <tr>
+              <td colspan="5" class="py-4 px-4 text-center text-stone-400 italic">
+                Không phát sinh dịch vụ phụ trợ.
+              </td>
+            </tr>
+          `;
+        } else {
+          booking.services.forEach(s => {
+            const catBadge = getServiceCategoryBadge(s.serviceName);
+            serviceTbody.innerHTML += `
+              <tr class="border-t border-stone-100 text-stone-700 hover:bg-stone-50/40 transition-colors">
+                <td class="py-3 px-4 font-semibold">${s.serviceName}</td>
+                <td class="py-3 px-4 text-center">${catBadge}</td>
+                <td class="py-3 px-4 text-center font-mono">${formatCurrency(getPrice(s.price))}</td>
+                <td class="py-3 px-4 text-center font-semibold font-mono">x${s.quantity}</td>
+                <td class="py-3 px-4 text-right font-mono font-bold text-[#b3541e]">${formatCurrency(getPrice(s.price) * s.quantity)}</td>
+              </tr>
+            `;
+          });
+        }
+
+        // SECTION C: Grand Total
+        document.getElementById('invoiceSubtotal').innerText = formatCurrency(subtotal);
+        document.getElementById('invoiceVat').innerText = formatCurrency(vat);
+        document.getElementById('invoiceGrandTotal').innerText = formatCurrency(grandTotal);
+
+        // Default payment selector
+        document.getElementById('invoicePaymentMethod').value = 'Tiền mặt';
+
+        document.getElementById('receiptModal').classList.remove('hidden');
+      } catch (err) {
+        console.error("Lỗi khi mở hóa đơn thanh toán:", err);
+      }
+    }
+
+    function getServiceCategoryBadge(name) {
+      const lower = name.toLowerCase();
+      if (lower.includes('spa') || lower.includes('trị liệu') || lower.includes('massage')) {
+        return `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-rose-50 text-rose-700 border border-rose-200">Spa</span>`;
+      }
+      if (lower.includes('ẩm thực') || lower.includes('trà') || lower.includes('ăn') || lower.includes('meal')) {
+        return `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-orange-50 text-orange-700 border border-orange-200">Ẩm thực</span>`;
+      }
+      if (lower.includes('đưa đón') || lower.includes('xe') || lower.includes('shuttle')) {
+        return `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-slate-50 text-slate-700 border border-slate-200">Đưa đón</span>`;
+      }
+      return `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-sky-50 text-sky-700 border border-sky-200">Tiện ích</span>`;
+    }
+
+    function closeReceiptModal() {
+      document.getElementById('receiptModal').classList.add('hidden');
+      selectedBookingIdForPayment = null;
+    }
+
+    // Payment completion workflow
+    const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+    if (confirmPaymentBtn) {
+      confirmPaymentBtn.addEventListener('click', async function() {
+        if (!selectedBookingIdForPayment) return;
+
+        try {
+          const res = await fetch(`${API_URL}/bookings/checkout/${selectedBookingIdForPayment}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ staffId: 2 }) // Jane Doe (Receptionist)
+          });
+          if (res.ok) {
+            console.log(`Đã hoàn tất checkout cho booking ID ${selectedBookingIdForPayment}`);
+            
+            // Trigger print & update
+            window.print();
+            closeReceiptModal();
+            await refreshData();
+          } else {
+            alert("Lỗi khi thực hiện xác nhận thanh toán.");
+          }
+        } catch (err) {
+          console.error("Lỗi kết nối thanh toán: ", err);
+        }
+      });
+    }
+
+    // Logout Action
+    function handleLogout(e) {
+      if (e) e.preventDefault();
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = './login.html';
+    }
+
+    // Profile Modal Actions
+    async function openProfileModal(e) {
+      if (e) e.preventDefault();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+
+      document.getElementById('oldPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmNewPassword').value = '';
+
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/me`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        const result = await res.json();
+        if (res.ok && result.success && result.data) {
+          const user = result.data;
+          document.getElementById('profileFullName').textContent = user.fullName;
+          document.getElementById('profileUsername').textContent = user.username;
+          document.getElementById('profileEmail').textContent = user.email;
+          document.getElementById('profilePhone').textContent = user.phone || 'Chưa cung cấp';
+          let roleText = 'Nhân Viên Lễ Tân';
+          const r = (user.role || '').toLowerCase().trim();
+          if (r === 'admin') roleText = 'Quản Trị Viên';
+          else if (r === 'receptionist') roleText = 'Nhân Viên Lễ Tân';
+          else if (r === 'cleaner') roleText = 'Nhân Viên Dọn Dẹp';
+          else if (r === 'accountant') roleText = 'Nhân Viên Kế Toán';
+          else if (['tech', 'technical', 'technician', 'kỹ thuật', 'ky_thuat'].includes(r)) roleText = 'Nhân Viên Kỹ Thuật';
+          document.getElementById('profileRole').textContent = roleText;
+        } else {
+          alert('Không thể tải thông tin hồ sơ: ' + (result.message || 'Lỗi không xác định'));
+        }
+      } catch (err) {
+        console.error('Error loading profile details:', err);
+        alert('Không thể kết nối đến máy chủ để tải thông tin hồ sơ.');
+      }
+
+      document.getElementById('profileModal').classList.remove('hidden');
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profileModal').classList.add('hidden');
+    }
+
+    async function submitChangePassword(e) {
+      if (e) e.preventDefault();
+      const oldPassword = document.getElementById('oldPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+      if (newPassword !== confirmNewPassword) {
+        alert('Mật khẩu mới và Xác nhận mật khẩu không khớp!');
+        return;
+      }
+
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/change-password`, {
+          method: 'PUT',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ oldPassword, newPassword })
+        });
+        const result = await res.json();
+        if (res.ok && result.success) {
+          alert('Đổi mật khẩu thành công!');
+          closeProfileModal();
+        } else {
+          alert('Lỗi: ' + (result.message || 'Đổi mật khẩu thất bại'));
+        }
+      } catch (err) {
+        console.error('Error changing password:', err);
+        alert('Không thể kết nối đến máy chủ để đổi mật khẩu.');
+      }
+    }
+
+    // Window focus sync reload
+    window.addEventListener('focus', refreshData);
+
+    // Helper to update UI elements based on clocked-in state
+    function updateAttendanceUI(isClockedIn) {
+      localStorage.setItem('isClockedIn', isClockedIn ? 'true' : 'false');
+      const pill = document.getElementById('attendanceStatusPill');
+      const btn = document.getElementById('attendanceBtn');
+      if (pill && btn) {
+        if (isClockedIn) {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none border-emerald-200 bg-emerald-50 text-emerald-700';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>ĐANG LÀM VIỆC';
+          btn.innerHTML = '🔴 Kết Thúc Ca Làm';
+        } else {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none border-stone-200 bg-stone-50 text-stone-500';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>ĐÃ RA CA';
+          btn.innerHTML = '🟢 Điểm Danh Vào Ca';
+        }
+      }
+    }
+
+    async function checkAttendanceState() {
+      const role = localStorage.getItem('userRole');
+      if (role !== 'receptionist' && role !== 'cleaner') {
+        return;
+      }
+      const apiBase = typeof API_URL !== 'undefined' ? API_URL : (typeof API_BASE !== 'undefined' ? API_BASE : '/api');
+      try {
+        const res = await fetch(`${apiBase}/attendance/status`, { headers: getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            updateAttendanceUI(data.isClockedIn);
+          }
+        }
+      } catch (err) {
+        console.error('Lỗi đồng bộ chấm công:', err);
+      }
+    }
+
+    async function initAttendanceSubsystem() {
+      const role = localStorage.getItem('userRole');
+      if (role !== 'receptionist' && role !== 'cleaner') {
+        return;
+      }
+
+      const apiBase = typeof API_URL !== 'undefined' ? API_URL : (typeof API_BASE !== 'undefined' ? API_BASE : '/api');
+      const profileDropdown = document.getElementById('profileDropdown');
+      const profileDropdownContainer = document.getElementById('profileDropdownContainer');
+      if (!profileDropdown || !profileDropdownContainer) return;
+
+      // 1. Create status pill if it doesn't exist
+      let pill = document.getElementById('attendanceStatusPill');
+      if (!pill) {
+        pill = document.createElement('div');
+        pill.id = 'attendanceStatusPill';
+        pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none';
+        profileDropdownContainer.parentNode.insertBefore(pill, profileDropdownContainer);
+      }
+
+      // 2. Create button if it doesn't exist
+      let btn = document.getElementById('attendanceBtn');
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'attendanceBtn';
+        btn.className = 'flex items-center gap-2 px-4 py-2.5 text-xs font-semibold w-full text-left transition-all duration-150 border-b border-[#E5DFD3]/40 cursor-pointer focus:outline-none hover:bg-[#F7F3EB] hover:text-[#b3541e]';
+        profileDropdown.insertBefore(btn, profileDropdown.firstChild);
+      }
+
+      // Set initial UI instantly from localStorage to avoid flicker
+      const localClockedIn = localStorage.getItem('isClockedIn') === 'true';
+      updateAttendanceUI(localClockedIn);
+
+      // Fetch status from server to sync
+      await checkAttendanceState();
+
+      // Handle click event
+      btn.onclick = async function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Hide the profile dropdown to look clean
+        profileDropdown.classList.add('hidden');
+        
+        const currentlyClockedIn = localStorage.getItem('isClockedIn') === 'true';
+        if (!currentlyClockedIn) {
+          // Check in
+          try {
+            const res = await fetch(`${apiBase}/attendance/check-in`, {
+              method: 'POST',
+              headers: getAuthHeaders()
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              updateAttendanceUI(true);
+              alert(data.message || 'Điểm danh vào ca thành công!');
+            } else {
+              alert('Lỗi: ' + (data.message || 'Không thể điểm danh vào ca'));
+            }
+          } catch (err) {
+            console.error('Lỗi check-in:', err);
+            alert('Không thể kết nối máy chủ để điểm danh vào ca.');
+          }
+        } else {
+          // Check out
+          try {
+            const res = await fetch(`${apiBase}/attendance/check-out`, {
+              method: 'POST',
+              headers: getAuthHeaders()
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              updateAttendanceUI(false);
+              const hours = data.data ? data.data.totalHours : 0;
+              alert(`Bạn đã hoàn thành ca làm việc! Tổng thời gian: ${hours} giờ.`);
+            } else {
+              alert('Lỗi: ' + (data.message || 'Không thể kết thúc ca làm'));
+            }
+          } catch (err) {
+            console.error('Lỗi check-out:', err);
+            alert('Không thể kết nối máy chủ để kết thúc ca làm.');
+          }
+        }
+      };
+    }
+    window.addEventListener('DOMContentLoaded', initAttendanceSubsystem);
+
+    // Initialize Page load
+    window.addEventListener('DOMContentLoaded', initPage);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-[#FDFBF7] text-[#2C2623]">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeHaven Resort - Quản Lý Dịch Vụ & Tiện Ích</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            terracotta: {
+              50: '#fdf4f0',
+              100: '#fbe7de',
+              200: '#f7d2c1',
+              300: '#efb197',
+              400: '#e38664',
+              500: '#b3541e', /* Terracotta Red-Brown */
+              600: '#9b4117',
+              700: '#813313',
+              800: '#682912',
+              950: '#381205',
+            },
+            luxury: {
+              cream: '#FDFBF7',
+              sand: '#F7F3EB',
+              charcoal: '#2C2623',
+              gold: '#C5A880',
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts - Playfair Display & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&family=Playfair+Display:ital,wght=0,400..900;1,400..900&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    .font-serif-luxury {
+      font-family: 'Playfair Display', serif;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Elegant soft custom scrollbar matching cream design */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F7F3EB;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #E5DFD3;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b3541e;
+    }
+  </style>
+</head>
+
+<body class="h-full flex overflow-hidden bg-[#FDFBF7]">
+
+  <!-- ================= THANH ĐIỀU HƯỚNG BÊN (SIDEBAR) ================= -->
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebarBackdrop" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-40 hidden lg:hidden"
+    onclick="toggleMobileSidebar()"></div>
+
+  <aside id="sidebar"
+    class="fixed inset-y-0 left-0 w-64 bg-white border-r border-[#E5DFD3]/80 z-50 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-300 ease-in-out shadow-sm">
+    <div>
+      <!-- Brand Logo / Resort Title -->
+      <div class="h-20 flex items-center px-6 border-b border-[#E5DFD3]/60 bg-[#FDFBF7]/50">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#b3541e] flex items-center justify-center shadow-lg shadow-[#b3541e]/20">
+            <i class="fa-solid fa-umbrella-beach text-white text-lg"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-base font-serif-luxury font-bold tracking-wide text-[#2C2623]">LuxeHaven</span>
+            <span class="text-[9px] font-semibold text-[#b3541e] uppercase tracking-widest mt-0.5">Khu Nghỉ Dưỡng</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-4 space-y-1.5">
+        <a href="./dashboard_AD.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-hotel w-5 text-center"></i>
+          <span>Tổng Quan Hệ Thống</span>
+        </a>
+        <a href="./rooms.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-key w-5 text-center"></i>
+          <span>Quản Lý Phòng</span>
+        </a>
+        <a href="./bookings.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-calendar-days w-5 text-center"></i>
+          <span>Đặt Phòng</span>
+        </a>
+        <a href="./services.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium bg-[#b3541e] text-white shadow-md shadow-[#b3541e]/15 transition-all duration-200">
+          <i class="fa-solid fa-spa w-5 text-center"></i>
+          <span>Dịch Vụ Khách Sạn</span>
+        </a>
+        <a href="./housekeeping.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-broom w-5 text-center"></i>
+          <span>Nhật Ký Dọn Phòng</span>
+        </a>
+        <a href="./users.html" id="sidebarUsersLink"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-user-shield w-5 text-center"></i>
+          <span>Quản Lý Người Dùng</span>
+        </a>
+        <a href="./accounting.html" id="sidebarAccountingLink"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-wallet w-5 text-center"></i>
+          <span>Quản Lý Tài Chính</span>
+        </a>
+      </nav>
+    </div>
+
+  </aside>
+
+  <!-- ================= MAIN LAYOUT WRAPPER ================= -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+    <!-- ================= THANH NAVBAR TRÊN ================= -->
+    <header class="h-20 bg-white border-b border-[#E5DFD3]/60 flex items-center justify-between px-6 z-30 shadow-sm">
+      <div class="flex items-center gap-4 flex-1">
+        <!-- Mobile Sidebar Toggle -->
+        <button onclick="toggleMobileSidebar()"
+          class="lg:hidden p-2 rounded-xl text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB] transition-colors cursor-pointer">
+          <i class="fa-solid fa-bars-staggered text-lg"></i>
+        </button>
+
+        <!-- Search Bar -->
+        <div class="max-w-md w-full relative hidden sm:block">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A89F9A]">
+            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+          </div>
+          <input type="text" id="serviceGlobalSearch" oninput="filterCatalogueAndOrders(this.value)"
+            placeholder="Tìm kiếm dịch vụ, phòng đặt..."
+            class="w-full text-xs bg-[#F7F3EB]/50 text-[#2C2623] placeholder-[#A89F9A] rounded-xl pl-9 pr-4 py-2.5 border border-[#E5DFD3]/80 focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <!-- User Actions & Info -->
+      <div class="flex items-center gap-5">
+        <!-- Backend Status Banner Indicator -->
+        <div id="backendStatusBadge"
+          class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border">
+          <span id="backendStatusDot" class="w-1.5 h-1.5 rounded-full"></span>
+          <span id="backendStatusText">Đang kiểm tra kết nối...</span>
+        </div>
+
+        <!-- Notification -->
+        <div class="relative" id="notificationContainer">
+          <button id="notificationBellBtn"
+            class="p-2.5 rounded-xl text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB] transition-all cursor-pointer">
+            <i class="fa-solid fa-bell text-sm"></i>
+          </button>
+          <span id="notificationDot" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#b3541e] border-2 border-white rounded-full hidden"></span>
+          
+          <!-- Dropdown Panel -->
+          <div id="notificationDropdown" class="absolute right-0 mt-2 w-80 bg-white border border-[#E5DFD3]/60 rounded-2xl shadow-xl z-50 hidden overflow-hidden">
+            <div class="p-3.5 border-b border-[#E5DFD3]/60 bg-[#FDFBF7]/50 flex items-center justify-between">
+              <span class="text-xs font-bold text-[#2C2623]">Thông báo</span>
+              <button onclick="markAllNotificationsAsRead(event)" class="text-[10px] font-semibold text-[#b3541e] hover:underline cursor-pointer">
+                Đánh dấu đã đọc
+              </button>
+            </div>
+            <div id="notificationList" class="max-h-80 overflow-y-auto divide-y divide-[#E5DFD3]/40">
+              <!-- Dynamic rows go here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Vertical Divider -->
+        <span class="h-7 w-px bg-[#E5DFD3]/60"></span>
+
+        <!-- Profile Menu -->
+        <div class="relative" id="profileDropdownContainer">
+          <button class="flex items-center gap-3.5 hover:opacity-90 focus:outline-none cursor-pointer">
+            <div
+              class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#b3541e] to-[#e38664] flex items-center justify-center font-bold text-white text-sm shadow-md">
+              LT
+            </div>
+            <div class="text-left hidden md:block">
+              <p class="text-xs font-semibold text-[#2C2623]" id="navUserName">Jane Doe</p>
+              <p class="text-[10px] text-[#b3541e] font-semibold tracking-wider uppercase mt-0.5" id="navUserRole">Lễ Tân</p>
+            </div>
+            <i class="fa-solid fa-chevron-down text-[#A89F9A] text-[9px]"></i>
+          </button>
+
+          <!-- Dropdown List -->
+          <div id="profileDropdown"
+            class="absolute right-0 mt-3 w-48 bg-white border border-[#E5DFD3]/80 rounded-xl shadow-xl py-1.5 hidden z-50">
+            <a href="#" onclick="openProfileModal(event)"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-[#5C524E] hover:bg-[#F7F3EB] hover:text-[#b3541e]"><i
+                class="fa-solid fa-user w-4 text-center"></i> Hồ sơ cá nhân</a>
+            <a href="#" onclick="openConfigModal(event)"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-[#5C524E] hover:bg-[#F7F3EB] hover:text-[#b3541e]"><i
+                class="fa-solid fa-sliders w-4 text-center"></i> Thiết lập cấu hình</a>
+            <hr class="border-[#E5DFD3]/40 my-1">
+            <a href="#" onclick="handleLogout(event)" class="flex items-center gap-2 px-4 py-2 text-xs text-rose-600 hover:bg-rose-50"><i
+                class="fa-solid fa-power-off w-4 text-center"></i> Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= NỘI DUNG CHÍNH (CONTENT AREA) ================= -->
+    <main class="flex-1 overflow-y-auto p-6 space-y-6">
+
+      <!-- Page Title Header -->
+      <div class="bg-white border border-[#E5DFD3]/60 p-6 rounded-2xl shadow-sm">
+        <span
+          class="text-[10px] font-bold text-[#b3541e] uppercase tracking-widest bg-[#b3541e]/5 px-2.5 py-1 rounded-full">Phân
+          Hệ Dịch Vụ Khách Sạn</span>
+        <h1 class="text-2xl font-serif-luxury font-bold text-[#2C2623] mt-2">Dịch Vụ & Tiện Ích</h1>
+        <p class="text-xs text-[#81726A] mt-1">Quản lý danh mục dịch vụ nghỉ dưỡng cao cấp của resort và phân hệ tiếp
+          nhận, xử lý cuộc gọi dịch vụ phòng trực tiếp.</p>
+      </div>
+
+      <!-- ================= TABS NAVIGATION SWITCHER ================= -->
+      <div class="border-b border-[#E5DFD3] flex items-center gap-6">
+        <button onclick="switchTab('service-catalogue')" id="tabBtn-service-catalogue"
+          class="pb-3 text-sm font-semibold border-b-2 border-[#b3541e] text-[#b3541e] transition-all cursor-pointer">
+          Danh Mục Dịch Vụ
+        </button>
+        <button onclick="switchTab('room-service-orders')" id="tabBtn-room-service-orders"
+          class="pb-3 text-sm font-semibold border-b-2 border-transparent text-[#81726A] hover:text-[#b3541e] transition-all cursor-pointer">
+          Đặt Dịch Vụ Tại Phòng
+        </button>
+      </div>
+
+      <!-- ================= TAB 1: SERVICE CATALOGUE PANEL ================= -->
+      <section id="tab-service-catalogue" class="space-y-6 block">
+        <!-- Sub Header & Add Button -->
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold text-[#2C2623] font-serif-luxury">Danh Sách Tiện Ích Nghỉ Dưỡng</h3>
+            <p class="text-xs text-[#81726A] mt-0.5">Quản lý thông tin biểu giá và khả năng cung ứng của các tiện ích
+              cao cấp.</p>
+          </div>
+          <div id="adminServiceActionBar">
+            <button onclick="openAddServiceModal()"
+              class="flex items-center gap-1.5 px-4 py-2.5 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md shadow-[#b3541e]/15 transition-all cursor-pointer">
+              <i class="fa-solid fa-plus text-[10px]"></i>
+              <span>Thêm Dịch Vụ Mới</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Catalogue Data Table -->
+        <div class="bg-white border border-[#E5DFD3]/60 rounded-2xl overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="border-b border-[#E5DFD3]/85 text-[10px] font-bold tracking-wider text-[#81726A] uppercase bg-[#F7F3EB]/40">
+                  <th class="py-4 px-6">Mã Dịch Vụ</th>
+                  <th class="py-4 px-6">Tên Dịch Vụ / Phân Loại</th>
+                  <th class="py-4 px-6">Đơn Giá</th>
+                  <th class="py-4 px-6">Trạng Thái Hoạt Động</th>
+                  <th class="py-4 px-6 text-right font-medium">Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#E5DFD3]/40 text-xs text-[#5C524E]" id="serviceCatalogueBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+          <div class="px-6 py-4 border-t border-[#E5DFD3]/60 bg-[#FDFBF7]/30 text-center">
+            <span class="text-[10px] text-[#81726A] font-medium" id="catalogueSummary">Hiển thị 6 dịch vụ hiện có</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 2: ROOM SERVICE ORDERS PANEL ================= -->
+      <section id="tab-room-service-orders" class="space-y-6 hidden">
+        <!-- Live Order Input Form Card -->
+        <div class="bg-white border border-[#E5DFD3]/60 p-6 rounded-2xl shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-[#E5DFD3]/50 pb-3">
+            <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+              <i class="fa-solid fa-bell-concierge text-[#b3541e]"></i>
+              <span>Yêu Cầu Gọi Dịch Vụ Tại Phòng</span>
+            </h3>
+            <span
+              class="text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Tiếp
+              nhận trực tiếp</span>
+          </div>
+
+          <!-- Live Form Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end text-xs">
+            <div>
+              <label class="block font-bold text-[#5C524E] mb-1.5">Chọn Phòng Đang Lưu Trú</label>
+              <select id="orderRoomSelector" onchange="updateGuestNameForOrder()"
+                class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+                <option value="">-- Chọn phòng --</option>
+                <!-- Populated dynamically with occupied rooms -->
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-[#5C524E] mb-1.5">Chọn Dịch Vụ Cung Cấp</label>
+              <select id="orderServiceSelector" onchange="calculateOrderTotal()"
+                class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+                <option value="">-- Chọn dịch vụ --</option>
+                <!-- Populated dynamically with available services -->
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-[#5C524E] mb-1.5">Số Lượng Yêu Cầu</label>
+              <input type="number" id="orderQuantity" min="1" value="1" oninput="calculateOrderTotal()"
+                class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            </div>
+            <div class="bg-[#F7F3EB]/50 border border-[#E5DFD3]/80 rounded-xl p-3.5 flex items-center justify-between">
+              <div>
+                <p class="text-[9px] font-bold text-[#81726A] uppercase tracking-wider leading-none">Tổng Thanh Toán</p>
+                <p class="text-sm font-bold text-[#b3541e] font-mono mt-1" id="orderTotalDisplay">0đ</p>
+              </div>
+              <button onclick="submitRoomServiceOrder()"
+                class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white font-bold rounded-lg text-[10px] uppercase tracking-wider transition-all cursor-pointer">Gửi
+                Đơn</button>
+            </div>
+          </div>
+          <!-- Auto occupant display -->
+          <div class="text-[10px] text-[#81726A] font-medium" id="orderOccupantText">
+            Khách lưu trú: <span class="font-bold text-[#2C2623]" id="orderOccupantName">Vui lòng chọn phòng</span>
+          </div>
+        </div>
+
+        <!-- History Table of Orders -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+            <i class="fa-solid fa-clock-rotate-left text-[#b3541e]"></i>
+            <span>Lịch Sử Gọi Dịch Vụ Trong Ngày</span>
+          </h3>
+          <div class="bg-white border border-[#E5DFD3]/60 rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="border-b border-[#E5DFD3]/85 text-[10px] font-bold tracking-wider text-[#81726A] uppercase bg-[#F7F3EB]/40">
+                    <th class="py-4 px-6">Thời Gian</th>
+                    <th class="py-4 px-6">Số Phòng</th>
+                    <th class="py-4 px-6">Tên Khách Hàng</th>
+                    <th class="py-4 px-6">Dịch Vụ & Số Lượng</th>
+                    <th class="py-4 px-6 font-mono text-center">Tổng Tiền</th>
+                    <th class="py-4 px-6">Trạng Thái Xử Lý</th>
+                    <th class="py-4 px-6 text-right font-medium">Thao Tác</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-[#E5DFD3]/40 text-xs text-[#5C524E]" id="serviceOrdersBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="h-12 bg-white border-t border-[#E5DFD3]/60 flex items-center justify-between px-6 text-[10px] text-[#81726A] font-medium z-10 shrink-0">
+      <span>&copy; 2026 LuxeHaven Resort - Hệ Thống Quản Lý Đặt Phòng Cao Cấp</span>
+      <span class="flex items-center gap-1.5"><span
+          class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>Bảng Quản Lý Dịch Vụ Đồng Bộ</span>
+    </footer>
+
+  </div>
+
+  <!-- ================= ADD NEW SERVICE MODAL ================= -->
+  <div id="addServiceModal"
+    class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div
+      class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-plus text-[#b3541e]"></i>
+          <span>Thêm Dịch Vụ Nghỉ Dưỡng Mới</span>
+        </h3>
+        <button onclick="closeAddServiceModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i
+            class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Add Form -->
+      <div class="space-y-3.5 text-xs">
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Tên Dịch Vụ</label>
+          <input type="text" id="newServiceName" placeholder="Ví dụ: Trà Chiều Hoàng Hôn"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Phân Loại Dịch Vụ</label>
+          <select id="newServiceCategory"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="Ẩm thực">Ẩm thực (F&B)</option>
+            <option value="Spa">Spa & Trị liệu (Wellness)</option>
+            <option value="Tour khám phá">Tour du lịch khám phá (Excursions)</option>
+            <option value="Xe đưa đón">Đưa đón sân bay & Hạng sang (Transport)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Đơn Giá (VND)</label>
+          <input type="number" id="newServicePrice" placeholder="Ví dụ: 350000"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Trạng Thái Hoạt Động</label>
+          <select id="newServiceAvailability"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="true">Đang phục vụ</option>
+            <option value="false">Tạm ngưng</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+        <button onclick="closeAddServiceModal()"
+          class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+        <button onclick="submitNewService()"
+          class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Lưu
+          dịch vụ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= EDIT PRICE MODAL ================= -->
+  <div id="editPriceModal"
+    class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div
+      class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square text-[#b3541e]"></i>
+          <span>Chỉnh Sửa Giá Dịch Vụ</span>
+        </h3>
+        <button onclick="closeEditPriceModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i
+            class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Edit price Form -->
+      <div class="space-y-3.5 text-xs">
+        <div>
+          <p class="text-[10px] text-[#81726A] uppercase tracking-wider font-bold">Dịch Vụ</p>
+          <p class="font-bold text-[#2C2623] text-sm mt-0.5" id="editPriceServiceName">Tên dịch vụ</p>
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Đơn Giá Mới (VND)</label>
+          <input type="number" id="editPriceInput" placeholder="Ví dụ: 400000"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+          <input type="hidden" id="editPriceServiceId">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+        <button onclick="closeEditPriceModal()"
+          class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+        <button onclick="submitUpdatedPrice()"
+          class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Cập
+          nhật giá</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: HỒ SƠ CÁ NHÂN & ĐỔI MẬT KHẨU ================= -->
+  <div id="profileModal" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-user-circle text-[#b3541e] text-base"></i>
+          <span>Hồ Sơ Cá Nhân</span>
+        </h3>
+        <button onclick="closeProfileModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Staff Details Display -->
+      <div class="p-3.5 bg-[#F7F3EB]/50 border border-[#E5DFD3] rounded-xl text-xs space-y-2 text-[#5C524E]">
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Họ và tên:</span>
+          <span class="font-bold text-[#2C2623]" id="profileFullName">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Tên đăng nhập:</span>
+          <span class="font-mono font-bold text-[#2C2623]" id="profileUsername">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Email:</span>
+          <span class="font-bold text-[#2C2623]" id="profileEmail">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Số điện thoại:</span>
+          <span class="font-mono font-bold text-[#2C2623]" id="profilePhone">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Chức vụ:</span>
+          <span class="font-bold text-[#b3541e]" id="profileRole">--</span>
+        </p>
+      </div>
+
+      <!-- Change Password Form -->
+      <form id="changePasswordForm" class="space-y-3 pt-2 border-t border-[#E5DFD3]/60" onsubmit="submitChangePassword(event)">
+        <h4 class="text-xs font-bold text-[#2C2623] uppercase tracking-wider">Đổi mật khẩu tài khoản</h4>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Mật khẩu hiện tại</label>
+          <input type="password" id="oldPassword" required placeholder="Nhập mật khẩu hiện tại..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Mật khẩu mới</label>
+          <input type="password" id="newPassword" required placeholder="Nhập mật khẩu mới..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Xác nhận mật khẩu mới</label>
+          <input type="password" id="confirmNewPassword" required placeholder="Xác nhận mật khẩu mới..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+          <button type="button" onclick="closeProfileModal()"
+            class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+          <button type="submit"
+            class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Cập nhật</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: THIẾT LẬP CẤU HÌNH ================= -->
+  <div id="configModal" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-[#b3541e] text-base"></i>
+          <span>Thiết Lập Cấu Hình</span>
+        </h3>
+        <button onclick="closeConfigModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Config Form -->
+      <form id="configForm" class="space-y-3.5 text-xs" onsubmit="submitConfigForm(event)">
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Ca làm việc hoạt động (Active Shift)</label>
+          <select id="configShift"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="Ca Sáng">Ca Sáng (08:00 - 16:00)</option>
+            <option value="Ca Chiều">Ca Chiều (16:00 - 24:00)</option>
+            <option value="Ca Đêm">Ca Đêm (00:00 - 08:00)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Chế độ giao diện (Interface Theme)</label>
+          <select id="configTheme"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="luxury-light">Luxury Light (Mặc định sáng)</option>
+            <option value="luxury-warm">Luxury Cream (Ấm áp)</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+          <button type="button" onclick="closeConfigModal()"
+            class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+          <button type="submit"
+            class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Lưu cấu hình</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= CLIENT SIDE INTERACTIONS SCRIPT ================= -->
+  <script>
+    // ============================================================
+    // ROLE-BASED ACCESS CONTROL GUARD
+    // Runs synchronously before any rendering to prevent UI flicker
+    // ============================================================
+    (function applyRoleBasedAccessControl() {
+      const currentUserRole = localStorage.getItem('userRole');
+      const currentFullName = localStorage.getItem('fullName');
+
+      // 1. Auth Guard: Redirect to login if not authenticated
+      if (!currentUserRole) {
+        window.location.href = './login.html';
+        return;
+      }
+
+      if (currentUserRole === 'cleaner') {
+        window.location.href = './housekeeping.html';
+        return;
+      }
+
+      if (currentUserRole === 'accountant') {
+        window.location.href = './accounting.html';
+        return;
+      }
+
+      // 2. Update Header Profile Display from localStorage (instant, no flicker)
+      const navUserNameEl = document.getElementById('navUserName');
+      const navUserRoleEl = document.getElementById('navUserRole');
+      const initialsEl = document.querySelector('#profileDropdownContainer .rounded-xl.bg-gradient-to-tr');
+
+      if (navUserNameEl && currentFullName) navUserNameEl.textContent = currentFullName;
+      if (navUserRoleEl) {
+        let roleText = 'LỄ TÂN';
+        const r = (currentUserRole || '').toLowerCase().trim();
+        if (r === 'admin') roleText = 'QUẢN TRỊ VIÊN';
+        else if (r === 'cleaner') roleText = 'BUỒNG PHÒNG';
+        else if (r === 'accountant') roleText = 'KẾ TOÁN KINH DOANH';
+        else if (['tech', 'technical', 'technician', 'kỹ thuật', 'ky_thuat'].includes(r)) roleText = 'KỸ THUẬT';
+        navUserRoleEl.textContent = roleText;
+      }
+      if (initialsEl && currentFullName) {
+        const names = currentFullName.trim().split(' ');
+        const initials = names.length > 1
+          ? (names[0][0] + names[names.length - 1][0]).toUpperCase()
+          : names[0].substring(0, 2).toUpperCase();
+        initialsEl.textContent = initials;
+      }
+
+      // 3. Customize Sidebar and options based on Role
+      const serviceActionBar = document.getElementById('adminServiceActionBar');
+      const usersLink = document.getElementById('sidebarUsersLink');
+      const acctLink = document.getElementById('sidebarAccountingLink');
+
+      if (currentUserRole === 'admin') {
+        if (serviceActionBar) serviceActionBar.classList.remove('hidden');
+        if (usersLink) usersLink.classList.remove('hidden');
+        if (acctLink) acctLink.classList.remove('hidden');
+      } else {
+        if (serviceActionBar) serviceActionBar.classList.add('hidden');
+        if (usersLink) usersLink.classList.add('hidden');
+        if (acctLink) acctLink.classList.add('hidden');
+      }
+    })();
+
+    // Track user role for dynamic renders
+    const currentUserRole = localStorage.getItem('userRole');
+
+    const API_URL = '/api';
+
+    function getAuthHeaders() {
+      const token = localStorage.getItem('token');
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      };
+    }
+
+    // loadUserProfileHeader: syncs API data to localStorage for consistency
+    async function loadUserProfileHeader() {
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/me`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        if (res.status === 401) {
+          localStorage.clear();
+          window.location.href = './login.html';
+          return;
+        }
+        if (res.ok) {
+          const result = await res.json();
+          if (result.success && result.data) {
+            const user = result.data;
+            localStorage.setItem('fullName', user.fullName);
+            localStorage.setItem('userRole', user.role);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching user profile for header:', err);
+      }
+    }
+
+    // Profile Dropdown Toggle
+    function toggleProfileDropdown(e) {
+      if (e) e.stopPropagation();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.toggle('hidden');
+    }
+
+    // Attach robust click listener to the profile wrapper button
+    (function initProfileDropdown() {
+      const profileBtn = document.querySelector('#profileDropdownContainer button');
+      const dropdown = document.getElementById('profileDropdown');
+      
+      if (profileBtn && dropdown) {
+        profileBtn.removeAttribute('onclick');
+        profileBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          dropdown.classList.toggle('hidden');
+          const notifDropdown = document.getElementById('notificationDropdown');
+          if (notifDropdown) notifDropdown.classList.add('hidden');
+        });
+      }
+      
+      document.addEventListener('click', function (e) {
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!dropdown.contains(e.target) && (!profileBtn || !profileBtn.contains(e.target))) {
+            dropdown.classList.add('hidden');
+          }
+        }
+      });
+    })();
+
+    // Notification Dropdown Toggle & Polling
+    (function initNotificationDropdown() {
+      const bellBtn = document.getElementById('notificationBellBtn');
+      const dropdown = document.getElementById('notificationDropdown');
+      
+      if (bellBtn && dropdown) {
+        bellBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          dropdown.classList.toggle('hidden');
+          const profileDropdown = document.getElementById('profileDropdown');
+          if (profileDropdown) profileDropdown.classList.add('hidden');
+        });
+      }
+      
+      document.addEventListener('click', function (e) {
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!dropdown.contains(e.target) && (!bellBtn || !bellBtn.contains(e.target))) {
+            dropdown.classList.add('hidden');
+          }
+        }
+      });
+
+      // Poll notifications immediately and every 30 seconds
+      fetchNotifications();
+      setInterval(fetchNotifications, 30000);
+    })();
+
+    async function fetchNotifications() {
+      try {
+        const res = await fetch(`${API_URL}/notifications`, {
+          headers: getAuthHeaders()
+        });
+        if (!res.ok) return;
+        const json = await res.json();
+        const notifications = json.data || [];
+        
+        // Check for unread
+        const hasUnread = notifications.some(n => !n.isRead);
+        const dot = document.getElementById('notificationDot');
+        if (dot) {
+          if (hasUnread) {
+            dot.classList.remove('hidden');
+          } else {
+            dot.classList.add('hidden');
+          }
+        }
+        
+        // Populate dropdown list
+        const list = document.getElementById('notificationList');
+        if (list) {
+          if (notifications.length === 0) {
+            list.innerHTML = `
+              <div class="p-4 text-center text-xs text-[#81726A] italic">
+                Không có thông báo mới nào
+              </div>
+            `;
+          } else {
+            list.innerHTML = notifications.map(n => {
+              const bgClass = n.isRead ? 'bg-white hover:bg-stone-50' : 'bg-orange-50/40 hover:bg-orange-50/60';
+              const textWeight = n.isRead ? 'font-medium' : 'font-bold';
+              return `
+                <div class="p-3.5 text-xs transition-colors duration-150 ${bgClass}">
+                  <p class="${textWeight} text-[#2C2623]">${escapeHTML(n.title)}</p>
+                  <p class="text-[#5C524E] mt-1 leading-relaxed">${escapeHTML(n.message)}</p>
+                  <p class="text-[10px] text-stone-400 mt-1.5 flex items-center justify-between">
+                    <span>${timeAgo(n.createdAt)}</span>
+                    ${!n.isRead ? `<span class="w-1.5 h-1.5 rounded-full bg-[#b3541e]"></span>` : ''}
+                  </p>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching notifications:', err);
+      }
+    }
+
+    async function markAllNotificationsAsRead(e) {
+      if (e) e.stopPropagation();
+      try {
+        const res = await fetch(`${API_URL}/notifications/read-all`, {
+          method: 'PUT',
+          headers: getAuthHeaders()
+        });
+        if (res.ok) {
+          fetchNotifications();
+        }
+      } catch (err) {
+        console.error('Error marking all read:', err);
+      }
+    }
+
+    function timeAgo(dateString) {
+      if (!dateString) return '';
+      const now = new Date();
+      const past = new Date(dateString);
+      const diffMs = now - past;
+      const diffMins = Math.floor(diffMs / 60000);
+      if (diffMins < 1) return 'Vừa xong';
+      if (diffMins < 60) return `${diffMins} phút trước`;
+      const diffHours = Math.floor(diffMins / 60);
+      if (diffHours < 24) return `${diffHours} giờ trước`;
+      const diffDays = Math.floor(diffHours / 24);
+      return `${diffDays} ngày trước`;
+    }
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Profile Modal Actions
+    async function openProfileModal(e) {
+      if (e) e.preventDefault();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+
+      document.getElementById('oldPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmNewPassword').value = '';
+
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/me`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        const result = await res.json();
+        if (res.ok && result.success && result.data) {
+          const user = result.data;
+          document.getElementById('profileFullName').textContent = user.fullName;
+          document.getElementById('profileUsername').textContent = user.username;
+          document.getElementById('profileEmail').textContent = user.email;
+          document.getElementById('profilePhone').textContent = user.phone || 'Chưa cung cấp';
+          let roleText = 'Nhân Viên Lễ Tân';
+          const r = (user.role || '').toLowerCase().trim();
+          if (r === 'admin') roleText = 'Quản Trị Viên';
+          else if (r === 'receptionist') roleText = 'Nhân Viên Lễ Tân';
+          else if (r === 'cleaner') roleText = 'Nhân Viên Dọn Dẹp';
+          else if (r === 'accountant') roleText = 'Nhân Viên Kế Toán';
+          else if (['tech', 'technical', 'technician', 'kỹ thuật', 'ky_thuat'].includes(r)) roleText = 'Nhân Viên Kỹ Thuật';
+          document.getElementById('profileRole').textContent = roleText;
+        } else {
+          alert('Không thể tải thông tin hồ sơ: ' + (result.message || 'Lỗi không xác định'));
+        }
+      } catch (err) {
+        console.error('Error loading profile details:', err);
+        alert('Không thể kết nối đến máy chủ để tải thông tin hồ sơ.');
+      }
+
+      document.getElementById('profileModal').classList.remove('hidden');
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profileModal').classList.add('hidden');
+    }
+
+    async function submitChangePassword(e) {
+      if (e) e.preventDefault();
+      const oldPassword = document.getElementById('oldPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+      if (newPassword !== confirmNewPassword) {
+        alert('Mật khẩu mới và Xác nhận mật khẩu không khớp!');
+        return;
+      }
+
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/change-password`, {
+          method: 'PUT',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ oldPassword, newPassword })
+        });
+        const result = await res.json();
+        if (res.ok && result.success) {
+          alert('Đổi mật khẩu thành công!');
+          closeProfileModal();
+        } else {
+          alert('Lỗi: ' + (result.message || 'Đổi mật khẩu thất bại'));
+        }
+      } catch (err) {
+        console.error('Error changing password:', err);
+        alert('Không thể kết nối đến máy chủ để đổi mật khẩu.');
+      }
+    }
+
+    // Config Modal Actions
+    function openConfigModal(e) {
+      if (e) e.preventDefault();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+
+      const savedShift = localStorage.getItem('activeShift') || 'Ca Sáng';
+      const savedTheme = localStorage.getItem('uiTheme') || 'luxury-warm';
+
+      document.getElementById('configShift').value = savedShift;
+      document.getElementById('configTheme').value = savedTheme;
+
+      document.getElementById('configModal').classList.remove('hidden');
+    }
+
+    function closeConfigModal() {
+      document.getElementById('configModal').classList.add('hidden');
+    }
+
+    function submitConfigForm(e) {
+      if (e) e.preventDefault();
+      const shift = document.getElementById('configShift').value;
+      const theme = document.getElementById('configTheme').value;
+
+      localStorage.setItem('activeShift', shift);
+      localStorage.setItem('uiTheme', theme);
+
+      alert('Lưu cấu hình thành công!');
+      closeConfigModal();
+
+      applyTheme(theme);
+    }
+
+    function applyTheme(theme) {
+      if (theme === 'luxury-warm') {
+        document.documentElement.classList.add('bg-[#FDFBF7]');
+        document.body.style.backgroundColor = '#FDFBF7';
+      } else {
+        document.documentElement.classList.remove('bg-[#FDFBF7]');
+        document.body.style.backgroundColor = '';
+      }
+    }
+
+    // Apply theme on load
+    applyTheme(localStorage.getItem('uiTheme') || 'luxury-warm');
+
+    // Logout Action
+    function handleLogout(e) {
+      if (e) e.preventDefault();
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = './login.html';
+    }
+    let isBackendOnline = false;
+
+    // Seeds representing DB state initially or fallback
+    let servicesCatalogue = [
+      { id: 1, code: 'DV-001', serviceName: 'Ẩm Thực Tại Phòng 24/7', category: 'Ẩm thực', price: 250000, isAvailable: true },
+      { id: 2, code: 'DV-002', serviceName: 'Trà Chiều Hoàng Hôn', category: 'Ẩm thực', price: 350000, isAvailable: true },
+      { id: 3, code: 'DV-003', serviceName: 'Spa & Trị Liệu Đặc Quyền', category: 'Spa', price: 950000, isAvailable: true },
+      { id: 4, code: 'DV-004', serviceName: 'Tour Du Thuyền Khám Phá Vịnh', category: 'Tour khám phá', price: 1500000, isAvailable: true },
+      { id: 5, code: 'DV-005', serviceName: 'Chèo Thuyền Kayak & SUP', category: 'Tour khám phá', price: 0, isAvailable: true },
+      { id: 6, code: 'DV-006', serviceName: 'Đưa Đón Sân Bay Hạng Sang', category: 'Xe đưa đón', price: 600000, isAvailable: true }
+    ];
+
+    // Seed Occupied bookings to choose room from
+    let occupiedBookings = [];
+
+    // Room service orders list (mapping booking_services)
+    let roomServiceOrders = [];
+
+    // Verify backend connectivity
+    async function checkBackendConnection() {
+      const badge = document.getElementById('backendStatusBadge');
+      const dot = document.getElementById('backendStatusDot');
+      const text = document.getElementById('backendStatusText');
+      if (badge) badge.classList.remove('hidden');
+
+      try {
+        const res = await fetch(`${API_URL}/health`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        if (res.ok) {
+          isBackendOnline = true;
+          if (badge && dot && text) {
+            badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-emerald-200 bg-emerald-50 text-emerald-700';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+            text.innerText = 'Máy chủ kết nối: TRỰC TUYẾN';
+          }
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        const token = localStorage.getItem('token');
+        if (token) {
+          console.warn("Backend connection health check failed, but token exists. Bypassing state lock.");
+          isBackendOnline = true;
+          if (badge && dot && text) {
+            badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-emerald-200 bg-emerald-50 text-emerald-700';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+            text.innerText = 'Máy chủ kết nối: TRỰC TUYẾN';
+          }
+        } else {
+          isBackendOnline = false;
+          if (badge && dot && text) {
+            badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-rose-200 bg-rose-50 text-rose-700';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse';
+            text.innerText = 'Máy chủ ngoại tuyến: DÙNG MOCK';
+          }
+        }
+      }
+    }
+
+    // Load initial states
+    async function initPage() {
+      await refreshData();
+      loadUserProfileHeader(); // Non-blocking sync
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('tab') === 'orders') {
+        switchTab('room-service-orders');
+      }
+    }
+
+    // Fetch live data from backend
+    async function refreshData() {
+      await checkBackendConnection();
+      if (isBackendOnline) {
+        try {
+          // Fetch catalogue
+          const resServices = await fetch(`${API_URL}/services`, { headers: getAuthHeaders() });
+          const dataServices = await resServices.json();
+          if (dataServices.data && dataServices.data.length > 0) {
+            servicesCatalogue = dataServices.data.map(s => ({
+              id: s.id,
+              code: `DV-${String(s.id).padStart(3, '0')}`,
+              serviceName: s.serviceName,
+              category: getCategoryFromName(s.serviceName),
+              price: parseFloat(s.price),
+              isAvailable: s.isAvailable
+            }));
+          }
+
+          // Fetch occupied bookings
+          const resBookings = await fetch(`${API_URL}/bookings`, { headers: getAuthHeaders() });
+          const dataBookings = await resBookings.json();
+          if (dataBookings.data && dataBookings.data.length > 0) {
+            occupiedBookings = dataBookings.data
+              .filter(b => b.status === 'occupied')
+              .map(b => ({
+                id: b.id,
+                roomNumber: b.room ? b.room.number : `RM-${b.roomId}`,
+                customerName: b.guestName || (b.guest ? b.guest.fullName : 'Khách Vãng Lai'),
+                email: b.guest ? b.guest.email || '' : ''
+              }));
+
+            // Aggregate orders history from all bookings
+            roomServiceOrders = [];
+            dataBookings.data.forEach(booking => {
+              if (booking.services && booking.services.length > 0) {
+                booking.services.forEach(s => {
+                  roomServiceOrders.push({
+                    id: s.id,
+                    time: s.createdAt ? s.createdAt.replace('T', ' ').split('.')[0] : getFormattedCurrentDate(),
+                    roomNumber: booking.room ? booking.room.number : `RM-${booking.roomId}`,
+                    customerName: booking.guestName || (booking.guest ? booking.guest.fullName : 'Guest'),
+                    serviceName: s.serviceName,
+                    quantity: s.quantity,
+                    totalPrice: s.totalPrice,
+                    status: s.taskStatus || 'pending',
+                    assignedStaffName: s.assignedStaffName || null
+                  });
+                });
+              }
+            });
+          }
+        } catch (err) {
+          console.error("Error connecting and syncing data: ", err);
+        }
+      }
+      renderAll();
+    }
+
+    function getCategoryFromName(name) {
+      const lower = name.toLowerCase();
+      if (lower.includes('spa') || lower.includes('massage') || lower.includes('trị liệu')) return 'Spa';
+      if (lower.includes('tour') || lower.includes('thuyền') || lower.includes('du thuyền') || lower.includes('sup') || lower.includes('kayak')) return 'Tour khám phá';
+      if (lower.includes('xe') || lower.includes('shuttle') || lower.includes('đưa đón') || lower.includes('limousine')) return 'Xe đưa đón';
+      return 'Ẩm thực';
+    }
+
+    // Switch Tabs
+    function switchTab(tabId) {
+      const catalogueTab = document.getElementById('tab-service-catalogue');
+      const ordersTab = document.getElementById('tab-room-service-orders');
+      const catalogueBtn = document.getElementById('tabBtn-service-catalogue');
+      const ordersBtn = document.getElementById('tabBtn-room-service-orders');
+
+      if (tabId === 'service-catalogue') {
+        catalogueTab.classList.remove('hidden');
+        catalogueTab.classList.add('block');
+        ordersTab.classList.add('hidden');
+        ordersTab.classList.remove('block');
+
+        catalogueBtn.className = "pb-3 text-sm font-semibold border-b-2 border-[#b3541e] text-[#b3541e] transition-all cursor-pointer";
+        ordersBtn.className = "pb-3 text-sm font-semibold border-b-2 border-transparent text-[#81726A] hover:text-[#b3541e] transition-all cursor-pointer";
+      } else {
+        ordersTab.classList.remove('hidden');
+        ordersTab.classList.add('block');
+        catalogueTab.classList.add('hidden');
+        catalogueTab.classList.remove('block');
+
+        ordersBtn.className = "pb-3 text-sm font-semibold border-b-2 border-[#b3541e] text-[#b3541e] transition-all cursor-pointer";
+        catalogueBtn.className = "pb-3 text-sm font-semibold border-b-2 border-transparent text-[#81726A] hover:text-[#b3541e] transition-all cursor-pointer";
+      }
+    }
+
+    // Toggle dropdown profile
+    // (Handled by global custom methods)
+
+    // Toggle Mobile Sidebar
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.toggle('-translate-x-full');
+      backdrop.classList.toggle('hidden');
+    }
+
+    // Format money VND
+    function formatCurrency(amount) {
+      if (amount === 0) return 'Miễn phí';
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    }
+
+    // Format current date helper
+    function getFormattedCurrentDate() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    // RENDER FUNCTIONS
+    function renderAll() {
+      renderCatalogue();
+      renderRoomSelectors();
+      renderServiceSelectors();
+      renderOrdersHistory();
+    }
+
+    // 1. Render Catalogue
+    function renderCatalogue() {
+      const tbody = document.getElementById('serviceCatalogueBody');
+      tbody.innerHTML = '';
+
+      servicesCatalogue.forEach(service => {
+        let categoryBadge = '';
+        if (service.category === 'Ẩm thực') {
+          categoryBadge = `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-orange-50 text-orange-700 border border-orange-200"><i class="fa-solid fa-utensils text-[9px]"></i> Ẩm thực</span>`;
+        } else if (service.category === 'Spa') {
+          categoryBadge = `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-rose-50 text-rose-700 border border-rose-200"><i class="fa-solid fa-spa text-[9px]"></i> Spa & Trị liệu</span>`;
+        } else if (service.category === 'Tour khám phá') {
+          categoryBadge = `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-50 text-sky-700 border border-sky-200"><i class="fa-solid fa-compass text-[9px]"></i> Tour khám phá</span>`;
+        } else {
+          categoryBadge = `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-50 text-slate-700 border border-slate-200"><i class="fa-solid fa-car text-[9px]"></i> Xe đưa đón</span>`;
+        }
+
+        const isAvailableBadge = service.isAvailable
+          ? `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Đang phục vụ</span>`
+          : `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">Tạm ngưng</span>`;
+
+        const actionBtn = currentUserRole === 'receptionist'
+          ? '' // Lễ tân không có quyền thay đổi trạng thái dịch vụ
+          : service.isAvailable
+            ? `<button onclick="toggleServiceAvailability(${service.id}, false)" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl text-[10px] font-semibold transition-all cursor-pointer">Ngừng phục vụ</button>`
+            : `<button onclick="toggleServiceAvailability(${service.id}, true)" class="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl text-[10px] font-semibold transition-all cursor-pointer">Kích hoạt</button>`;
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-[#F7F3EB]/25 transition-colors service-row';
+        tr.innerHTML = `
+          <td class="py-4 px-6 font-semibold text-[#b3541e] font-mono">${service.code}</td>
+          <td class="py-4 px-6">
+            <div class="font-bold text-[#2C2623]">${service.serviceName}</div>
+            <div class="mt-1">${categoryBadge}</div>
+          </td>
+          <td class="py-4 px-6 font-semibold text-charcoal font-mono">${formatCurrency(service.price)}</td>
+          <td class="py-4 px-6">${isAvailableBadge}</td>
+          <td class="py-4 px-6 text-right space-x-2">
+            <button onclick="openEditPriceModal(${service.id}, '${service.serviceName}', ${service.price})" class="px-2.5 py-1.5 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-[10px] font-semibold transition-all cursor-pointer">Chỉnh sửa giá</button>
+            ${actionBtn}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('catalogueSummary').innerText = `Hiển thị ${servicesCatalogue.length} dịch vụ hiện có`;
+    }
+
+    // 2. Render Room options in dropdown
+    function renderRoomSelectors() {
+      const selector = document.getElementById('orderRoomSelector');
+      // Keep option placeholder
+      selector.innerHTML = `<option value="">-- Chọn phòng --</option>`;
+      occupiedBookings.forEach(room => {
+        const option = document.createElement('option');
+        option.value = room.id;
+        option.innerText = `Phòng ${room.roomNumber}`;
+        selector.appendChild(option);
+      });
+    }
+
+    // 3. Render Service options in dropdown
+    function renderServiceSelectors() {
+      const selector = document.getElementById('orderServiceSelector');
+      selector.innerHTML = `<option value="">-- Chọn dịch vụ --</option>`;
+      servicesCatalogue.filter(s => s.isAvailable).forEach(service => {
+        const option = document.createElement('option');
+        option.value = service.id;
+        option.innerText = `${service.serviceName} (${formatCurrency(service.price)})`;
+        selector.appendChild(option);
+      });
+    }
+
+    // 4. Render Orders History
+    function renderOrdersHistory() {
+      const tbody = document.getElementById('serviceOrdersBody');
+      tbody.innerHTML = '';
+
+      roomServiceOrders.forEach(order => {
+        let statusBadge = '';
+        let actionBtn = '';
+        let staffHtml = '';
+
+        if (order.status === 'pending') {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">🕒 Chờ tiếp nhận</span>`;
+          actionBtn = `<span class="text-[10px] text-stone-400 font-semibold px-4 py-1.5 select-none bg-[#F7F3EB] rounded-xl border border-[#E5DFD3]/40 pointer-events-none opacity-50">[Chờ xử lý...]</span>`;
+        } else if (order.status === 'processing') {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">⚡ Đang thực hiện</span>`;
+          if (order.assignedStaffName) {
+            staffHtml = `<div class="text-[10px] text-stone-500 mt-1 font-medium">NV: ${escapeHTML(order.assignedStaffName)}</div>`;
+          }
+          actionBtn = `<button onclick="cancelRoomServiceOrder('${order.id}')" class="text-rose-600 hover:text-white hover:bg-rose-600 font-semibold px-4 py-1.5 rounded-xl border border-rose-200 transition-colors cursor-pointer text-[10px]">[Hủy đơn]</button>`;
+        } else {
+          // completed
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">✅ Đã phục vụ</span>`;
+          actionBtn = `<span class="text-[10px] text-stone-400 font-semibold px-4 py-1.5 select-none bg-[#F7F3EB] rounded-xl border border-[#E5DFD3]/40">[Đã xong]</span>`;
+        }
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-[#F7F3EB]/20 transition-colors order-row';
+        tr.innerHTML = `
+          <td class="py-4 px-6 font-mono text-[#81726A]">${order.time.split(' ')[1]}</td>
+          <td class="py-4 px-6 font-bold text-charcoal">Phòng ${order.roomNumber}</td>
+          <td class="py-4 px-6 font-semibold">${order.customerName}</td>
+          <td class="py-4 px-6">
+            <span class="font-bold text-charcoal">${order.serviceName}</span>
+            <span class="text-[#b3541e] font-bold font-mono ml-1">x${order.quantity}</span>
+          </td>
+          <td class="py-4 px-6 text-center font-mono font-bold text-[#b3541e]">${formatCurrency(order.totalPrice)}</td>
+          <td class="py-4 px-6">${statusBadge}${staffHtml}</td>
+          <td class="py-4 px-6 text-right">${actionBtn}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // INTERACTIONS & LOGICS
+
+    // Modal Control
+    function openAddServiceModal() {
+      document.getElementById('addServiceModal').classList.remove('hidden');
+    }
+    function closeAddServiceModal() {
+      document.getElementById('addServiceModal').classList.add('hidden');
+      document.getElementById('newServiceName').value = '';
+      document.getElementById('newServicePrice').value = '';
+    }
+
+    function openEditPriceModal(id, name, currentPrice) {
+      document.getElementById('editPriceServiceId').value = id;
+      document.getElementById('editPriceServiceName').innerText = name;
+      document.getElementById('editPriceInput').value = currentPrice;
+      document.getElementById('editPriceModal').classList.remove('hidden');
+    }
+    function closeEditPriceModal() {
+      document.getElementById('editPriceModal').classList.add('hidden');
+    }
+
+    // Submit Add Service
+    async function submitNewService() {
+      const name = document.getElementById('newServiceName').value.trim();
+      const category = document.getElementById('newServiceCategory').value;
+      const priceVal = document.getElementById('newServicePrice').value.trim();
+      const available = document.getElementById('newServiceAvailability').value === 'true';
+
+      if (!name || !priceVal) {
+        alert("Vui lòng điền đầy đủ tên dịch vụ và đơn giá.");
+        return;
+      }
+
+      const price = parseFloat(priceVal);
+
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/services`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ serviceName: name, price, isAvailable: available })
+          });
+          if (res.ok) {
+            console.log("Service created successfully on backend.");
+          } else {
+            console.error("Backend error creating service.");
+          }
+        } catch (err) {
+          console.error("Network error creating service: ", err);
+        }
+      } else {
+        // Local State Update
+        const newId = servicesCatalogue.length + 1;
+        servicesCatalogue.push({
+          id: newId,
+          code: `DV-${String(newId).padStart(3, '0')}`,
+          serviceName: name,
+          category,
+          price,
+          isAvailable: available
+        });
+      }
+
+      await refreshData();
+      closeAddServiceModal();
+    }
+
+    // Submit Edit Price
+    async function submitUpdatedPrice() {
+      const id = parseInt(document.getElementById('editPriceServiceId').value);
+      const newPrice = parseFloat(document.getElementById('editPriceInput').value);
+
+      if (isNaN(newPrice) || newPrice < 0) {
+        alert("Đơn giá không hợp lệ.");
+        return;
+      }
+
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/services/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ price: newPrice })
+          });
+          if (res.ok) {
+            console.log(`Updated price of Service ${id} to ${newPrice} on backend.`);
+          } else {
+            console.error("Backend error updating price.");
+          }
+        } catch (err) {
+          console.error("Network error updating price: ", err);
+        }
+      } else {
+        const service = servicesCatalogue.find(s => s.id === id);
+        if (service) {
+          service.price = newPrice;
+          console.log(`Updated price of Service ${id} to ${newPrice} locally.`);
+        }
+      }
+
+      await refreshData();
+      closeEditPriceModal();
+    }
+
+    // Toggle Service Availability
+    async function toggleServiceAvailability(id, isAvailable) {
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/services/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isAvailable })
+          });
+          if (res.ok) {
+            console.log(`Toggled availability of Service ${id} to ${isAvailable} on backend.`);
+          } else {
+            console.error("Backend error toggling availability.");
+          }
+        } catch (err) {
+          console.error("Network error toggling availability: ", err);
+        }
+      } else {
+        const service = servicesCatalogue.find(s => s.id === id);
+        if (service) {
+          service.isAvailable = isAvailable;
+          console.log(`Toggled availability of Service ${id} to ${isAvailable} locally.`);
+        }
+      }
+      await refreshData();
+    }
+
+    // Live total price calculation
+    function calculateOrderTotal() {
+      const serviceId = parseInt(document.getElementById('orderServiceSelector').value);
+      const quantity = parseInt(document.getElementById('orderQuantity').value) || 1;
+      const totalDisplay = document.getElementById('orderTotalDisplay');
+
+      if (!serviceId) {
+        totalDisplay.innerText = '0đ';
+        return;
+      }
+
+      const service = servicesCatalogue.find(s => s.id === serviceId);
+      if (service) {
+        const total = service.price * quantity;
+        totalDisplay.innerText = formatCurrency(total);
+      }
+    }
+
+    // Update guest name in label on selecting room
+    function updateGuestNameForOrder() {
+      const bookingId = parseInt(document.getElementById('orderRoomSelector').value);
+      const occupantSpan = document.getElementById('orderOccupantName');
+
+      if (!bookingId) {
+        occupantSpan.innerText = 'Vui lòng chọn phòng';
+        return;
+      }
+
+      const booking = occupiedBookings.find(b => b.id === bookingId);
+      if (booking) {
+        occupantSpan.innerText = `${booking.customerName} (${booking.email})`;
+      }
+    }
+
+    // Submit Room Service Order
+    async function submitRoomServiceOrder() {
+      const bookingId = parseInt(document.getElementById('orderRoomSelector').value);
+      const serviceId = parseInt(document.getElementById('orderServiceSelector').value);
+      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
+
+      if (!bookingId || !serviceId) {
+        alert("Vui lòng chọn phòng và dịch vụ.");
+        return;
+      }
+
+      const booking = occupiedBookings.find(b => b.id === bookingId);
+      const service = servicesCatalogue.find(s => s.id === serviceId);
+
+      if (!booking || !service) return;
+
+      const orderTotal = service.price * qty;
+
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/services/booking`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bookingId, serviceId, quantity: qty })
+          });
+          if (res.ok) {
+            console.log("Room service order saved on backend.");
+          } else {
+            console.error("Backend error saving order.");
+          }
+        } catch (err) {
+          console.error("Network error saving order: ", err);
+        }
+      } else {
+        // Local state update
+        roomServiceOrders.unshift({
+          id: roomServiceOrders.length + 1,
+          time: getFormattedCurrentDate(),
+          roomNumber: booking.roomNumber,
+          customerName: booking.customerName,
+          serviceName: service.serviceName,
+          quantity: qty,
+          totalPrice: orderTotal,
+          status: 'pending'
+        });
+      }
+
+      // Clear Form selectors
+      document.getElementById('orderRoomSelector').value = '';
+      document.getElementById('orderServiceSelector').value = '';
+      document.getElementById('orderQuantity').value = 1;
+      document.getElementById('orderTotalDisplay').innerText = '0đ';
+      document.getElementById('orderOccupantName').innerText = 'Vui lòng chọn phòng';
+
+      await refreshData();
+    }
+
+    // Complete Order
+    function completeRoomServiceOrder(orderId) {
+      const order = roomServiceOrders.find(o => o.id === orderId);
+      if (order) {
+        order.status = 'completed';
+        console.log(`Order ID ${orderId} status set to completed.`);
+      }
+      renderOrdersHistory();
+    }
+
+    // Cancel Order
+    async function cancelRoomServiceOrder(orderId) {
+      if (!confirm('Bạn có chắc chắn muốn hủy đơn dịch vụ này không?')) {
+        return;
+      }
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/department/tasks/${orderId}/cancel`, {
+            method: 'PUT',
+            headers: getAuthHeaders()
+          });
+          const result = await res.json();
+          if (res.ok && result.success) {
+            alert(result.message || 'Đã hủy đơn thành công!');
+          } else {
+            alert('Lỗi: ' + (result.message || 'Không thể hủy đơn'));
+          }
+        } catch (err) {
+          console.error('Lỗi khi hủy đơn:', err);
+          alert('Không thể kết nối đến máy chủ để hủy đơn.');
+        }
+      } else {
+        // Local state update
+        const order = roomServiceOrders.find(o => o.id === orderId || o.id === parseInt(orderId));
+        if (order) {
+          order.status = 'pending';
+          order.assignedStaffName = null;
+          console.log(`Order ID ${orderId} status set to pending locally.`);
+        }
+      }
+      await refreshData();
+    }
+
+    // Add window focus sync reload
+    window.addEventListener('focus', refreshData);
+
+    // Global filtering inside Catalogue and Order Tables
+    function filterCatalogueAndOrders(query) {
+      const clean = query.toLowerCase().trim();
+
+      // Filter Catalogue Rows
+      const serviceRows = document.querySelectorAll('.service-row');
+      serviceRows.forEach(row => {
+        if (row.innerText.toLowerCase().includes(clean)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      // Filter Orders Rows
+      const orderRows = document.querySelectorAll('.order-row');
+      orderRows.forEach(row => {
+        if (row.innerText.toLowerCase().includes(clean)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    // Helper to update UI elements based on clocked-in state
+    function updateAttendanceUI(isClockedIn) {
+      localStorage.setItem('isClockedIn', isClockedIn ? 'true' : 'false');
+      const pill = document.getElementById('attendanceStatusPill');
+      const btn = document.getElementById('attendanceBtn');
+      if (pill && btn) {
+        if (isClockedIn) {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none border-emerald-200 bg-emerald-50 text-emerald-700';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>ĐANG LÀM VIỆC';
+          btn.innerHTML = '🔴 Kết Thúc Ca Làm';
+        } else {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none border-stone-200 bg-stone-50 text-stone-500';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>ĐÃ RA CA';
+          btn.innerHTML = '🟢 Điểm Danh Vào Ca';
+        }
+      }
+    }
+
+    async function checkAttendanceState() {
+      const role = localStorage.getItem('userRole');
+      if (role !== 'receptionist' && role !== 'cleaner') {
+        return;
+      }
+      const apiBase = typeof API_URL !== 'undefined' ? API_URL : (typeof API_BASE !== 'undefined' ? API_BASE : '/api');
+      try {
+        const res = await fetch(`${apiBase}/attendance/status`, { headers: getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            updateAttendanceUI(data.isClockedIn);
+          }
+        }
+      } catch (err) {
+        console.error('Lỗi đồng bộ chấm công:', err);
+      }
+    }
+
+    async function initAttendanceSubsystem() {
+      const role = localStorage.getItem('userRole');
+      if (role !== 'receptionist' && role !== 'cleaner') {
+        return;
+      }
+
+      const apiBase = typeof API_URL !== 'undefined' ? API_URL : (typeof API_BASE !== 'undefined' ? API_BASE : '/api');
+      const profileDropdown = document.getElementById('profileDropdown');
+      const profileDropdownContainer = document.getElementById('profileDropdownContainer');
+      if (!profileDropdown || !profileDropdownContainer) return;
+
+      // 1. Create status pill if it doesn't exist
+      let pill = document.getElementById('attendanceStatusPill');
+      if (!pill) {
+        pill = document.createElement('div');
+        pill.id = 'attendanceStatusPill';
+        pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none';
+        profileDropdownContainer.parentNode.insertBefore(pill, profileDropdownContainer);
+      }
+
+      // 2. Create button if it doesn't exist
+      let btn = document.getElementById('attendanceBtn');
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'attendanceBtn';
+        btn.className = 'flex items-center gap-2 px-4 py-2.5 text-xs font-semibold w-full text-left transition-all duration-150 border-b border-[#E5DFD3]/40 cursor-pointer focus:outline-none hover:bg-[#F7F3EB] hover:text-[#b3541e]';
+        profileDropdown.insertBefore(btn, profileDropdown.firstChild);
+      }
+
+      // Set initial UI instantly from localStorage to avoid flicker
+      const localClockedIn = localStorage.getItem('isClockedIn') === 'true';
+      updateAttendanceUI(localClockedIn);
+
+      // Fetch status from server to sync
+      await checkAttendanceState();
+
+      // Handle click event
+      btn.onclick = async function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Hide the profile dropdown to look clean
+        profileDropdown.classList.add('hidden');
+        
+        const currentlyClockedIn = localStorage.getItem('isClockedIn') === 'true';
+        if (!currentlyClockedIn) {
+          // Check in
+          try {
+            const res = await fetch(`${apiBase}/attendance/check-in`, {
+              method: 'POST',
+              headers: getAuthHeaders()
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              updateAttendanceUI(true);
+              alert(data.message || 'Điểm danh vào ca thành công!');
+            } else {
+              alert('Lỗi: ' + (data.message || 'Không thể điểm danh vào ca'));
+            }
+          } catch (err) {
+            console.error('Lỗi check-in:', err);
+            alert('Không thể kết nối máy chủ để điểm danh vào ca.');
+          }
+        } else {
+          // Check out
+          try {
+            const res = await fetch(`${apiBase}/attendance/check-out`, {
+              method: 'POST',
+              headers: getAuthHeaders()
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              updateAttendanceUI(false);
+              const hours = data.data ? data.data.totalHours : 0;
+              alert(`Bạn đã hoàn thành ca làm việc! Tổng thời gian: ${hours} giờ.`);
+            } else {
+              alert('Lỗi: ' + (data.message || 'Không thể kết thúc ca làm'));
+            }
+          } catch (err) {
+            console.error('Lỗi check-out:', err);
+            alert('Không thể kết nối máy chủ để kết thúc ca làm.');
+          }
+        }
+      };
+    }
+    window.addEventListener('DOMContentLoaded', initAttendanceSubsystem);
+
+    // Initialize Page
+    initPage();
+  </script>
+
+</body>
+
+</html>

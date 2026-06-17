@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-stone-100">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeHaven - Phòng Vận Hành Bộ Phận</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            terracotta: {
+              50: '#fdf4f0',
+              100: '#fbe7de',
+              200: '#f7d2c1',
+              300: '#efb197',
+              400: '#e38664',
+              500: '#b3541e',
+              600: '#9b4117',
+              700: '#813313',
+              800: '#682912',
+            },
+            luxury: {
+              cream: '#FDFBF7',
+              sand: '#F7F3EB',
+              charcoal: '#2C2623',
+              gold: '#C5A880',
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    .font-serif-luxury {
+      font-family: 'Playfair Display', serif;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .grid-btn {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .grid-btn:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+
+<body class="bg-stone-100 min-h-full flex items-center justify-center p-0 sm:p-4">
+
+  <!-- Mobile Viewport Wrapper Container -->
+  <main class="w-full max-w-md bg-[#FDFBF7] min-h-screen sm:min-h-[850px] sm:rounded-3xl sm:shadow-2xl flex flex-col justify-between overflow-hidden relative border border-[#E5DFD3]/40">
+
+    <!-- HEADER / BRANDING -->
+    <header class="bg-white border-b border-[#E5DFD3]/50 px-5 py-4 flex items-center justify-between shadow-sm z-30">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-[#b3541e] flex items-center justify-center shadow-lg shadow-[#b3541e]/15">
+          <i class="fa-solid fa-umbrella-beach text-white text-base"></i>
+        </div>
+        <div>
+          <h1 class="text-sm font-bold font-serif-luxury text-[#2C2623]">LuxeHaven Staff</h1>
+          <p class="text-[9px] font-semibold text-[#b3541e] uppercase tracking-wider">Phòng Nhân Viên</p>
+        </div>
+      </div>
+
+      <!-- Attendance status pill placed in header -->
+      <div id="attendanceStatusPill" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[9px] font-bold border transition-all duration-300 select-none border-stone-200 bg-stone-50 text-stone-500">
+        <span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>ĐÃ RA CA
+      </div>
+    </header>
+
+    <!-- MAIN INTERACTIVE DISPLAY -->
+    <div class="flex-1 px-5 py-4 space-y-4">
+      
+      <!-- Welcome info banner card -->
+      <div class="bg-gradient-to-br from-[#2C2623] to-[#453A35] text-white p-5 rounded-2xl shadow-md space-y-3 relative overflow-hidden">
+        <!-- Decoration background glow -->
+        <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-[#b3541e]/15 rounded-full blur-2xl"></div>
+
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-bold font-serif-luxury" id="welcomeStaffName">Nhân Viên</h2>
+            <p class="text-[10px] text-stone-300 font-medium tracking-wide mt-0.5" id="staffDeptText">Bộ phận: Đang tải...</p>
+          </div>
+          <button onclick="handleLogout()" class="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="Đăng xuất">
+            <i class="fa-solid fa-power-off text-xs"></i>
+          </button>
+        </div>
+
+        <div class="pt-2 border-t border-white/10 flex justify-between text-[10px] text-stone-300">
+          <span>Hôm nay: <strong id="dateDisplay">--</strong></span>
+          <span>Ca hiện tại: <strong id="shiftDisplay">Ca Sáng</strong></span>
+        </div>
+      </div>
+
+      <!-- Live connection badge -->
+      <div id="connectionBadge" class="flex items-center justify-center gap-1.5 py-1 px-2.5 rounded-lg border text-[9px] font-bold w-fit mx-auto transition-all">
+        <span id="connectionDot" class="w-1.5 h-1.5 rounded-full"></span>
+        <span id="connectionText">Đang kiểm tra kết nối...</span>
+      </div>
+
+      <!-- THE 3x2 ICON MATRIX GRID -->
+      <div class="grid grid-cols-2 gap-4 pt-2">
+        
+        <!-- ICON 1: ĐƠN GỌI MỚI -->
+        <button onclick="openPanel('panel-new-orders')" class="grid-btn bg-white border border-[#E5DFD3]/60 p-5 rounded-2xl shadow-sm text-left flex flex-col justify-between h-32 hover:border-[#b3541e]/20 focus:outline-none relative">
+          <div class="w-10 h-10 rounded-xl bg-orange-50 text-[#b3541e] flex items-center justify-center text-lg">
+            <i class="fa-solid fa-inbox"></i>
+          </div>
+          <div>
+            <span class="absolute top-4 right-4 bg-rose-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full hidden" id="badgeNewOrders">0</span>
+            <h3 class="text-xs font-bold text-[#2C2623]" id="cardNewOrdersTitle">Đơn Gọi Mới</h3>
+            <p class="text-[9px] text-stone-400 mt-0.5" id="cardNewOrdersDesc">Yêu cầu từ khách hàng</p>
+          </div>
+        </button>
+
+        <!-- ICON 2: ĐANG THỰC HIỆN -->
+        <button onclick="openPanel('panel-active-tasks')" class="grid-btn bg-white border border-[#E5DFD3]/60 p-5 rounded-2xl shadow-sm text-left flex flex-col justify-between h-32 hover:border-[#b3541e]/20 focus:outline-none relative">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg animate-pulse">
+            <i class="fa-solid fa-rotate-right"></i>
+          </div>
+          <div>
+            <span class="absolute top-4 right-4 bg-amber-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full hidden" id="badgeActiveTasks">0</span>
+            <h3 class="text-xs font-bold text-[#2C2623]" id="cardActiveTasksTitle">Đang Thực Hiện</h3>
+            <p class="text-[9px] text-stone-400 mt-0.5" id="cardActiveTasksDesc">Nhiệm vụ phụ trách</p>
+          </div>
+        </button>
+
+        <!-- ICON 3: BẢNG CHẤM CÔNG -->
+        <button onclick="openPanel('panel-attendance')" class="grid-btn bg-white border border-[#E5DFD3]/60 p-5 rounded-2xl shadow-sm text-left flex flex-col justify-between h-32 hover:border-[#b3541e]/20 focus:outline-none">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-[#2C2623]">Bảng Chấm Công</h3>
+            <p class="text-[9px] text-stone-400 mt-0.5">Vào ca / Kết thúc ca làm</p>
+          </div>
+        </button>
+
+        <!-- ICON 4: PHIẾU LƯƠNG -->
+        <button onclick="openPanel('panel-payroll')" class="grid-btn bg-white border border-[#E5DFD3]/60 p-5 rounded-2xl shadow-sm text-left flex flex-col justify-between h-32 hover:border-[#b3541e]/20 focus:outline-none">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-money-bill-wave"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-[#2C2623]">Phiếu Lương</h3>
+            <p class="text-[9px] text-stone-400 mt-0.5">Sao kê chi tiết lương tháng</p>
+          </div>
+        </button>
+
+        <!-- ICON 5: KHO VẬT TƯ -->
+        <button onclick="openPanel('panel-inventory')" class="grid-btn bg-white border border-[#E5DFD3]/60 p-5 rounded-2xl shadow-sm text-left flex flex-col justify-between h-32 hover:border-[#b3541e]/20 focus:outline-none">
+          <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-boxes-stacked"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-[#2C2623]">Kho Vật Tư</h3>
+            <p class="text-[9px] text-stone-400 mt-0.5">Kiểm kê thực phẩm & thiết bị</p>
+          </div>
+        </button>
+
+        <!-- ICON 6: BÁO CÁO SỰ CỐ -->
+        <button onclick="openPanel('panel-report-issue')" class="grid-btn bg-white border border-[#E5DFD3]/60 p-5 rounded-2xl shadow-sm text-left flex flex-col justify-between h-32 hover:border-[#b3541e]/20 focus:outline-none">
+          <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-[#2C2623]">Báo Cáo Sự Cố</h3>
+            <p class="text-[9px] text-stone-400 mt-0.5">Báo hỏng đồ gửi tới Admin</p>
+          </div>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- FOOTER NAV BRAND -->
+    <footer class="bg-white border-t border-[#E5DFD3]/50 py-3 text-center z-10">
+      <span class="text-[8px] font-bold text-[#A89F9A] uppercase tracking-widest">LuxeHaven Resort & Spa © 2026</span>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE-UP DRAWER OVERLAY CHANNELS (ONE TEMPLATE TO TOGGLE PANELS) -->
+    <!-- ============================================================ -->
+
+    <!-- PANEL: NEW ORDERS -->
+    <section id="panel-new-orders" class="absolute inset-x-0 bottom-0 top-20 bg-white border-t border-[#E5DFD3]/70 rounded-t-3xl shadow-2xl z-40 transform translate-y-full transition-transform duration-300 ease-in-out flex flex-col justify-between hidden">
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="px-5 py-4 border-b border-[#E5DFD3]/50 bg-[#FDFBF7] flex items-center justify-between rounded-t-3xl">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-inbox text-[#b3541e] text-base animate-bounce"></i>
+            <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623]" id="panelNewOrdersTitle">Yêu Cầu Mới Bộ Phận</h3>
+          </div>
+          <button onclick="closePanel('panel-new-orders')" class="text-stone-400 hover:text-stone-600 text-sm cursor-pointer p-1"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5 space-y-3" id="newOrdersList">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL: ACTIVE TASKS -->
+    <section id="panel-active-tasks" class="absolute inset-x-0 bottom-0 top-20 bg-white border-t border-[#E5DFD3]/70 rounded-t-3xl shadow-2xl z-40 transform translate-y-full transition-transform duration-300 ease-in-out flex flex-col justify-between hidden">
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="px-5 py-4 border-b border-[#E5DFD3]/50 bg-[#FDFBF7] flex items-center justify-between rounded-t-3xl">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-person-digging text-amber-600 text-base"></i>
+            <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623]" id="panelActiveTasksTitle">Nhiệm Vụ Đang Thực Hiện</h3>
+          </div>
+          <button onclick="closePanel('panel-active-tasks')" class="text-stone-400 hover:text-stone-600 text-sm cursor-pointer p-1"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5 space-y-3" id="activeTasksList">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL: ATTENDANCE -->
+    <section id="panel-attendance" class="absolute inset-x-0 bottom-0 bg-white border-t border-[#E5DFD3]/70 rounded-t-3xl shadow-2xl z-40 transform translate-y-full transition-transform duration-300 ease-in-out flex flex-col justify-between hidden">
+      <div class="px-5 py-4 border-b border-[#E5DFD3]/50 bg-[#FDFBF7] flex items-center justify-between rounded-t-3xl">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-business-time text-blue-600 text-base"></i>
+          <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623]">Điểm Danh Vào/Ra Ca</h3>
+        </div>
+        <button onclick="closePanel('panel-attendance')" class="text-stone-400 hover:text-stone-600 text-sm cursor-pointer p-1"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-6 text-center space-y-6">
+        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-2">
+          <p class="text-xs text-stone-500 font-medium">Trạng thái chấm công hiện tại:</p>
+          <div id="attendanceModalStatus" class="text-lg font-extrabold text-[#2C2623]">ĐANG NGOẠI TUYẾN</div>
+        </div>
+
+        <button id="clockInOutBtn" class="w-full bg-[#b3541e] hover:bg-[#9b4117] text-white py-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md">
+          🟢 Điểm Danh Vào Ca
+        </button>
+      </div>
+    </section>
+
+    <!-- PANEL: PAYROLL -->
+    <section id="panel-payroll" class="absolute inset-x-0 bottom-0 top-20 bg-white border-t border-[#E5DFD3]/70 rounded-t-3xl shadow-2xl z-40 transform translate-y-full transition-transform duration-300 ease-in-out flex flex-col justify-between hidden">
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="px-5 py-4 border-b border-[#E5DFD3]/50 bg-[#FDFBF7] flex items-center justify-between rounded-t-3xl">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-receipt text-emerald-600 text-base"></i>
+            <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623]">Chi Tiết Lương Tháng</h3>
+          </div>
+          <button onclick="closePanel('panel-payroll')" class="text-stone-400 hover:text-stone-600 text-sm cursor-pointer p-1"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5" id="payrollDetailsContainer">
+          <!-- Dynamic details -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL: INVENTORY -->
+    <section id="panel-inventory" class="absolute inset-x-0 bottom-0 top-20 bg-white border-t border-[#E5DFD3]/70 rounded-t-3xl shadow-2xl z-40 transform translate-y-full transition-transform duration-300 ease-in-out flex flex-col justify-between hidden">
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="px-5 py-4 border-b border-[#E5DFD3]/50 bg-[#FDFBF7] flex items-center justify-between rounded-t-3xl">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-cubes text-teal-600 text-base"></i>
+            <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623]">Trạng Thái Vật Tư & Kho</h3>
+          </div>
+          <button onclick="closePanel('panel-inventory')" class="text-stone-400 hover:text-stone-600 text-sm cursor-pointer p-1"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5 space-y-4">
+          <p class="text-[10px] text-stone-500 font-medium">Bảng theo dõi trạng thái thiết bị & vật tư được phân quyền cụ thể theo bộ phận của nhân viên đăng nhập.</p>
+          <div id="inventoryItemsContainer" class="space-y-2.5">
+            <!-- Dynamic items based on F&B, SPA, TRANSPORT -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL: REPORT ISSUE -->
+    <section id="panel-report-issue" class="absolute inset-x-0 bottom-0 bg-white border-t border-[#E5DFD3]/70 rounded-t-3xl shadow-2xl z-40 transform translate-y-full transition-transform duration-300 ease-in-out flex flex-col justify-between hidden">
+      <div class="px-5 py-4 border-b border-[#E5DFD3]/50 bg-[#FDFBF7] flex items-center justify-between rounded-t-3xl">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-triangle-exclamation text-rose-600 text-base"></i>
+          <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623]">Báo Cáo Sự Cố Phát Sinh</h3>
+        </div>
+        <button onclick="closePanel('panel-report-issue')" class="text-stone-400 hover:text-stone-600 text-sm cursor-pointer p-1"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form onsubmit="handleReportIssue(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-[10px] font-bold text-stone-500 uppercase mb-1">Chọn Phòng Xảy Ra Sự Cố</label>
+          <select id="issueRoomId" required class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="">-- Chọn phòng --</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-stone-500 uppercase mb-1">Chi tiết sự cố</label>
+          <textarea id="issueDescription" required rows="3" placeholder="Mô tả cụ thể sự cố để bộ phận kỹ thuật kịp xử lý..." class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md">
+          <i class="fa-solid fa-paper-plane mr-1"></i> Gửi Sự Cố
+        </button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- CLIENT SCRIPTS -->
+  <script>
+    const API_URL = '/api';
+    let isBackendOnline = false;
+    let loggedInUser = null;
+    let tasksState = [];
+
+    // Format money helper
+    function formatCurrency(val) {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val);
+    }
+
+    // Auth verification & department setup
+    async function checkAuth() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = './login.html';
+        return;
+      }
+
+      // Load user profile details
+      try {
+        const res = await fetch(`${API_URL}/auth/me`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const result = await res.json();
+        if (res.ok && result.success && result.data) {
+          loggedInUser = result.data;
+          
+          // Display details
+          document.getElementById('welcomeStaffName').textContent = loggedInUser.fullName;
+          
+          let deptLabel = 'Chưa xác định';
+          if (loggedInUser.departmentId === 'F&B') deptLabel = 'BP. Ẩm Thực (F&B)';
+          else if (loggedInUser.departmentId === 'SPA') deptLabel = 'BP. Spa & Trị Liệu';
+          else if (loggedInUser.departmentId === 'TRANSPORT') deptLabel = 'BP. Vận Chuyển';
+          else if (loggedInUser.role === 'technical') deptLabel = 'BP. Kỹ Thuật & Bảo Trì';
+          document.getElementById('staffDeptText').textContent = `Bộ phận: ${deptLabel}`;
+
+          if (loggedInUser.role === 'technical') {
+            document.getElementById('cardNewOrdersTitle').textContent = '🛠️ Sự Cố Cần Sửa';
+            document.getElementById('cardNewOrdersDesc').textContent = 'Sự cố phòng cần khắc phục';
+            document.getElementById('cardActiveTasksTitle').textContent = '🕒 Đang Sửa Chữa';
+            document.getElementById('cardActiveTasksDesc').textContent = 'Sự cố đang khắc phục';
+            
+            document.getElementById('panelNewOrdersTitle').textContent = 'Sự Cố Cần Sửa Chữa';
+            document.getElementById('panelActiveTasksTitle').textContent = 'Danh Sách Đang Sửa Chữa';
+          }
+        } else {
+          localStorage.clear();
+          window.location.href = './login.html';
+        }
+      } catch (err) {
+        console.error('Lỗi xác thực người dùng:', err);
+        // Offline simulation defaults
+        const fallbackRole = localStorage.getItem('userRole') || 'cleaner';
+        loggedInUser = {
+          id: parseInt(localStorage.getItem('userId')) || 4,
+          fullName: localStorage.getItem('fullName') || 'Nguyen Van Cleaner',
+          role: fallbackRole,
+          departmentId: fallbackRole === 'technical' ? 'technical' : 'SPA'
+        };
+        document.getElementById('welcomeStaffName').textContent = loggedInUser.fullName;
+        
+        let deptLabel = 'BP. Spa & Trị Liệu (Offline)';
+        if (loggedInUser.role === 'technical') {
+          deptLabel = 'BP. Kỹ Thuật & Bảo Trì (Offline)';
+        }
+        document.getElementById('staffDeptText').textContent = `Bộ phận: ${deptLabel}`;
+
+        if (loggedInUser.role === 'technical') {
+          document.getElementById('cardNewOrdersTitle').textContent = '🛠️ Sự Cố Cần Sửa';
+          document.getElementById('cardNewOrdersDesc').textContent = 'Sự cố phòng cần khắc phục';
+          document.getElementById('cardActiveTasksTitle').textContent = '🕒 Đang Sửa Chữa';
+          document.getElementById('cardActiveTasksDesc').textContent = 'Sự cố đang khắc phục';
+          
+          document.getElementById('panelNewOrdersTitle').textContent = 'Sự Cố Cần Sửa Chữa';
+          document.getElementById('panelActiveTasksTitle').textContent = 'Danh Sách Đang Sửa Chữa';
+        }
+      }
+    }
+
+    // Status Connection Check
+    async function checkConnection() {
+      const dot = document.getElementById('connectionDot');
+      const text = document.getElementById('connectionText');
+      const badge = document.getElementById('connectionBadge');
+
+      try {
+        const token = localStorage.getItem('token');
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        const res = await fetch(`${API_URL}/health`, { headers });
+        if (res.ok) {
+          isBackendOnline = true;
+          if (badge && dot && text) {
+            badge.className = 'flex items-center justify-center gap-1.5 py-1 px-2.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 w-fit mx-auto transition-all';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+            text.innerText = 'MÁY CHỦ TRỰC TUYẾN';
+          }
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        const token = localStorage.getItem('token');
+        if (token) {
+          console.warn("Backend connection health check failed, but token exists. Bypassing state lock.");
+          isBackendOnline = true;
+          if (badge && dot && text) {
+            badge.className = 'flex items-center justify-center gap-1.5 py-1 px-2.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 w-fit mx-auto transition-all';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+            text.innerText = 'MÁY CHỦ TRỰC TUYẾN';
+          }
+        } else {
+          isBackendOnline = false;
+          if (badge && dot && text) {
+            badge.className = 'flex items-center justify-center gap-1.5 py-1 px-2.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 w-fit mx-auto transition-all';
+            dot.className = 'w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse';
+            text.innerText = 'NGOẠI TUYẾN (DÙNG MOCK)';
+          }
+        }
+      }
+    }
+
+    // Refresh dashboard tasks
+    async function refreshTasks() {
+      await checkConnection();
+
+      const token = localStorage.getItem('token');
+      if (isBackendOnline && token) {
+        try {
+          const res = await fetch(`${API_URL}/department/tasks`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const json = await res.json();
+          tasksState = json.data || [];
+        } catch (error) {
+          console.error(error);
+          loadMockTasks();
+        }
+      } else {
+        loadMockTasks();
+      }
+
+      renderTasks();
+    }
+
+    function loadMockTasks() {
+      // Create some mock tasks based on logged-in user department
+      const dept = loggedInUser ? loggedInUser.departmentId : 'SPA';
+      const role = loggedInUser ? loggedInUser.role : 'cleaner';
+
+      if (role === 'technical') {
+        tasksState = [
+          { id: 101, serviceName: 'Bóng đèn phòng khách bị cháy', roomNumber: '101', departmentId: 'technical', taskStatus: 'pending' },
+          { id: 102, serviceName: 'Vòi sen nhà tắm bị rò nước', roomNumber: '202', departmentId: 'technical', taskStatus: 'processing', assignedStaffId: loggedInUser.id }
+        ];
+        return;
+      }
+
+      tasksState = [
+        { id: 1, serviceName: 'Ẩm Thực Tại Phòng 24/7', roomNumber: '102', quantity: 2, totalPrice: 500000, departmentId: 'F&B', taskStatus: 'pending' },
+        { id: 2, serviceName: 'Trà Chiều Hoàng Hôn', roomNumber: '102', quantity: 1, totalPrice: 350000, departmentId: 'F&B', taskStatus: 'processing', assignedStaffId: 4 },
+        { id: 3, serviceName: 'Spa & Trị Liệu Đặc Quyền', roomNumber: '203', quantity: 1, totalPrice: 950000, departmentId: 'SPA', taskStatus: 'pending' },
+        { id: 4, serviceName: 'Đưa Đón Sân Bay Hạng Sang', roomNumber: 'VIP', quantity: 1, totalPrice: 600000, departmentId: 'TRANSPORT', taskStatus: 'pending' }
+      ].filter(t => t.departmentId === dept);
+    }
+
+    function renderTasks() {
+      const newOrdersList = document.getElementById('newOrdersList');
+      const activeTasksList = document.getElementById('activeTasksList');
+      
+      newOrdersList.innerHTML = '';
+      activeTasksList.innerHTML = '';
+
+      const pendingTasks = tasksState.filter(t => t.taskStatus === 'pending');
+      const activeTasks = tasksState.filter(t => t.taskStatus === 'processing' && (t.assignedStaffId === loggedInUser.id || !isBackendOnline));
+
+      // Update badges
+      const badgeNew = document.getElementById('badgeNewOrders');
+      if (pendingTasks.length > 0) {
+        badgeNew.textContent = pendingTasks.length;
+        badgeNew.classList.remove('hidden');
+      } else {
+        badgeNew.classList.add('hidden');
+      }
+
+      const badgeActive = document.getElementById('badgeActiveTasks');
+      if (activeTasks.length > 0) {
+        badgeActive.textContent = activeTasks.length;
+        badgeActive.classList.remove('hidden');
+      } else {
+        badgeActive.classList.add('hidden');
+      }
+
+      // Render new orders
+      if (pendingTasks.length === 0) {
+        newOrdersList.innerHTML = `
+          <div class="py-12 text-center text-xs text-stone-400 italic">
+            <i class="fa-solid fa-inbox text-2xl mb-2 text-stone-300 block"></i>
+            Chưa có yêu cầu mới nào.
+          </div>`;
+      } else {
+        pendingTasks.forEach(t => {
+          const div = document.createElement('div');
+          div.className = 'p-4 bg-[#F7F3EB]/50 border border-[#E5DFD3] rounded-2xl flex justify-between items-center';
+          const btnLabel = loggedInUser.role === 'technical' ? 'Tiếp Nhận Sửa' : 'Tiếp Nhận';
+          const infoText = loggedInUser.role === 'technical'
+            ? `Phòng: <strong class="font-mono">${t.roomNumber}</strong>`
+            : `Phòng: <strong class="font-mono">${t.roomNumber}</strong> | Số lượng: ${t.quantity}`;
+          
+          div.innerHTML = `
+            <div>
+              <h4 class="text-xs font-bold text-[#2C2623]">${t.serviceName}</h4>
+              <p class="text-[10px] text-stone-500 mt-1">${infoText}</p>
+            </div>
+            <button onclick="acceptTask(${t.id})" class="px-3.5 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-[10px] font-bold uppercase transition-all shadow-sm cursor-pointer">
+              ${btnLabel}
+            </button>
+          `;
+          newOrdersList.appendChild(div);
+        });
+      }
+
+      // Render active tasks
+      if (activeTasks.length === 0) {
+        activeTasksList.innerHTML = `
+          <div class="py-12 text-center text-xs text-stone-400 italic">
+            <i class="fa-solid fa-clock-rotate-left text-2xl mb-2 text-stone-300 block"></i>
+            Chưa có nhiệm vụ đang thực hiện.
+          </div>`;
+      } else {
+        activeTasks.forEach(t => {
+          const div = document.createElement('div');
+          div.className = 'p-4 bg-[#F7F3EB]/50 border border-[#E5DFD3] rounded-2xl flex justify-between items-center';
+          const btnLabel = loggedInUser.role === 'technical' ? 'Hoàn Thành Sửa' : 'Hoàn Thành';
+          const statusText = loggedInUser.role === 'technical' ? 'Đang sửa' : 'Đang làm';
+          
+          div.innerHTML = `
+            <div>
+              <h4 class="text-xs font-bold text-[#2C2623]">${t.serviceName}</h4>
+              <p class="text-[10px] text-stone-500 mt-1">Phòng: <strong class="font-mono">${t.roomNumber}</strong> | Trạng thái: <span class="text-amber-600 font-bold">${statusText}</span></p>
+            </div>
+            <button onclick="completeTask(${t.id})" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[10px] font-bold uppercase transition-all shadow-sm cursor-pointer">
+              ${btnLabel}
+            </button>
+          `;
+          activeTasksList.appendChild(div);
+        });
+      }
+    }
+
+    // Accept task trigger
+    async function acceptTask(id) {
+      const token = localStorage.getItem('token');
+      if (isBackendOnline && token) {
+        try {
+          const res = await fetch(`${API_URL}/department/tasks/${id}/accept`, {
+            method: 'PUT',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const result = await res.json();
+          if (res.ok && result.success) {
+            alert(result.message || 'Nhận việc thành công!');
+            await refreshTasks();
+          } else {
+            alert('Lỗi: ' + (result.message || 'Không thể nhận việc'));
+          }
+        } catch (error) {
+          console.error(error);
+          alert('Không thể kết nối máy chủ.');
+        }
+      } else {
+        // Offline action simulation
+        const t = tasksState.find(x => x.id === id);
+        if (t) {
+          t.taskStatus = 'processing';
+          t.assignedStaffId = loggedInUser.id;
+        }
+        alert('Đã tiếp nhận yêu cầu! (Offline Mock)');
+        renderTasks();
+      }
+    }
+
+    // Complete task trigger
+    async function completeTask(id) {
+      const token = localStorage.getItem('token');
+      if (isBackendOnline && token) {
+        try {
+          const res = await fetch(`${API_URL}/department/tasks/${id}/complete`, {
+            method: 'PUT',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const result = await res.json();
+          if (res.ok && result.success) {
+            alert(result.message || 'Hoàn thành nhiệm vụ!');
+            await refreshTasks();
+          } else {
+            alert('Lỗi: ' + (result.message || 'Không thể hoàn thành'));
+          }
+        } catch (error) {
+          console.error(error);
+          alert('Không thể kết nối máy chủ.');
+        }
+      } else {
+        // Offline complete simulation
+        const idx = tasksState.findIndex(x => x.id === id);
+        if (idx !== -1) {
+          tasksState.splice(idx, 1);
+        }
+        alert('Nhiệm vụ đã hoàn thành! (Offline Mock)');
+        renderTasks();
+      }
+    }
+
+    // Load rooms for report issue modal
+    async function loadRoomsForReport() {
+      const select = document.getElementById('issueRoomId');
+      if (!select) return;
+      select.innerHTML = '<option value="">-- Chọn phòng --</option>';
+
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`${API_URL}/rooms`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const json = await res.json();
+        if (res.ok && json.success && json.data) {
+          json.data.forEach(room => {
+            const opt = document.createElement('option');
+            opt.value = room.id;
+            opt.textContent = `Phòng ${room.number} (${room.type})`;
+            select.appendChild(opt);
+          });
+        } else {
+          throw new Error(json.message || 'Không thể tải phòng');
+        }
+      } catch (err) {
+        console.error('Lỗi khi tải phòng:', err);
+        // Fallback mock rooms if offline or error
+        const mockRooms = [
+          { id: 1, number: '101', type: 'Bayview King' },
+          { id: 2, number: '102', type: 'Deluxe Room' },
+          { id: 3, number: '103', type: 'Deluxe Room' },
+          { id: 4, number: '201', type: 'Oceanview Twin' },
+          { id: 5, number: '202', type: 'Oceanview Twin' },
+          { id: 6, number: '203', type: 'Luxury Suite' },
+          { id: 7, number: '301', type: 'Luxury Suite' },
+          { id: 8, number: '302', type: 'Luxury Family Suite' }
+        ];
+        mockRooms.forEach(room => {
+          const opt = document.createElement('option');
+          opt.value = room.id;
+          opt.textContent = `Phòng ${room.number} (${room.type})`;
+          select.appendChild(opt);
+        });
+      }
+    }
+
+    // Report issue trigger
+    async function handleReportIssue(event) {
+      event.preventDefault();
+      const roomId = document.getElementById('issueRoomId').value;
+      const description = document.getElementById('issueDescription').value.trim();
+
+      if (!roomId) {
+        alert('Vui lòng chọn phòng xảy ra sự cố');
+        return;
+      }
+
+      const token = localStorage.getItem('token');
+      if (isBackendOnline && token) {
+        try {
+          const res = await fetch(`${API_URL}/department/report-issue`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ roomId, description })
+          });
+          const result = await res.json();
+          if (res.ok && result.success) {
+            alert('Báo cáo sự cố thành công! Thông báo đã được gửi đến bộ phận điều phối.');
+            document.getElementById('issueRoomId').value = '';
+            document.getElementById('issueDescription').value = '';
+            closePanel('panel-report-issue');
+          } else {
+            alert('Lỗi: ' + (result.message || 'Không thể gửi báo cáo'));
+          }
+        } catch (error) {
+          console.error(error);
+          alert('Không thể kết nối máy chủ.');
+        }
+      } else {
+        alert('Báo cáo sự cố thành công! Thông báo đã được gửi đến bộ phận điều phối.');
+        document.getElementById('issueRoomId').value = '';
+        document.getElementById('issueDescription').value = '';
+        closePanel('panel-report-issue');
+      }
+    }
+
+    // Dynamic Inventory load
+    async function loadInventory() {
+      const container = document.getElementById('inventoryItemsContainer');
+      container.innerHTML = `<p class="text-xs text-stone-400 italic">Đang đồng bộ dữ liệu kho...</p>`;
+
+      const token = localStorage.getItem('token');
+      if (isBackendOnline && token) {
+        try {
+          const res = await fetch(`${API_URL}/department/inventory`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const json = await res.json();
+          if (res.ok && json.success && json.data) {
+            renderInventoryUI(json.type, json.data);
+          } else {
+            container.innerHTML = `<p class="text-xs text-rose-500 italic">Lỗi: Không thể tải thông tin kho.</p>`;
+          }
+        } catch (error) {
+          console.error(error);
+          renderMockInventory();
+        }
+      } else {
+        renderMockInventory();
+      }
+    }
+
+    function renderInventoryUI(type, items) {
+      const container = document.getElementById('inventoryItemsContainer');
+      container.innerHTML = '';
+
+      if (items.length === 0) {
+        container.innerHTML = `<p class="text-xs text-stone-400 italic">Không có vật tư nào được ghi nhận.</p>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'p-3 bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl flex justify-between items-center text-xs';
+        
+        let subText = '';
+        if (type === 'F&B') {
+          subText = `<strong class="text-emerald-700">${formatCurrency(item.price)}</strong>`;
+        }
+        
+        const isReady = item.status === 'Sẵn sàng' || item.status === 'Sẵn sàng phục vụ';
+        const statusBadge = isReady
+          ? `<span class="px-2 py-0.5 rounded-md text-[9px] bg-emerald-50 text-emerald-700 border border-emerald-200">Sẵn sàng</span>`
+          : `<span class="px-2 py-0.5 rounded-md text-[9px] bg-amber-50 text-amber-700 border border-amber-200">${item.status}</span>`;
+
+        div.innerHTML = `
+          <div>
+            <p class="font-bold text-[#2C2623]">${item.name}</p>
+            <p class="text-[9px] text-stone-400 mt-0.5">${subText}</p>
+          </div>
+          <div>${statusBadge}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function renderMockInventory() {
+      const type = loggedInUser ? loggedInUser.departmentId : 'SPA';
+      const role = loggedInUser ? loggedInUser.role : 'cleaner';
+      let items = [];
+      if (role === 'technical') {
+        items = [
+          { name: 'Bộ dụng cụ sửa chữa đa năng', status: 'Sẵn sàng' },
+          { name: 'Máy khoan & Thang rút', status: 'Sẵn sàng' },
+          { name: 'Thiết bị đo dòng điện', status: 'Sẵn sàng' },
+          { name: 'Vật tư thay thế (Bóng đèn, Van nước)', status: 'Sẵn sàng' }
+        ];
+      } else if (type === 'F&B') {
+        items = [
+          { name: 'Ẩm Thực Tại Phòng 24/7', status: 'Sẵn sàng phục vụ', price: 250000 },
+          { name: 'Trà Chiều Hoàng Hôn', status: 'Sẵn sàng phục vụ', price: 350000 }
+        ];
+      } else if (type === 'SPA') {
+        items = [
+          { name: 'Phòng Trị Liệu VIP 1 (Single)', status: 'Sẵn sàng' },
+          { name: 'Phòng Trị Liệu VIP 2 (Single)', status: 'Sẵn sàng' },
+          { name: 'Phòng Trị Liệu Đôi 01 (Double)', status: 'Sẵn sàng' },
+          { name: 'Phòng Sauna & Tắm hơi', status: 'Sẵn sàng' }
+        ];
+      } else {
+        items = [
+          { name: 'Mercedes-Benz S500 (VIP 1)', status: 'Sẵn sàng' },
+          { name: 'Toyota Alphard (VIP 2)', status: 'Sẵn sàng' },
+          { name: 'Ford Transit Dcar Limousine', status: 'Sẵn sàng' }
+        ];
+      }
+      renderInventoryUI(type, items);
+    }
+
+    // Dynamic Payroll load
+    async function loadPayroll() {
+      const container = document.getElementById('payrollDetailsContainer');
+      container.innerHTML = `<p class="text-xs text-stone-400 italic">Đang tải sao kê lương...</p>`;
+
+      const token = localStorage.getItem('token');
+      if (isBackendOnline && token) {
+        try {
+          const res = await fetch(`${API_URL}/accounting/payroll`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const json = await res.json();
+          if (res.ok && json.success && json.data) {
+            // Find current user row
+            const record = json.data.find(x => x.id === loggedInUser.id || x.username === loggedInUser.username);
+            if (record) {
+              renderPayrollUI(record);
+            } else {
+              container.innerHTML = `
+                <div class="p-4 bg-amber-50 border border-amber-100 rounded-xl text-center text-xs text-amber-800">
+                  Tài khoản của bạn chưa được thiết lập bảng lương trong tháng này.
+                </div>`;
+            }
+          } else {
+            container.innerHTML = `<p class="text-xs text-rose-500 italic">Lỗi kết nối tải sao kê lương.</p>`;
+          }
+        } catch (error) {
+          console.error(error);
+          renderMockPayroll();
+        }
+      } else {
+        renderMockPayroll();
+      }
+    }
+
+    function renderPayrollUI(record) {
+      const container = document.getElementById('payrollDetailsContainer');
+      const rate = record.role === 'cleaner' ? 25000 : 35000;
+      const hours = parseFloat(record.totalHours || 0);
+      const total = rate * hours;
+
+      container.innerHTML = `
+        <div class="bg-[#F7F3EB]/50 border border-[#E5DFD3] rounded-2xl p-5 space-y-4">
+          <div class="flex justify-between items-center border-b border-[#E5DFD3]/60 pb-3">
+            <div>
+              <h4 class="text-xs font-bold text-[#2C2623]">${record.fullName}</h4>
+              <p class="text-[9px] text-[#b3541e] font-semibold uppercase tracking-wider mt-0.5">Mã NV: NV-${100 + record.id}</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-[9px] font-bold bg-[#b3541e]/10 text-[#b3541e] uppercase">Tháng 06</span>
+          </div>
+
+          <div class="text-xs space-y-2 text-[#5C524E]">
+            <p class="flex justify-between">
+              <span>Mức lương cơ bản:</span>
+              <span class="font-bold text-[#2C2623]">${formatCurrency(rate)}/giờ</span>
+            </p>
+            <p class="flex justify-between">
+              <span>Tổng số giờ làm:</span>
+              <span class="font-mono font-bold text-[#2C2623]">${hours.toFixed(2)} giờ</span>
+            </p>
+            <hr class="border-[#E5DFD3]/40">
+            <p class="flex justify-between text-sm pt-1">
+              <span class="font-bold">Tổng Lương Tạm Tính:</span>
+              <span class="font-mono font-bold text-[#b3541e] text-base">${formatCurrency(total)}</span>
+            </p>
+          </div>
+        </div>`;
+    }
+
+    function renderMockPayroll() {
+      const record = {
+        id: loggedInUser ? loggedInUser.id : 4,
+        fullName: loggedInUser ? loggedInUser.fullName : 'Nguyen Van Cleaner',
+        role: loggedInUser ? loggedInUser.role : 'cleaner',
+        totalHours: 0.00
+      };
+      renderPayrollUI(record);
+    }
+
+    // Integrated Attendance Subsystem Actions
+    async function initAttendance() {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      };
+
+      const pill = document.getElementById('attendanceStatusPill');
+      const modalStatus = document.getElementById('attendanceStatusPill'); // alias or update locally
+      const clockBtn = document.getElementById('clockInOutBtn');
+
+      function updateUI(isClockedIn) {
+        localStorage.setItem('isClockedIn', isClockedIn ? 'true' : 'false');
+        
+        const modalStatusEl = document.getElementById('attendanceModalStatus');
+        
+        if (isClockedIn) {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[9px] font-bold border transition-all duration-300 select-none border-emerald-200 bg-emerald-50 text-emerald-700';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>ĐANG LÀM VIỆC';
+          
+          if (modalStatusEl) {
+            modalStatusEl.className = 'text-lg font-extrabold text-emerald-600';
+            modalStatusEl.innerText = '🔴 ĐANG LÀM VIỆC';
+          }
+          clockBtn.className = 'w-full bg-rose-600 hover:bg-rose-700 text-white py-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md';
+          clockBtn.innerHTML = '🔴 Kết Thúc Ca Làm';
+        } else {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[9px] font-bold border transition-all duration-300 select-none border-stone-200 bg-stone-50 text-stone-500';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>ĐÃ RA CA';
+          
+          if (modalStatusEl) {
+            modalStatusEl.className = 'text-lg font-extrabold text-stone-500';
+            modalStatusEl.innerText = '🟢 ĐÃ RA CA';
+          }
+          clockBtn.className = 'w-full bg-[#b3541e] hover:bg-[#9b4117] text-white py-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md';
+          clockBtn.innerHTML = '🟢 Điểm Danh Vào Ca';
+        }
+      }
+
+      // Initial state load
+      const localState = localStorage.getItem('isClockedIn') === 'true';
+      updateUI(localState);
+
+      // Sync with server if online
+      if (isBackendOnline) {
+        try {
+          const res = await fetch(`${API_URL}/attendance/status`, { headers });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success) {
+              updateUI(data.isClockedIn);
+            }
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      // Button Click Handler
+      clockBtn.onclick = async function (e) {
+        e.preventDefault();
+        const currentlyClockedIn = localStorage.getItem('isClockedIn') === 'true';
+        
+        if (!currentlyClockedIn) {
+          // Clock-in
+          if (isBackendOnline) {
+            try {
+              const res = await fetch(`${API_URL}/attendance/check-in`, { method: 'POST', headers });
+              const data = await res.json();
+              if (res.ok && data.success) {
+                updateUI(true);
+                alert(data.message || 'Điểm danh vào ca thành công!');
+                closePanel('panel-attendance');
+              } else {
+                alert('Lỗi: ' + (data.message || 'Không thể vào ca'));
+              }
+            } catch (err) {
+              console.error(err);
+            }
+          } else {
+            updateUI(true);
+            alert('Điểm danh vào ca thành công! (Offline Mock)');
+            closePanel('panel-attendance');
+          }
+        } else {
+          // Clock-out
+          if (isBackendOnline) {
+            try {
+              const res = await fetch(`${API_URL}/attendance/check-out`, { method: 'POST', headers });
+              const data = await res.json();
+              if (res.ok && data.success) {
+                updateUI(false);
+                const hours = data.data ? data.data.totalHours : 0;
+                alert(`Bạn đã hoàn thành ca làm việc! Tổng thời gian: ${hours} giờ.`);
+                closePanel('panel-attendance');
+                await loadPayroll(); // reload payroll hours
+              } else {
+                alert('Lỗi: ' + (data.message || 'Không thể ra ca'));
+              }
+            } catch (err) {
+              console.error(err);
+            }
+          } else {
+            updateUI(false);
+            alert('Bạn đã hoàn thành ca làm việc! (Offline Mock)');
+            closePanel('panel-attendance');
+          }
+        }
+      };
+    }
+
+    // Panel slide controllers
+    function openPanel(id) {
+      const panel = document.getElementById(id);
+      if (panel) {
+        panel.classList.remove('hidden');
+        setTimeout(() => {
+          panel.style.transform = 'translateY(0)';
+        }, 10);
+      }
+
+      // Fetch or refresh data for panels on open
+      if (id === 'panel-new-orders' || id === 'panel-active-tasks') {
+        refreshTasks();
+      } else if (id === 'panel-inventory') {
+        loadInventory();
+      } else if (id === 'panel-payroll') {
+        loadPayroll();
+      } else if (id === 'panel-attendance') {
+        initAttendance();
+      } else if (id === 'panel-report-issue') {
+        loadRoomsForReport();
+      }
+    }
+
+    function closePanel(id) {
+      const panel = document.getElementById(id);
+      if (panel) {
+        panel.style.transform = 'translateY(100%)';
+        setTimeout(() => {
+          panel.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    // Logout Helper
+    function handleLogout() {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = './login.html';
+    }
+
+    // Initialize App lifecycle
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Set localized date
+      document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString('vi-VN', {
+        day: 'numeric', month: 'numeric'
+      });
+
+      await checkConnection();
+      await checkAuth();
+      await refreshTasks();
+      
+      // Auto refresh tasks every 15 seconds
+      setInterval(refreshTasks, 15000);
+    });
+  </script>
+</body>
+
+</html>

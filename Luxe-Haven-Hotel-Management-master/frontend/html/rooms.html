@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-[#FDFBF7] text-[#2C2623]">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeHaven Resort - Quản Lý Sơ Đồ Phòng</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            terracotta: {
+              50: '#fdf4f0',
+              100: '#fbe7de',
+              200: '#f7d2c1',
+              300: '#efb197',
+              400: '#e38664',
+              500: '#b3541e', /* Terracotta Red-Brown Accent */
+              600: '#9b4117',
+              700: '#813313',
+              800: '#682912',
+              955: '#381205',
+            },
+            luxury: {
+              cream: '#FDFBF7',
+              sand: '#F7F3EB',
+              charcoal: '#2C2623',
+              gold: '#C5A880',
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts - Playfair Display & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&family=Playfair+Display:ital,wght=0,400..900;1,400..900&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    .font-serif-luxury {
+      font-family: 'Playfair Display', serif;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Elegant soft custom scrollbar matching cream design */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F7F3EB;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #E5DFD3;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b3541e;
+    }
+  </style>
+</head>
+
+<body class="h-full flex overflow-hidden bg-[#FDFBF7]">
+
+  <!-- ================= THANH ĐIỀU HƯỚNG BÊN (SIDEBAR) ================= -->
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebarBackdrop" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-40 hidden lg:hidden"
+    onclick="toggleMobileSidebar()"></div>
+
+  <aside id="sidebar"
+    class="fixed inset-y-0 left-0 w-64 bg-white border-r border-[#E5DFD3]/80 z-50 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-300 ease-in-out shadow-sm">
+    <div>
+      <!-- Brand Logo / Resort Title -->
+      <div class="h-20 flex items-center px-6 border-b border-[#E5DFD3]/60 bg-[#FDFBF7]/50">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#b3541e] flex items-center justify-center shadow-lg shadow-[#b3541e]/20">
+            <i class="fa-solid fa-umbrella-beach text-white text-lg"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-base font-serif-luxury font-bold tracking-wide text-[#2C2623]">LuxeHaven</span>
+            <span class="text-[9px] font-semibold text-[#b3541e] uppercase tracking-widest mt-0.5">Khu Nghỉ Dưỡng</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-4 space-y-1.5">
+        <a href="./dashboard_AD.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-hotel w-5 text-center"></i>
+          <span>Tổng Quan Hệ Thống</span>
+        </a>
+        <a href="./rooms.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium bg-[#b3541e] text-white shadow-md shadow-[#b3541e]/15 transition-all duration-200">
+          <i class="fa-solid fa-key w-5 text-center"></i>
+          <span>Quản Lý Phòng</span>
+        </a>
+        <a href="./bookings.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-calendar-days w-5 text-center"></i>
+          <span>Đặt Phòng</span>
+        </a>
+        <a href="./services.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-spa w-5 text-center"></i>
+          <span>Dịch Vụ Khách Sạn</span>
+        </a>
+        <a href="./housekeeping.html"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-broom w-5 text-center"></i>
+          <span>Nhật Ký Dọn Phòng</span>
+        </a>
+        <a href="./users.html" id="sidebarUsersLink"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-user-shield w-5 text-center"></i>
+          <span>Quản Lý Người Dùng</span>
+        </a>
+        <a href="./accounting.html" id="sidebarAccountingLink"
+          class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB]/60 transition-all duration-200">
+          <i class="fa-solid fa-wallet w-5 text-center"></i>
+          <span>Quản Lý Tài Chính</span>
+        </a>
+      </nav>
+    </div>
+
+
+  </aside>
+
+  <!-- ================= MAIN LAYOUT WRAPPER ================= -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+    <!-- ================= THANH NAVBAR TRÊN ================= -->
+    <header class="h-20 bg-white border-b border-[#E5DFD3]/60 flex items-center justify-between px-6 z-30 shadow-sm">
+      <div class="flex items-center gap-4 flex-1">
+        <!-- Mobile Sidebar Toggle -->
+        <button onclick="toggleMobileSidebar()"
+          class="lg:hidden p-2 rounded-xl text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB] transition-colors cursor-pointer">
+          <i class="fa-solid fa-bars-staggered text-lg"></i>
+        </button>
+
+        <!-- Search Bar -->
+        <div class="max-w-md w-full relative hidden sm:block">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A89F9A]">
+            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+          </div>
+          <input type="text" id="roomGlobalSearch" oninput="handleSearch(this.value)"
+            placeholder="Tìm kiếm theo số phòng, hạng phòng..."
+            class="w-full text-xs bg-[#F7F3EB]/50 text-[#2C2623] placeholder-[#A89F9A] rounded-xl pl-9 pr-4 py-2.5 border border-[#E5DFD3]/80 focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <!-- User Actions & Info -->
+      <div class="flex items-center gap-5">
+        <!-- Backend Connection Indicator -->
+        <div id="backendStatusBadge"
+          class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border">
+          <span id="backendStatusDot" class="w-1.5 h-1.5 rounded-full"></span>
+          <span id="backendStatusText">Đang kiểm tra kết nối...</span>
+        </div>
+
+        <!-- Notification -->
+        <div class="relative" id="notificationContainer">
+          <button id="notificationBellBtn"
+            class="p-2.5 rounded-xl text-[#5C524E] hover:text-[#b3541e] hover:bg-[#F7F3EB] transition-all cursor-pointer">
+            <i class="fa-solid fa-bell text-sm"></i>
+          </button>
+          <span id="notificationDot" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#b3541e] border-2 border-white rounded-full hidden"></span>
+          
+          <!-- Dropdown Panel -->
+          <div id="notificationDropdown" class="absolute right-0 mt-2 w-80 bg-white border border-[#E5DFD3]/60 rounded-2xl shadow-xl z-50 hidden overflow-hidden">
+            <div class="p-3.5 border-b border-[#E5DFD3]/60 bg-[#FDFBF7]/50 flex items-center justify-between">
+              <span class="text-xs font-bold text-[#2C2623]">Thông báo</span>
+              <button onclick="markAllNotificationsAsRead(event)" class="text-[10px] font-semibold text-[#b3541e] hover:underline cursor-pointer">
+                Đánh dấu đã đọc
+              </button>
+            </div>
+            <div id="notificationList" class="max-h-80 overflow-y-auto divide-y divide-[#E5DFD3]/40">
+              <!-- Dynamic rows go here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Vertical Divider -->
+        <span class="h-7 w-px bg-[#E5DFD3]/60"></span>
+
+        <!-- Profile Menu -->
+        <div class="relative" id="profileDropdownContainer">
+          <button class="flex items-center gap-3.5 hover:opacity-90 focus:outline-none cursor-pointer">
+            <div
+              class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#b3541e] to-[#e38664] flex items-center justify-center font-bold text-white text-sm shadow-md">
+              LT
+            </div>
+            <div class="text-left hidden md:block">
+              <p class="text-xs font-semibold text-[#2C2623]" id="navUserName">Jane Doe</p>
+              <p class="text-[10px] text-[#b3541e] font-semibold tracking-wider uppercase mt-0.5" id="navUserRole">Lễ Tân</p>
+            </div>
+            <i class="fa-solid fa-chevron-down text-[#A89F9A] text-[9px]"></i>
+          </button>
+
+          <!-- Dropdown List -->
+          <div id="profileDropdown"
+            class="absolute right-0 mt-3 w-48 bg-white border border-[#E5DFD3]/80 rounded-xl shadow-xl py-1.5 hidden z-50">
+            <a href="#" onclick="openProfileModal(event)"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-[#5C524E] hover:bg-[#F7F3EB] hover:text-[#b3541e]"><i
+                class="fa-solid fa-user w-4 text-center"></i> Hồ sơ cá nhân</a>
+            <a href="#" onclick="openConfigModal(event)"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-[#5C524E] hover:bg-[#F7F3EB] hover:text-[#b3541e]"><i
+                class="fa-solid fa-sliders w-4 text-center"></i> Thiết lập cấu hình</a>
+            <hr class="border-[#E5DFD3]/40 my-1">
+            <a href="#" onclick="handleLogout(event)" class="flex items-center gap-2 px-4 py-2 text-xs text-rose-600 hover:bg-rose-50"><i
+                class="fa-solid fa-power-off w-4 text-center"></i> Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= NỘI DUNG CHÍNH (CONTENT AREA) ================= -->
+    <main class="flex-1 overflow-y-auto p-6 space-y-6">
+
+
+
+      <!-- 2. TOP HEADER -->
+      <div class="bg-white border border-[#E5DFD3]/60 p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <span class="text-[10px] font-bold text-[#b3541e] uppercase tracking-widest bg-[#b3541e]/5 px-2.5 py-1 rounded-full">Phân Hệ Quản Lý Phòng</span>
+          <h1 class="text-2xl font-serif-luxury font-bold text-[#2C2623] mt-2">Sơ Đồ Phòng LuxeHaven</h1>
+          <p class="text-xs text-[#81726A] mt-1">Giám sát trạng thái buồng phòng thời gian thực, quản lý phân phối phòng nghỉ và thông tin khách lưu trú.</p>
+        </div>
+        <div id="adminActionContainer" class="shrink-0">
+          <button onclick="openAddRoomModal()"
+            class="flex items-center gap-1.5 px-4.5 py-2.5 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md shadow-[#b3541e]/15 transition-all cursor-pointer">
+            <i class="fa-solid fa-plus text-[10px]"></i>
+            <span>Thêm Phòng Mới</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. STAFF COUNTERS SECTION -->
+      <section id="statsSection" class="grid grid-cols-2 lg:grid-cols-4 gap-4 hidden">
+        <!-- Tổng phòng -->
+        <div class="bg-white border border-[#E5DFD3]/60 p-4 rounded-2xl shadow-sm flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl bg-luxury-sand flex items-center justify-center text-[#2C2623]">
+            <i class="fa-solid fa-hotel text-lg"></i>
+          </div>
+          <div>
+            <p class="text-[10px] font-bold text-[#81726A] uppercase tracking-wider">Tổng số phòng</p>
+            <h3 id="statTotal" class="text-xl font-bold font-serif-luxury text-[#2C2623] mt-0.5">0</h3>
+          </div>
+        </div>
+        <!-- Phòng trống -->
+        <div class="bg-white border border-[#E5DFD3]/60 p-4 rounded-2xl shadow-sm flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+            <i class="fa-solid fa-door-open text-lg"></i>
+          </div>
+          <div>
+            <p class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Phòng trống</p>
+            <h3 id="statAvailable" class="text-xl font-bold font-serif-luxury text-emerald-700 mt-0.5">0</h3>
+          </div>
+        </div>
+        <!-- Phòng đang ở -->
+        <div class="bg-white border border-[#E5DFD3]/60 p-4 rounded-2xl shadow-sm flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl bg-[#b3541e]/5 text-[#b3541e] flex items-center justify-center">
+            <i class="fa-solid fa-key text-lg"></i>
+          </div>
+          <div>
+            <p class="text-[10px] font-bold text-[#b3541e] uppercase tracking-wider">Đang ở</p>
+            <h3 id="statOccupied" class="text-xl font-bold font-serif-luxury text-[#b3541e] mt-0.5">0</h3>
+          </div>
+        </div>
+        <!-- Phòng bẩn -->
+        <div class="bg-white border border-[#E5DFD3]/60 p-4 rounded-2xl shadow-sm flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+            <i class="fa-solid fa-broom text-lg"></i>
+          </div>
+          <div>
+            <p class="text-[10px] font-bold text-amber-700 uppercase tracking-wider">Chờ dọn dẹp</p>
+            <h3 id="statDirty" class="text-xl font-bold font-serif-luxury text-amber-700 mt-0.5">0</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. CONTROLS & FILTERS -->
+      <div class="bg-white border border-[#E5DFD3]/60 p-4 rounded-2xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <button onclick="setStatusFilter('all')" id="filterBtn-all"
+            class="px-4 py-2 rounded-xl font-semibold bg-[#b3541e] text-white transition-all cursor-pointer">
+            Tất Cả
+          </button>
+          <button onclick="setStatusFilter('available')" id="filterBtn-available"
+            class="px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer">
+            Trống
+          </button>
+          <button onclick="setStatusFilter('occupied')" id="filterBtn-occupied"
+            class="px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer">
+            Đang sử dụng
+          </button>
+          <button onclick="setStatusFilter('dirty')" id="filterBtn-dirty"
+            class="px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer">
+            Chờ dọn dẹp
+          </button>
+        </div>
+        <div class="flex items-center gap-2 text-xs w-full sm:w-auto">
+          <select id="typeFilter" onchange="handleTypeFilter(this.value)"
+            class="bg-[#F7F3EB]/50 text-[#2C2623] rounded-xl px-3 py-2 border border-[#E5DFD3]/80 focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all w-full sm:w-44">
+            <option value="all">Tất cả hạng phòng</option>
+            <option value="Deluxe">Deluxe</option>
+            <option value="Suite">Suite</option>
+            <option value="Oceanview">Oceanview</option>
+            <option value="Bayview King">Bayview King</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 5. VISUAL ROOM GRID SYSTEM -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623]">Danh Sách Sơ Đồ Phòng</h3>
+          <p class="text-[10px] text-[#81726A] font-semibold" id="gridSummaryText">Hiển thị 10 phòng</p>
+        </div>
+
+        <div id="roomGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <!-- Room cards populated dynamically -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="h-12 bg-white border-t border-[#E5DFD3]/60 flex items-center justify-between px-6 text-[10px] text-[#81726A] font-medium z-10 shrink-0">
+      <span>&copy; 2026 LuxeHaven Resort - Hệ Thống Quản Lý Đặt Phòng Cao Cấp</span>
+      <span class="flex items-center gap-1.5"><span
+          class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>Bảng Quản Lý Phòng Đồng Bộ</span>
+    </footer>
+
+  </div>
+
+  <!-- ================= MODAL: ADD / EDIT ROOM (ADMIN ONLY) ================= -->
+  <div id="roomModal"
+    class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div
+      class="bg-white border border-[#E5DFD3] rounded-3xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-hotel text-[#b3541e]"></i>
+          <span id="modalTitle">Thêm Phòng Mới</span>
+        </h3>
+        <button onclick="closeRoomModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i
+            class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+
+      <!-- Form Inputs -->
+      <div class="space-y-4 text-xs">
+        <input type="hidden" id="modalRoomId">
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1.5">Số phòng</label>
+          <input type="text" id="inputRoomNumber" placeholder="Ví dụ: 302"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1.5">Loại phòng (Hạng phòng)</label>
+          <select id="inputRoomType"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="Deluxe">Deluxe</option>
+            <option value="Suite">Suite</option>
+            <option value="Oceanview">Oceanview</option>
+            <option value="Bayview King">Bayview King</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1.5">Đơn giá / Đêm (VND)</label>
+          <input type="number" id="inputRoomPrice" placeholder="Ví dụ: 2500000"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all font-mono">
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1.5">Trạng thái ban đầu</label>
+          <select id="inputRoomStatus"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="available">Trống (Available)</option>
+            <option value="occupied">Đang sử dụng (Occupied)</option>
+            <option value="dirty">Chờ dọn dẹp (Dirty)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+        <button onclick="closeRoomModal()"
+          class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+        <button onclick="submitRoomForm()"
+          class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Lưu thông tin</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: STAY INFORMATION DETAILS (STAFF ONLY - OCCUPIED CARDS) ================= -->
+  <div id="stayInfoModal"
+    class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div
+      class="bg-white border border-[#E5DFD3] rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden p-6 space-y-4 m-4 max-h-[90vh] overflow-y-auto">
+      
+      <!-- SUB-VIEW 1: STAY DETAILS -->
+      <div id="stayInfoMainView" class="space-y-4">
+        <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+          <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+            <i class="fa-solid fa-address-card text-[#b3541e]"></i>
+            <span>Thông Tin Đăng Ký Lưu Trú</span>
+          </h3>
+          <button onclick="closeStayInfoModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i
+              class="fa-solid fa-xmark text-base"></i></button>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between bg-[#F7F3EB]/50 p-4 rounded-2xl border border-[#E5DFD3]/60">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-[#b3541e]/5 text-[#b3541e] flex flex-col items-center justify-center shadow-inner border border-[#b3541e]/10">
+                <span class="text-[8px] font-bold uppercase leading-none font-sans text-stone-500">Phòng</span>
+                <span class="text-xs font-bold font-mono mt-0.5 leading-none" id="stayRoomNum">000</span>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-[#2C2623]" id="stayRoomType">Hạng phòng</h4>
+                <p class="text-[9px] text-stone-400" id="stayRoomPrice">Giá: 0 đ/Đêm</p>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 text-[9px] font-bold text-[#b3541e] bg-[#b3541e]/5 rounded-full border border-[#b3541e]/10">Đang ở</span>
+          </div>
+
+          <div class="space-y-3 p-1.5">
+            <div class="flex justify-between items-center py-2 border-b border-[#E5DFD3]/40">
+              <span class="text-stone-500 font-medium">Mã khách hàng:</span>
+              <span class="font-mono font-bold text-stone-800 bg-[#F7F3EB] px-2 py-0.5 rounded border border-[#E5DFD3]" id="stayGuestCode">KH-0000</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-[#E5DFD3]/40">
+              <span class="text-stone-500 font-medium">Họ & tên khách:</span>
+              <span class="font-bold text-stone-800" id="stayGuestName">Tên Khách Hàng</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-[#E5DFD3]/40">
+              <span class="text-stone-500 font-medium">Thời gian lưu trú:</span>
+              <span class="font-bold text-stone-800" id="stayDates">Nhận ➔ Trả</span>
+            </div>
+            <div class="flex justify-between items-center py-2">
+              <span class="text-stone-500 font-medium">Trạng thái thanh toán:</span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold border" id="stayPaymentBadge">
+                <span class="w-1.5 h-1.5 rounded-full" id="stayPaymentDot"></span>
+                <span id="stayPaymentStatus">Đang xử lý</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end pt-3 border-t border-[#E5DFD3]/60">
+          <button onclick="showInterimInvoice()" id="btnViewInterimInvoice"
+            class="px-4 py-2 border border-[#b3541e] text-[#b3541e] hover:bg-[#b3541e]/5 rounded-xl text-xs font-bold transition-all cursor-pointer mr-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            <span>Xem Hóa Đơn Tạm Tính</span>
+          </button>
+          <button onclick="closeStayInfoModal()"
+            class="px-5 py-2.5 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Đóng cửa sổ</button>
+        </div>
+      </div>
+
+      <!-- SUB-VIEW 2: INTERIM BILLING RECEIPT -->
+      <div id="stayInfoInvoiceView" class="space-y-4 hidden">
+        <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+          <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+            <i class="fa-solid fa-file-invoice-dollar text-[#b3541e]"></i>
+            <span>Hóa Đơn Tạm Tính (Chi Tiết)</span>
+          </h3>
+          <button onclick="closeStayInfoModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i
+              class="fa-solid fa-xmark text-base"></i></button>
+        </div>
+
+        <!-- Custom Profile Summary -->
+        <div class="grid grid-cols-2 gap-4 bg-[#FDFBF7] border border-[#E5DFD3]/60 p-4 rounded-2xl text-xs">
+          <div>
+            <p class="text-[9px] font-bold text-stone-400 uppercase tracking-wider">Khách hàng</p>
+            <p class="font-bold text-[#2C2623] mt-1" id="interimGuestName">Name</p>
+            <p class="text-[10px] text-stone-500 font-mono mt-0.5" id="interimGuestPhone">Phone</p>
+          </div>
+          <div>
+            <p class="text-[9px] font-bold text-stone-400 uppercase tracking-wider">Thông tin phòng</p>
+            <p class="font-bold text-[#2C2623] mt-1" id="interimRoomDetail">Phòng</p>
+            <p class="text-[10px] text-stone-500 font-mono mt-0.5" id="interimStayDates">Dates</p>
+          </div>
+        </div>
+
+        <!-- SECTION A: Room Stay Cost -->
+        <div class="space-y-2 text-xs">
+          <h4 class="text-[10px] font-bold text-[#b3541e] uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-bed text-[11px]"></i>
+            <span>Phần A: Tiền phòng khách sạn</span>
+          </h4>
+          <div class="bg-white border border-[#E5DFD3]/60 rounded-xl overflow-hidden shadow-inner">
+            <table class="w-full text-left border-collapse text-[11px]">
+              <thead>
+                <tr class="border-b border-[#E5DFD3]/60 bg-[#F7F3EB]/30 text-[9px] font-bold text-stone-500 uppercase tracking-wider">
+                  <th class="py-2.5 px-4">Nội dung (Loại phòng)</th>
+                  <th class="py-2.5 px-4 text-center">Đơn giá/Đêm</th>
+                  <th class="py-2.5 px-4 text-center">Số đêm</th>
+                  <th class="py-2.5 px-4 text-right">Thành tiền</th>
+                </tr>
+              </thead>
+              <tbody id="interimRoomTableBody">
+                <!-- Dynamically populated stay row -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION B: Service Cost -->
+        <div class="space-y-2 text-xs">
+          <h4 class="text-[10px] font-bold text-[#b3541e] uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-bell-concierge text-[11px]"></i>
+            <span>Phần B: Chi tiết dịch vụ phát sinh</span>
+          </h4>
+          <div class="bg-white border border-[#E5DFD3]/60 rounded-xl overflow-hidden shadow-inner">
+            <table class="w-full text-left border-collapse text-[11px]">
+              <thead>
+                <tr class="border-b border-[#E5DFD3]/60 bg-[#F7F3EB]/30 text-[9px] font-bold text-stone-500 uppercase tracking-wider">
+                  <th class="py-2.5 px-4">Tên dịch vụ</th>
+                  <th class="py-2.5 px-4 text-center">Phân loại</th>
+                  <th class="py-2.5 px-4 text-center">Đơn giá</th>
+                  <th class="py-2.5 px-4 text-center">Số lượng</th>
+                  <th class="py-2.5 px-4 text-right">Thành tiền</th>
+                </tr>
+              </thead>
+              <tbody id="interimServiceTableBody">
+                <!-- Dynamically populated services or empty note -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION C: Billing summary card -->
+        <div class="border-t border-[#E5DFD3]/60 pt-4 text-xs">
+          <div class="space-y-1.5 text-right w-full sm:max-w-xs ml-auto">
+            <div class="flex justify-between text-[11px] text-stone-500">
+              <span>Cộng tiền (Phòng + Dịch vụ):</span>
+              <span id="interimSubtotal" class="font-mono">0 đ</span>
+            </div>
+            <div class="flex justify-between text-[11px] text-stone-500 pb-1.5 border-b border-stone-200">
+              <span>Thuế VAT (10%):</span>
+              <span id="interimVat" class="font-mono">0 đ</span>
+            </div>
+            <div class="flex justify-between items-center text-sm font-bold pt-1">
+              <span class="font-serif-luxury text-[#2C2623] text-sm">TỔNG TIỀN TẠM TÍNH:</span>
+              <span class="text-base font-bold text-[#b3541e] font-mono" id="interimGrandTotal">0 đ</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end pt-3 border-t border-[#E5DFD3]/60">
+          <button onclick="hideInterimInvoice()"
+            class="px-5 py-2.5 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Quay lại</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- ================= MODAL: HỒ SƠ CÁ NHÂN & ĐỔI MẬT KHẨU ================= -->
+  <div id="profileModal" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-user-circle text-[#b3541e] text-base"></i>
+          <span>Hồ Sơ Cá Nhân</span>
+        </h3>
+        <button onclick="closeProfileModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Staff Details Display -->
+      <div class="p-3.5 bg-[#F7F3EB]/50 border border-[#E5DFD3] rounded-xl text-xs space-y-2 text-[#5C524E]">
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Họ và tên:</span>
+          <span class="font-bold text-[#2C2623]" id="profileFullName">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Tên đăng nhập:</span>
+          <span class="font-mono font-bold text-[#2C2623]" id="profileUsername">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Email:</span>
+          <span class="font-bold text-[#2C2623]" id="profileEmail">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Số điện thoại:</span>
+          <span class="font-mono font-bold text-[#2C2623]" id="profilePhone">--</span>
+        </p>
+        <p class="flex justify-between">
+          <span class="font-semibold text-stone-500">Chức vụ:</span>
+          <span class="font-bold text-[#b3541e]" id="profileRole">--</span>
+        </p>
+      </div>
+
+      <!-- Change Password Form -->
+      <form id="changePasswordForm" class="space-y-3 pt-2 border-t border-[#E5DFD3]/60" onsubmit="submitChangePassword(event)">
+        <h4 class="text-xs font-bold text-[#2C2623] uppercase tracking-wider">Đổi mật khẩu tài khoản</h4>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Mật khẩu hiện tại</label>
+          <input type="password" id="oldPassword" required placeholder="Nhập mật khẩu hiện tại..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Mật khẩu mới</label>
+          <input type="password" id="newPassword" required placeholder="Nhập mật khẩu mới..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="text-xs">
+          <label class="block font-bold text-[#5C524E] mb-1">Xác nhận mật khẩu mới</label>
+          <input type="password" id="confirmNewPassword" required placeholder="Xác nhận mật khẩu mới..."
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+          <button type="button" onclick="closeProfileModal()"
+            class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+          <button type="submit"
+            class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Cập nhật</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: THIẾT LẬP CẤU HÌNH ================= -->
+  <div id="configModal" class="fixed inset-0 bg-[#2C2623]/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white border border-[#E5DFD3] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden p-6 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-[#E5DFD3]/60 pb-3">
+        <h3 class="text-sm font-bold font-serif-luxury text-[#2C2623] flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-[#b3541e] text-base"></i>
+          <span>Thiết Lập Cấu Hình</span>
+        </h3>
+        <button onclick="closeConfigModal()" class="text-[#81726A] hover:text-[#b3541e] cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Config Form -->
+      <form id="configForm" class="space-y-3.5 text-xs" onsubmit="submitConfigForm(event)">
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Ca làm việc hoạt động (Active Shift)</label>
+          <select id="configShift"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="Ca Sáng">Ca Sáng (08:00 - 16:00)</option>
+            <option value="Ca Chiều">Ca Chiều (16:00 - 24:00)</option>
+            <option value="Ca Đêm">Ca Đêm (00:00 - 08:00)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-[#5C524E] mb-1">Chế độ giao diện (Interface Theme)</label>
+          <select id="configTheme"
+            class="w-full bg-[#F7F3EB]/40 border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#b3541e] focus:bg-white transition-all">
+            <option value="luxury-light">Luxury Light (Mặc định sáng)</option>
+            <option value="luxury-warm">Luxury Cream (Ấm áp)</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#E5DFD3]/60">
+          <button type="button" onclick="closeConfigModal()"
+            class="px-4 py-2 border border-[#E5DFD3] hover:border-[#b3541e] hover:text-[#b3541e] text-[#81726A] rounded-xl text-xs font-semibold transition-all cursor-pointer">Hủy</button>
+          <button type="submit"
+            class="px-4 py-2 bg-[#b3541e] hover:bg-[#9b4117] text-white rounded-xl text-xs font-semibold shadow-md transition-all cursor-pointer">Lưu cấu hình</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= RUNTIME INTERACTIONS JAVASCRIPT ================= -->
+  <script>
+    // ============================================================
+    // ROLE-BASED ACCESS CONTROL GUARD
+    // Runs synchronously before any rendering to prevent UI flicker
+    // ============================================================
+    (function applyRoleBasedAccessControl() {
+      const currentUserRole = localStorage.getItem('userRole');
+      const currentFullName = localStorage.getItem('fullName');
+
+      // 1. Auth Guard: Redirect to login if not authenticated
+      if (!currentUserRole) {
+        window.location.href = './login.html';
+        return;
+      }
+
+      if (currentUserRole === 'cleaner') {
+        window.location.href = './housekeeping.html';
+        return;
+      }
+
+      if (currentUserRole === 'accountant') {
+        window.location.href = './accounting.html';
+        return;
+      }
+
+      // 2. Update Header Profile Display from localStorage (instant, no flicker)
+      const navUserNameEl = document.getElementById('navUserName');
+      const navUserRoleEl = document.getElementById('navUserRole');
+      const initialsEl = document.querySelector('#profileDropdownContainer .rounded-xl.bg-gradient-to-tr');
+
+      if (navUserNameEl && currentFullName) navUserNameEl.textContent = currentFullName;
+      if (navUserRoleEl) {
+        let roleText = 'LỄ TÂN';
+        const r = (currentUserRole || '').toLowerCase().trim();
+        if (r === 'admin') roleText = 'QUẢN TRỊ VIÊN';
+        else if (r === 'cleaner') roleText = 'BUỒNG PHÒNG';
+        else if (r === 'accountant') roleText = 'KẾ TOÁN KINH DOANH';
+        else if (['tech', 'technical', 'technician', 'kỹ thuật', 'ky_thuat'].includes(r)) roleText = 'KỸ THUẬT';
+        navUserRoleEl.textContent = roleText;
+      }
+      if (initialsEl && currentFullName) {
+        const names = currentFullName.trim().split(' ');
+        const initials = names.length > 1
+          ? (names[0][0] + names[names.length - 1][0]).toUpperCase()
+          : names[0].substring(0, 2).toUpperCase();
+        initialsEl.textContent = initials;
+      }
+
+      // 3. Hide/show elements synchronously based on role
+      const statsSection = document.getElementById('statsSection');
+      const adminActionContainer = document.getElementById('adminActionContainer');
+      const usersLink = document.getElementById('sidebarUsersLink');
+      const acctLink = document.getElementById('sidebarAccountingLink');
+
+      if (currentUserRole === 'admin') {
+        if (statsSection) statsSection.classList.add('hidden');
+        if (adminActionContainer) adminActionContainer.classList.remove('hidden');
+        if (usersLink) usersLink.classList.remove('hidden');
+        if (acctLink) acctLink.classList.remove('hidden');
+      } else {
+        if (statsSection) statsSection.classList.remove('hidden');
+        if (adminActionContainer) adminActionContainer.classList.add('hidden');
+        if (usersLink) usersLink.classList.add('hidden');
+        if (acctLink) acctLink.classList.add('hidden');
+      }
+    })();
+
+    let isBackendOnline = false;
+    const API_URL = '/api';
+
+    function getAuthHeaders() {
+      const token = localStorage.getItem('token');
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      };
+    }
+
+    // loadUserProfileHeader: syncs API data to localStorage for consistency
+    async function loadUserProfileHeader() {
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/me`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        if (res.status === 401) {
+          localStorage.clear();
+          window.location.href = './login.html';
+          return;
+        }
+        if (res.ok) {
+          const result = await res.json();
+          if (result.success && result.data) {
+            const user = result.data;
+            localStorage.setItem('fullName', user.fullName);
+            localStorage.setItem('userRole', user.role);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching user profile for header:', err);
+      }
+    }
+
+    // Profile Dropdown Toggle
+    function toggleProfileDropdown(e) {
+      if (e) e.stopPropagation();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.toggle('hidden');
+    }
+
+    // Attach robust click listener to the profile wrapper button
+    (function initProfileDropdown() {
+      const profileBtn = document.querySelector('#profileDropdownContainer button');
+      const dropdown = document.getElementById('profileDropdown');
+      
+      if (profileBtn && dropdown) {
+        profileBtn.removeAttribute('onclick');
+        profileBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          dropdown.classList.toggle('hidden');
+          const notifDropdown = document.getElementById('notificationDropdown');
+          if (notifDropdown) notifDropdown.classList.add('hidden');
+        });
+      }
+      
+      document.addEventListener('click', function (e) {
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!dropdown.contains(e.target) && (!profileBtn || !profileBtn.contains(e.target))) {
+            dropdown.classList.add('hidden');
+          }
+        }
+      });
+    })();
+
+    // Notification Dropdown Toggle & Polling
+    (function initNotificationDropdown() {
+      const bellBtn = document.getElementById('notificationBellBtn');
+      const dropdown = document.getElementById('notificationDropdown');
+      
+      if (bellBtn && dropdown) {
+        bellBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          dropdown.classList.toggle('hidden');
+          const profileDropdown = document.getElementById('profileDropdown');
+          if (profileDropdown) profileDropdown.classList.add('hidden');
+        });
+      }
+      
+      document.addEventListener('click', function (e) {
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!dropdown.contains(e.target) && (!bellBtn || !bellBtn.contains(e.target))) {
+            dropdown.classList.add('hidden');
+          }
+        }
+      });
+
+      // Poll notifications immediately and every 30 seconds
+      fetchNotifications();
+      setInterval(fetchNotifications, 30000);
+    })();
+
+    async function loadHeaderNotifications() {
+      try {
+        const res = await fetch(`${API_URL}/notifications`, {
+          headers: getAuthHeaders()
+        });
+        if (!res.ok) return;
+        const json = await res.json();
+        const notifications = json.data || [];
+        
+        // Check for unread
+        const hasUnread = notifications.some(n => !n.isRead);
+        const dot = document.getElementById('notificationDot');
+        if (dot) {
+          if (hasUnread) {
+            dot.classList.remove('hidden');
+          } else {
+            dot.classList.add('hidden');
+          }
+        }
+        
+        // Populate dropdown list
+        const list = document.getElementById('notificationList');
+        if (list) {
+          if (notifications.length === 0) {
+            list.innerHTML = `
+              <div class="p-4 text-center text-xs text-[#81726A] italic">
+                Không có thông báo mới nào
+              </div>
+            `;
+          } else {
+            list.innerHTML = notifications.map(n => {
+              const bgClass = n.isRead ? 'bg-white hover:bg-stone-50' : 'bg-orange-50/40 hover:bg-orange-50/60';
+              const textWeight = n.isRead ? 'font-medium' : 'font-bold';
+              return `
+                <div class="p-3.5 text-xs transition-colors duration-150 ${bgClass}">
+                  <p class="${textWeight} text-[#2C2623]">${escapeHTML(n.title)}</p>
+                  <p class="text-[#5C524E] mt-1 leading-relaxed">${escapeHTML(n.message)}</p>
+                  <p class="text-[10px] text-stone-400 mt-1.5 flex items-center justify-between">
+                    <span>${timeAgo(n.createdAt)}</span>
+                    ${!n.isRead ? `<span class="w-1.5 h-1.5 rounded-full bg-[#b3541e]"></span>` : ''}
+                  </p>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching notifications:', err);
+      }
+    }
+
+    function fetchNotifications() {
+      return loadHeaderNotifications();
+    }
+
+    async function markAllNotificationsAsRead(e) {
+      if (e) e.stopPropagation();
+      try {
+        const res = await fetch(`${API_URL}/notifications/read-all`, {
+          method: 'PUT',
+          headers: getAuthHeaders()
+        });
+        if (res.ok) {
+          loadHeaderNotifications();
+        }
+      } catch (err) {
+        console.error('Error marking all read:', err);
+      }
+    }
+
+    function timeAgo(dateString) {
+      if (!dateString) return '';
+      const now = new Date();
+      const past = new Date(dateString);
+      const diffMs = now - past;
+      const diffMins = Math.floor(diffMs / 60000);
+      if (diffMins < 1) return 'Vừa xong';
+      if (diffMins < 60) return `${diffMins} phút trước`;
+      const diffHours = Math.floor(diffMins / 60);
+      if (diffHours < 24) return `${diffHours} giờ trước`;
+      const diffDays = Math.floor(diffHours / 24);
+      return `${diffDays} ngày trước`;
+    }
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Profile Modal Actions
+    async function openProfileModal(e) {
+      if (e) e.preventDefault();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+
+      document.getElementById('oldPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmNewPassword').value = '';
+
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/me`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+        const result = await res.json();
+        if (res.ok && result.success && result.data) {
+          const user = result.data;
+          document.getElementById('profileFullName').textContent = user.fullName;
+          document.getElementById('profileUsername').textContent = user.username;
+          document.getElementById('profileEmail').textContent = user.email;
+          document.getElementById('profilePhone').textContent = user.phone || 'Chưa cung cấp';
+          let roleText = 'Nhân Viên Lễ Tân';
+          const r = (user.role || '').toLowerCase().trim();
+          if (r === 'admin') roleText = 'Quản Trị Viên';
+          else if (r === 'receptionist') roleText = 'Nhân Viên Lễ Tân';
+          else if (r === 'cleaner') roleText = 'Nhân Viên Dọn Dẹp';
+          else if (r === 'accountant') roleText = 'Nhân Viên Kế Toán';
+          else if (['tech', 'technical', 'technician', 'kỹ thuật', 'ky_thuat'].includes(r)) roleText = 'Nhân Viên Kỹ Thuật';
+          document.getElementById('profileRole').textContent = roleText;
+        } else {
+          alert('Không thể tải thông tin hồ sơ: ' + (result.message || 'Lỗi không xác định'));
+        }
+      } catch (err) {
+        console.error('Error loading profile details:', err);
+        alert('Không thể kết nối đến máy chủ để tải thông tin hồ sơ.');
+      }
+
+      document.getElementById('profileModal').classList.remove('hidden');
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profileModal').classList.add('hidden');
+    }
+
+    async function submitChangePassword(e) {
+      if (e) e.preventDefault();
+      const oldPassword = document.getElementById('oldPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+      if (newPassword !== confirmNewPassword) {
+        alert('Mật khẩu mới và Xác nhận mật khẩu không khớp!');
+        return;
+      }
+
+      const apiEndpoint = typeof API_URL !== 'undefined' ? API_URL : API_BASE;
+      try {
+        const res = await fetch(`${apiEndpoint}/auth/change-password`, {
+          method: 'PUT',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ oldPassword, newPassword })
+        });
+        const result = await res.json();
+        if (res.ok && result.success) {
+          alert('Đổi mật khẩu thành công!');
+          closeProfileModal();
+        } else {
+          alert('Lỗi: ' + (result.message || 'Đổi mật khẩu thất bại'));
+        }
+      } catch (err) {
+        console.error('Error changing password:', err);
+        alert('Không thể kết nối đến máy chủ để đổi mật khẩu.');
+      }
+    }
+
+    // Config Modal Actions
+    function openConfigModal(e) {
+      if (e) e.preventDefault();
+      const dropdown = document.getElementById('profileDropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+
+      const savedShift = localStorage.getItem('activeShift') || 'Ca Sáng';
+      const savedTheme = localStorage.getItem('uiTheme') || 'luxury-warm';
+
+      document.getElementById('configShift').value = savedShift;
+      document.getElementById('configTheme').value = savedTheme;
+
+      document.getElementById('configModal').classList.remove('hidden');
+    }
+
+    function closeConfigModal() {
+      document.getElementById('configModal').classList.add('hidden');
+    }
+
+    function submitConfigForm(e) {
+      if (e) e.preventDefault();
+      const shift = document.getElementById('configShift').value;
+      const theme = document.getElementById('configTheme').value;
+
+      localStorage.setItem('activeShift', shift);
+      localStorage.setItem('uiTheme', theme);
+
+      alert('Lưu cấu hình thành công!');
+      closeConfigModal();
+
+      applyTheme(theme);
+    }
+
+    function applyTheme(theme) {
+      if (theme === 'luxury-warm') {
+        document.documentElement.classList.add('bg-[#FDFBF7]');
+        document.body.style.backgroundColor = '#FDFBF7';
+      } else {
+        document.documentElement.classList.remove('bg-[#FDFBF7]');
+        document.body.style.backgroundColor = '';
+      }
+    }
+
+    // Apply theme on load
+    applyTheme(localStorage.getItem('uiTheme') || 'luxury-warm');
+
+    // Logout Action
+    function handleLogout(e) {
+      if (e) e.preventDefault();
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = './login.html';
+    }
+
+
+    // Seeded/Fetched Rooms data
+    let roomsData = [];
+
+    // Seeded/Fetched Bookings lookup table
+    let bookingsData = {};
+
+    // State Variables
+    const currentUserRole = localStorage.getItem('userRole') || 'receptionist';
+    const currentRole = currentUserRole === 'admin' ? 'admin' : 'staff';
+    let statusFilter = 'all';  // 'all', 'available', 'occupied', 'dirty'
+    let typeFilter = 'all';    // 'all', 'Deluxe', 'Suite', 'Oceanview'
+    let searchQuery = '';
+
+    // Verify backend connectivity
+    function checkBackendConnection() {
+      isBackendOnline = true;
+      const badge = document.getElementById('backendStatusBadge') || document.getElementById('connection-status') || document.querySelector('.status-pill');
+      const dot = document.getElementById('backendStatusDot');
+      const text = document.getElementById('backendStatusText');
+      if (badge) {
+        badge.classList.remove('hidden');
+        badge.className = 'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-emerald-200 bg-emerald-50 text-emerald-700';
+        if (dot) dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+        if (text) text.innerText = 'Máy chủ kết nối: TRỰC TUYẾN';
+      }
+      const statusBadge = document.getElementById('connection-status') || document.querySelector('.status-pill');
+      if (statusBadge) {
+        statusBadge.textContent = "Máy chủ kết nối: TRỰC TUYẾN";
+        statusBadge.className = "status-pill border border-emerald-200 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium";
+      }
+    }
+
+    // Load initial data
+    async function initPage() {
+      const statusBadge = document.getElementById('connection-status') || document.querySelector('.status-pill') || document.getElementById('backendStatusBadge');
+      if (statusBadge) {
+        statusBadge.textContent = "Máy chủ kết nối: TRỰC TUYẾN";
+        statusBadge.className = "status-pill border border-emerald-200 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium";
+        const dot = document.getElementById('backendStatusDot');
+        const text = document.getElementById('backendStatusText');
+        if (dot) dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500';
+        if (text) text.innerText = 'Máy chủ kết nối: TRỰC TUYẾN';
+        statusBadge.classList.remove('hidden');
+      }
+      isBackendOnline = true;
+
+      await refreshData();
+      loadUserProfileHeader(); // Non-blocking sync
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('status') === 'available') {
+        setStatusFilter('available');
+      }
+    }
+
+    async function fetchRooms() {
+      await refreshData();
+    }
+
+    // Sync booking info details and rooms from database
+    async function refreshData() {
+      await checkBackendConnection();
+      if (isBackendOnline) {
+        try {
+          const resRooms = await fetch(`${API_URL}/rooms`, { headers: getAuthHeaders() });
+          const dataRooms = await resRooms.json();
+          const resBookings = await fetch(`${API_URL}/bookings`, { headers: getAuthHeaders() });
+          const dataBookings = await resBookings.json();
+          const resHousekeeping = await fetch(`${API_URL}/housekeeping`, { headers: getAuthHeaders() });
+          const dataHousekeeping = await resHousekeeping.json();
+
+          bookingsData = {};
+
+          if (dataRooms.data && dataRooms.data.length > 0) {
+            roomsData = dataRooms.data.map(room => {
+              let status = room.available ? 'available' : 'dirty';
+              let mappedId = room.id;
+              
+              if (dataBookings.data && dataBookings.data.length > 0) {
+                const booking = dataBookings.data.find(b => b.roomId === room.id && b.status === 'occupied');
+                if (booking) {
+                  status = 'occupied';
+                  bookingsData[mappedId] = {
+                    guestCode: booking.guest ? booking.guest.customerCode || `KH-${String(booking.guest.id).padStart(4, '0')}` : `KH-${String(booking.userId).padStart(4, '0')}`,
+                    guestName: booking.guestName || (booking.guest ? booking.guest.fullName : 'Khách Vãng Lai'),
+                    customerPhone: booking.guest ? booking.guest.phone || '0900000000' : '0900000000',
+                    roomNumber: room.number,
+                    roomType: room.type,
+                    roomPrice: getPrice(room.pricePerNight),
+                    checkIn: booking.checkIn,
+                    checkOut: booking.checkOut,
+                    paymentStatus: booking.payment ? (booking.payment.paymentStatus === 'Paid' ? 'Đã thanh toán' : 'Chưa thanh toán') : 'Chưa thanh toán',
+                    services: booking.services || []
+                  };
+                }
+              }
+
+              if (status !== 'occupied' && dataHousekeeping.data && dataHousekeeping.data.length > 0) {
+                const logs = dataHousekeeping.data.filter(l => l.roomId === room.id);
+                if (logs.length > 0) {
+                  const latestLog = logs[0];
+                  if (latestLog.status !== 'clean') {
+                    status = 'dirty';
+                  } else {
+                    status = 'available';
+                  }
+                }
+              }
+
+              return {
+                id: room.id,
+                number: room.number,
+                type: room.type.replace(' Room', ''),
+                pricePerNight: getPrice(room.pricePerNight),
+                status: status
+              };
+            });
+          }
+        } catch (err) {
+          console.error("Lỗi khi kết nối đồng bộ dữ liệu backend: ", err);
+        }
+      } else {
+        // LocalStorage mock fallback
+        if (!localStorage.getItem('luxeHaven_bookings')) {
+          const initialBookings = [
+            {
+              id: 1,
+              bookingCode: 'DP-2041',
+              customerName: 'Alex Johnson',
+              customerPhone: '0912345678',
+              roomNumber: '202',
+              roomType: 'Suite',
+              roomPrice: 2500000,
+              checkIn: '2026-06-12',
+              checkOut: '2026-06-14',
+              status: 'confirmed',
+              services: [
+                { name: 'Spa & Trị Liệu Đặc Quyền', price: 950000, quantity: 1 },
+                { name: 'Ẩm Thực Tại Phòng 24/7', price: 250000, quantity: 2 }
+              ],
+              paymentStatus: 'Chưa thanh toán'
+            },
+            {
+              id: 2,
+              bookingCode: 'DP-2042',
+              customerName: 'Nguyễn Văn Hùng',
+              customerPhone: '0987654321',
+              roomNumber: '102',
+              roomType: 'Deluxe',
+              roomPrice: 1200000,
+              checkIn: '2026-06-10',
+              checkOut: '2026-06-14',
+              status: 'occupied',
+              services: [
+                { name: 'Trà Chiều Hoàng Hôn', price: 350000, quantity: 1 }
+              ],
+              paymentStatus: 'Chưa thanh toán'
+            }
+          ];
+          localStorage.setItem('luxeHaven_bookings', JSON.stringify(initialBookings));
+        }
+
+        const fallbackRooms = [
+          { id: 1, number: '101', type: 'Bayview King', pricePerNight: 1500000, status: 'available' },
+          { id: 2, number: '102', type: 'Deluxe', pricePerNight: 1200000, status: 'occupied' },
+          { id: 3, number: '103', type: 'Deluxe', pricePerNight: 1200000, status: 'dirty' }
+        ];
+
+        if (localStorage.getItem('luxeHaven_rooms')) {
+          roomsData = JSON.parse(localStorage.getItem('luxeHaven_rooms'));
+        } else {
+          roomsData = fallbackRooms;
+          localStorage.setItem('luxeHaven_rooms', JSON.stringify(roomsData));
+        }
+
+        const syncedBookings = JSON.parse(localStorage.getItem('luxeHaven_bookings') || '[]');
+        roomsData.forEach(room => {
+          const matched = syncedBookings.find(b => b.roomNumber === room.number && b.status === 'occupied');
+          if (matched) {
+            room.status = 'occupied';
+            bookingsData[room.id] = {
+              guestCode: matched.customerCode || matched.guestCode || `KH-0${matched.id}`,
+              guestName: matched.customerName,
+              customerPhone: matched.customerPhone || '0900000000',
+              roomNumber: room.number,
+              roomType: room.type,
+              roomPrice: getPrice(room.pricePerNight),
+              checkIn: matched.checkIn,
+              checkOut: matched.checkOut,
+              paymentStatus: matched.paymentStatus || 'Chưa thanh toán',
+              services: matched.services || []
+            };
+          }
+        });
+      }
+      renderAll();
+    }
+
+    function formatDateString(str) {
+      if (!str) return 'N/A';
+      const d = new Date(str);
+      return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+    }
+
+    function getPrice(price) {
+      if (price < 10000) return price * 23000;
+      return price;
+    }
+
+    function getNights(checkInStr, checkOutStr) {
+      if (!checkInStr || !checkOutStr) return 1;
+      let checkIn = new Date(checkInStr.split('T')[0]);
+      let checkOut = new Date(checkOutStr.split('T')[0]);
+      if (checkInStr.includes('/') && checkInStr.split('/').length === 3) {
+        const parts = checkInStr.split('/');
+        checkIn = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+      }
+      if (checkOutStr.includes('/') && checkOutStr.split('/').length === 3) {
+        const parts = checkOutStr.split('/');
+        checkOut = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+      }
+      const diffTime = Math.abs(checkOut - checkIn);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays || 1;
+    }
+
+    // Money formatter
+    function formatCurrency(val) {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val);
+    }
+
+    // Toggle dropdown profile
+    // (Handled by global custom methods)
+
+    // Toggle Mobile Sidebar
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.toggle('-translate-x-full');
+      backdrop.classList.toggle('hidden');
+    }
+
+
+
+    // Calculate dynamic stats counters for Staff
+    function calculateStats() {
+      const total = roomsData.length;
+      const available = roomsData.filter(r => r.status === 'available').length;
+      const occupied = roomsData.filter(r => r.status === 'occupied').length;
+      const dirty = roomsData.filter(r => r.status === 'dirty').length;
+
+      document.getElementById('statTotal').innerText = total;
+      document.getElementById('statAvailable').innerText = available;
+      document.getElementById('statOccupied').innerText = occupied;
+      document.getElementById('statDirty').innerText = dirty;
+    }
+
+    // Filter handlers
+    function setStatusFilter(filter) {
+      statusFilter = filter;
+      const filters = ['all', 'available', 'occupied', 'dirty'];
+      filters.forEach(f => {
+        const btn = document.getElementById(`filterBtn-${f}`);
+        if (f === filter) {
+          btn.className = "px-4 py-2 rounded-xl font-semibold bg-[#b3541e] text-white transition-all cursor-pointer";
+        } else {
+          btn.className = "px-4 py-2 rounded-xl font-semibold bg-[#F7F3EB] text-[#5C524E] hover:text-[#b3541e] transition-all cursor-pointer";
+        }
+      });
+      renderGrid();
+    }
+
+    function handleTypeFilter(type) {
+      typeFilter = type;
+      renderGrid();
+    }
+
+    function handleSearch(query) {
+      searchQuery = query.trim().toLowerCase();
+      renderGrid();
+    }
+
+    // Render Room Grid System
+    function renderGrid() {
+      const grid = document.getElementById('roomGrid');
+      grid.innerHTML = '';
+
+      // Apply filters: search query, room status, room type
+      const filteredRooms = roomsData.filter(room => {
+        const matchesSearch = room.number.toLowerCase().includes(searchQuery) ||
+                              room.type.toLowerCase().includes(searchQuery);
+        const matchesStatus = statusFilter === 'all' || room.status === statusFilter;
+        const matchesType = typeFilter === 'all' || room.type === typeFilter;
+
+        return matchesSearch && matchesStatus && matchesType;
+      });
+
+      document.getElementById('gridSummaryText').innerText = `Hiển thị ${filteredRooms.length} phòng`;
+
+      if (filteredRooms.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-12 text-center text-xs text-stone-500 font-semibold bg-white border border-[#E5DFD3]/60 rounded-2xl">
+            Không tìm thấy phòng nghỉ nào phù hợp với bộ lọc hiện tại.
+          </div>
+        `;
+        return;
+      }
+
+      filteredRooms.forEach(room => {
+        let borderClass = 'border-stone-200';
+        let badgeHTML = '';
+        let interactionClass = '';
+
+        if (room.status === 'available') {
+          borderClass = 'border-emerald-200 hover:border-emerald-300 shadow-emerald-500/5';
+          badgeHTML = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
+              <span class="w-1 h-1 bg-emerald-500 rounded-full animate-ping"></span>
+              Trống (Sẵn sàng)
+            </span>`;
+        } else if (room.status === 'occupied') {
+          borderClass = 'border-terracotta-200/50 hover:border-terracotta-300 shadow-terracotta-500/5';
+          badgeHTML = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#b3541e]/5 text-[#b3541e] border border-[#b3541e]/10">
+              <span class="w-1.5 h-1.5 bg-[#b3541e] rounded-full"></span>
+              Đang sử dụng
+            </span>`;
+          if (currentRole === 'staff') {
+            interactionClass = 'cursor-pointer hover:bg-stone-50/50 hover:shadow-md';
+          }
+        } else if (room.status === 'dirty') {
+          borderClass = 'border-amber-200 hover:border-amber-300 shadow-amber-500/5';
+          badgeHTML = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-100">
+              <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+              Chờ dọn dẹp
+            </span>`;
+        }
+
+        // Action Buttons for Admin View (Pen & Trash)
+        let adminActionOverlay = '';
+        if (currentRole === 'admin') {
+          adminActionOverlay = `
+            <div class="absolute top-3 right-3 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 z-10">
+              <button onclick="event.stopPropagation(); openEditRoomModal(${room.id})" 
+                class="w-7 h-7 bg-white text-[#5C524E] border border-stone-200 hover:border-[#b3541e] hover:text-[#b3541e] rounded-lg flex items-center justify-center transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-pen text-[10px]"></i>
+              </button>
+              <button onclick="event.stopPropagation(); deleteRoom(${room.id}, '${room.number}')" 
+                class="w-7 h-7 bg-white text-rose-600 border border-stone-200 hover:border-rose-300 hover:bg-rose-50 rounded-lg flex items-center justify-center transition-all cursor-pointer shadow-sm">
+                <i class="fa-solid fa-trash-can text-[10px]"></i>
+              </button>
+            </div>`;
+        }
+
+        // Staff-only tooltip on Occupied rooms
+        let staffTooltip = '';
+        if (currentRole === 'staff' && room.status === 'occupied') {
+          staffTooltip = `
+            <div class="mt-4 pt-2 border-t border-[#E5DFD3]/40 flex justify-between items-center text-[9px] text-[#b3541e] font-semibold">
+              <span>Xem thông tin lưu trú</span>
+              <i class="fa-solid fa-chevron-right text-[8px] animate-pulse"></i>
+            </div>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = `group relative bg-white border ${borderClass} p-5 rounded-2xl shadow-sm transition-all duration-200 ${interactionClass}`;
+        
+        // Handle click event: Staff clicking Occupied room
+        if (currentRole === 'staff' && room.status === 'occupied') {
+          card.onclick = () => openStayInfoModal(room.id);
+        }
+
+        card.innerHTML = `
+          ${adminActionOverlay}
+          <div class="flex flex-col h-full justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[9px] font-bold text-stone-400 uppercase tracking-widest font-mono">Room ID: ${room.id}</span>
+                ${badgeHTML}
+              </div>
+              <div>
+                <h3 class="text-3xl font-serif-luxury font-bold text-[#2C2623] tracking-wide font-mono">${room.number}</h3>
+                <p class="text-[11px] text-[#81726A] font-semibold mt-1 flex items-center gap-1">
+                  <i class="fa-solid fa-bed text-[10px] text-[#b3541e]/75"></i> Hạng: ${room.type}
+                </p>
+              </div>
+            </div>
+            <div class="mt-5">
+              <p class="text-[9px] font-bold text-stone-400 uppercase tracking-wider">Đơn giá/Đêm</p>
+              <p class="text-sm font-bold text-[#b3541e] font-mono mt-0.5">${formatCurrency(room.pricePerNight)}</p>
+            </div>
+            ${staffTooltip}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Modal Control: Room Form (Add / Edit)
+    function openAddRoomModal() {
+      document.getElementById('modalTitle').innerText = 'Thêm Phòng Mới';
+      document.getElementById('modalRoomId').value = '';
+      document.getElementById('inputRoomNumber').value = '';
+      document.getElementById('inputRoomType').value = 'Deluxe';
+      document.getElementById('inputRoomPrice').value = '';
+      document.getElementById('inputRoomStatus').value = 'available';
+      document.getElementById('roomModal').classList.remove('hidden');
+    }
+
+    function openEditRoomModal(id) {
+      const room = roomsData.find(r => r.id === id);
+      if (!room) return;
+
+      document.getElementById('modalTitle').innerText = `Chỉnh Sửa Phòng - ${room.number}`;
+      document.getElementById('modalRoomId').value = room.id;
+      document.getElementById('inputRoomNumber').value = room.number;
+      document.getElementById('inputRoomType').value = room.type;
+      document.getElementById('inputRoomPrice').value = room.pricePerNight;
+      document.getElementById('inputRoomStatus').value = room.status;
+      document.getElementById('roomModal').classList.remove('hidden');
+    }
+
+    function closeRoomModal() {
+      document.getElementById('roomModal').classList.add('hidden');
+    }
+
+    // Form Submission: Add / Edit Room Logic
+    async function submitRoomForm() {
+      const id = document.getElementById('modalRoomId').value;
+      const number = document.getElementById('inputRoomNumber').value.trim();
+      const type = document.getElementById('inputRoomType').value;
+      const price = parseFloat(document.getElementById('inputRoomPrice').value);
+      const status = document.getElementById('inputRoomStatus').value;
+
+      if (!number || isNaN(price)) {
+        alert('Vui lòng nhập đầy đủ thông tin hợp lệ!');
+        return;
+      }
+
+      const roomPayload = {
+        number: number,
+        type: type,
+        pricePerNight: price,
+        available: status === 'available'
+      };
+
+      if (isBackendOnline) {
+        try {
+          if (id) {
+            // Edit Mode
+            const res = await fetch(`${API_URL}/rooms/${id}`, {
+              method: 'PUT',
+              headers: getAuthHeaders(),
+              body: JSON.stringify(roomPayload)
+            });
+            if (res.ok) {
+              if (status === 'dirty' || status === 'available') {
+                await fetch(`${API_URL}/housekeeping/room/${id}/status`, {
+                  method: 'PUT',
+                  headers: getAuthHeaders(),
+                  body: JSON.stringify({ status: status === 'dirty' ? 'dirty' : 'clean' })
+                });
+              }
+              console.log(`Đã sửa thông tin phòng ID ${id}`);
+            } else {
+              alert('Có lỗi xảy ra khi cập nhật phòng.');
+            }
+          } else {
+            // Add Mode
+            const res = await fetch(`${API_URL}/rooms`, {
+              method: 'POST',
+              headers: getAuthHeaders(),
+              body: JSON.stringify(roomPayload)
+            });
+            if (res.ok) {
+              const data = await res.json();
+              const newRoom = data.data;
+              if (status === 'dirty' && newRoom) {
+                await fetch(`${API_URL}/housekeeping/room/${newRoom.id}/status`, {
+                  method: 'PUT',
+                  headers: getAuthHeaders(),
+                  body: JSON.stringify({ status: 'dirty' })
+                });
+              }
+              console.log(`Đã thêm phòng mới`);
+            } else {
+              alert('Có lỗi xảy ra khi tạo phòng mới.');
+            }
+          }
+        } catch (err) {
+          console.error("Lỗi khi kết nối cập nhật phòng:", err);
+        }
+      } else {
+        // Mock edit mode
+        if (id) {
+          const roomIndex = roomsData.findIndex(r => r.id === parseInt(id));
+          if (roomIndex !== -1) {
+            roomsData[roomIndex].number = number;
+            roomsData[roomIndex].type = type;
+            roomsData[roomIndex].pricePerNight = price;
+            roomsData[roomIndex].status = status;
+            localStorage.setItem('luxeHaven_rooms', JSON.stringify(roomsData));
+          }
+        } else {
+          // Mock add mode
+          const newId = roomsData.length > 0 ? Math.max(...roomsData.map(r => r.id)) + 1 : 1;
+          const newRoom = {
+            id: newId,
+            number: number,
+            type: type,
+            pricePerNight: price,
+            status: status
+          };
+          roomsData.push(newRoom);
+          localStorage.setItem('luxeHaven_rooms', JSON.stringify(roomsData));
+        }
+      }
+
+      closeRoomModal();
+      await refreshData();
+    }
+
+    // Delete Room
+    async function deleteRoom(id, number) {
+      if (confirm(`Bạn có chắc chắn muốn xóa phòng ${number}?`)) {
+        if (isBackendOnline) {
+          try {
+            const res = await fetch(`${API_URL}/rooms/${id}`, {
+              method: 'DELETE',
+              headers: getAuthHeaders()
+            });
+            if (res.ok) {
+              console.log(`Đã xóa phòng ${number}`);
+              await refreshData();
+            } else {
+              alert("Lỗi khi xóa phòng. Vui lòng thử lại.");
+            }
+          } catch (err) {
+            console.error("Lỗi kết nối xóa phòng: ", err);
+          }
+        } else {
+          roomsData = roomsData.filter(r => r.id !== id);
+          localStorage.setItem('luxeHaven_rooms', JSON.stringify(roomsData));
+          renderAll();
+        }
+      }
+    }
+
+    // Stay Info modal logic
+    let activeBookingForInterim = null;
+
+    function openStayInfoModal(roomId) {
+      const room = roomsData.find(r => r.id === roomId);
+      const booking = bookingsData[roomId];
+      if (!room || !booking) return;
+
+      activeBookingForInterim = booking;
+
+      document.getElementById('stayRoomNum').innerText = room.number;
+      document.getElementById('stayRoomType').innerText = `Hạng phòng: ${room.type}`;
+      document.getElementById('stayRoomPrice').innerText = `Giá: ${formatCurrency(getPrice(room.pricePerNight))}/Đêm`;
+      document.getElementById('stayGuestCode').innerText = booking.guestCode;
+      document.getElementById('stayGuestName').innerText = booking.guestName;
+      document.getElementById('stayDates').innerText = `${formatDateString(booking.checkIn)} ➔ ${formatDateString(booking.checkOut)}`;
+      document.getElementById('stayPaymentStatus').innerText = booking.paymentStatus;
+
+      const badge = document.getElementById('stayPaymentBadge');
+      const dot = document.getElementById('stayPaymentDot');
+
+      if (booking.paymentStatus === 'Đã thanh toán') {
+        badge.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200";
+        dot.className = "w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse";
+      } else {
+        badge.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200";
+        dot.className = "w-1.5 h-1.5 rounded-full bg-rose-500";
+      }
+
+      hideInterimInvoice();
+      document.getElementById('stayInfoModal').classList.remove('hidden');
+    }
+
+    function closeStayInfoModal() {
+      document.getElementById('stayInfoModal').classList.add('hidden');
+    }
+
+    function showInterimInvoice() {
+      if (!activeBookingForInterim) return;
+
+      const booking = activeBookingForInterim;
+      const nights = getNights(booking.checkIn, booking.checkOut);
+      const roomTotal = booking.roomPrice * nights;
+      const serviceTotal = booking.services ? booking.services.reduce((sum, s) => sum + (getPrice(s.price) * s.quantity), 0) : 0;
+      const subtotal = roomTotal + serviceTotal;
+      const vat = subtotal * 0.10;
+      const grandTotal = subtotal + vat;
+
+      // Fill details
+      document.getElementById('interimGuestName').innerText = booking.guestName;
+      document.getElementById('interimGuestPhone').innerText = `SĐT: ${booking.customerPhone}`;
+      document.getElementById('interimRoomDetail').innerText = `Phòng ${booking.roomNumber} - Hạng ${booking.roomType}`;
+      document.getElementById('interimStayDates').innerText = `${formatDateString(booking.checkIn)} ➔ ${formatDateString(booking.checkOut)}`;
+
+      // Table Room
+      const roomTbody = document.getElementById('interimRoomTableBody');
+      roomTbody.innerHTML = `
+        <tr class="text-stone-700">
+          <td class="py-2.5 px-4 font-semibold">Phòng ${booking.roomType} ${booking.roomNumber}</td>
+          <td class="py-2.5 px-4 text-center font-mono">${formatCurrency(booking.roomPrice)}</td>
+          <td class="py-2.5 px-4 text-center font-semibold">${nights} Đêm</td>
+          <td class="py-2.5 px-4 text-right font-mono font-bold text-[#b3541e]">${formatCurrency(roomTotal)}</td>
+        </tr>
+      `;
+
+      // Table Services
+      const serviceTbody = document.getElementById('interimServiceTableBody');
+      serviceTbody.innerHTML = '';
+      if (!booking.services || booking.services.length === 0) {
+        serviceTbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-3 px-4 text-center text-stone-400 italic">
+              Không phát sinh dịch vụ phụ trợ.
+            </td>
+          </tr>
+        `;
+      } else {
+        booking.services.forEach(s => {
+          const catBadge = getServiceCategoryBadge(s.serviceName);
+          serviceTbody.innerHTML += `
+            <tr class="border-t border-stone-100 text-stone-700">
+              <td class="py-2.5 px-4 font-semibold">${s.serviceName}</td>
+              <td class="py-2.5 px-4 text-center">${catBadge}</td>
+              <td class="py-2.5 px-4 text-center font-mono">${formatCurrency(getPrice(s.price))}</td>
+              <td class="py-2.5 px-4 text-center font-semibold font-mono">x${s.quantity}</td>
+              <td class="py-2.5 px-4 text-right font-mono font-bold text-[#b3541e]">${formatCurrency(getPrice(s.price) * s.quantity)}</td>
+            </tr>
+          `;
+        });
+      }
+
+      // Calculations
+      document.getElementById('interimSubtotal').innerText = formatCurrency(subtotal);
+      document.getElementById('interimVat').innerText = formatCurrency(vat);
+      document.getElementById('interimGrandTotal').innerText = formatCurrency(grandTotal);
+
+      // Transition views
+      document.getElementById('stayInfoMainView').classList.add('hidden');
+      document.getElementById('stayInfoInvoiceView').classList.remove('hidden');
+    }
+
+    function hideInterimInvoice() {
+      document.getElementById('stayInfoInvoiceView').classList.add('hidden');
+      document.getElementById('stayInfoMainView').classList.remove('hidden');
+    }
+
+    function getServiceCategoryBadge(name) {
+      const lower = name.toLowerCase();
+      if (lower.includes('spa') || lower.includes('trị liệu') || lower.includes('massage')) {
+        return `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-rose-50 text-rose-700 border border-rose-200">Spa</span>`;
+      }
+      if (lower.includes('ẩm thực') || lower.includes('trà') || lower.includes('ăn') || lower.includes('meal')) {
+        return `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-orange-50 text-orange-700 border border-orange-200">Ẩm thực</span>`;
+      }
+      if (lower.includes('đưa đón') || lower.includes('xe') || lower.includes('shuttle')) {
+        return `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-slate-50 text-slate-700 border border-slate-200">Đưa đón</span>`;
+      }
+      return `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-sky-50 text-sky-700 border border-sky-200">Tiện ích</span>`;
+    }
+
+    // Refresh rendering for all elements
+    function renderAll() {
+      if (currentRole === 'staff') {
+        calculateStats();
+      }
+      renderGrid();
+    }
+
+    // Helper to update UI elements based on clocked-in state
+    function updateAttendanceUI(isClockedIn) {
+      localStorage.setItem('isClockedIn', isClockedIn ? 'true' : 'false');
+      const pill = document.getElementById('attendanceStatusPill');
+      const btn = document.getElementById('attendanceBtn');
+      if (pill && btn) {
+        if (isClockedIn) {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none border-emerald-200 bg-emerald-50 text-emerald-700';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>ĐANG LÀM VIỆC';
+          btn.innerHTML = '🔴 Kết Thúc Ca Làm';
+        } else {
+          pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none border-stone-200 bg-stone-50 text-stone-500';
+          pill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>ĐÃ RA CA';
+          btn.innerHTML = '🟢 Điểm Danh Vào Ca';
+        }
+      }
+    }
+
+    async function checkAttendanceState() {
+      const role = localStorage.getItem('userRole');
+      if (role !== 'receptionist' && role !== 'cleaner') {
+        return;
+      }
+      const apiBase = typeof API_URL !== 'undefined' ? API_URL : (typeof API_BASE !== 'undefined' ? API_BASE : '/api');
+      try {
+        const res = await fetch(`${apiBase}/attendance/status`, { headers: getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            updateAttendanceUI(data.isClockedIn);
+          }
+        }
+      } catch (err) {
+        console.error('Lỗi đồng bộ chấm công:', err);
+      }
+    }
+
+    async function initAttendanceSubsystem() {
+      const role = localStorage.getItem('userRole');
+      if (role !== 'receptionist' && role !== 'cleaner') {
+        return;
+      }
+
+      const apiBase = typeof API_URL !== 'undefined' ? API_URL : (typeof API_BASE !== 'undefined' ? API_BASE : '/api');
+      const profileDropdown = document.getElementById('profileDropdown');
+      const profileDropdownContainer = document.getElementById('profileDropdownContainer');
+      if (!profileDropdown || !profileDropdownContainer) return;
+
+      // 1. Create status pill if it doesn't exist
+      let pill = document.getElementById('attendanceStatusPill');
+      if (!pill) {
+        pill = document.createElement('div');
+        pill.id = 'attendanceStatusPill';
+        pill.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all duration-300 select-none';
+        profileDropdownContainer.parentNode.insertBefore(pill, profileDropdownContainer);
+      }
+
+      // 2. Create button if it doesn't exist
+      let btn = document.getElementById('attendanceBtn');
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'attendanceBtn';
+        btn.className = 'flex items-center gap-2 px-4 py-2.5 text-xs font-semibold w-full text-left transition-all duration-150 border-b border-[#E5DFD3]/40 cursor-pointer focus:outline-none hover:bg-[#F7F3EB] hover:text-[#b3541e]';
+        profileDropdown.insertBefore(btn, profileDropdown.firstChild);
+      }
+
+      // Set initial UI instantly from localStorage to avoid flicker
+      const localClockedIn = localStorage.getItem('isClockedIn') === 'true';
+      updateAttendanceUI(localClockedIn);
+
+      // Fetch status from server to sync
+      await checkAttendanceState();
+
+      // Handle click event
+      btn.onclick = async function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Hide the profile dropdown to look clean
+        profileDropdown.classList.add('hidden');
+        
+        const currentlyClockedIn = localStorage.getItem('isClockedIn') === 'true';
+        if (!currentlyClockedIn) {
+          // Check in
+          try {
+            const res = await fetch(`${apiBase}/attendance/check-in`, {
+              method: 'POST',
+              headers: getAuthHeaders()
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              updateAttendanceUI(true);
+              alert(data.message || 'Điểm danh vào ca thành công!');
+            } else {
+              alert('Lỗi: ' + (data.message || 'Không thể điểm danh vào ca'));
+            }
+          } catch (err) {
+            console.error('Lỗi check-in:', err);
+            alert('Không thể kết nối máy chủ để điểm danh vào ca.');
+          }
+        } else {
+          // Check out
+          try {
+            const res = await fetch(`${apiBase}/attendance/check-out`, {
+              method: 'POST',
+              headers: getAuthHeaders()
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              updateAttendanceUI(false);
+              const hours = data.data ? data.data.totalHours : 0;
+              alert(`Bạn đã hoàn thành ca làm việc! Tổng thời gian: ${hours} giờ.`);
+            } else {
+              alert('Lỗi: ' + (data.message || 'Không thể kết thúc ca làm'));
+            }
+          } catch (err) {
+            console.error('Lỗi check-out:', err);
+            alert('Không thể kết nối máy chủ để kết thúc ca làm.');
+          }
+        }
+      };
+    }
+    window.addEventListener('DOMContentLoaded', initAttendanceSubsystem);
+
+    // Initialize Page
+    window.addEventListener('DOMContentLoaded', initPage);
+  </script>
+</body>
+
+</html>
